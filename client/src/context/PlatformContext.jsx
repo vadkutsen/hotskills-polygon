@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
-import { networks } from "../utils/networks";
+// import { networks } from "../utils/networks";
 
 import { contractABI, contractAddress } from "../utils/constants";
 
@@ -9,6 +9,7 @@ export const PlatformContext = React.createContext();
 
 const { ethereum } = window;
 const address0 = "0x0000000000000000000000000000000000000000";
+const polygonTestnetId = "0x13881";
 
 const ProjectType = {
   0: "First Come First Serve",
@@ -51,7 +52,7 @@ export const PlatformProvider = ({ children }) => {
     reward: 0,
   });
   const [currentAccount, setCurrentAccount] = useState("");
-  const [network, setNetwork] = useState("");
+  const [networkId, setNetworkId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [projects, setProjects] = useState([]);
   const [project, setProject] = useState([]);
@@ -76,7 +77,7 @@ export const PlatformProvider = ({ children }) => {
       console.log("No authorized accounts found");
     }
     const chainId = await ethereum.request({ method: "eth_chainId" });
-    setNetwork(networks[chainId]);
+    setNetworkId(chainId);
     // Reload the page when they change networks
     function handleChainChanged() {
       window.location.reload();
@@ -102,23 +103,23 @@ export const PlatformProvider = ({ children }) => {
   };
 
   const switchNetwork = async () => {
-    if (window.ethereum) {
+    if (ethereum) {
       try {
         // Try to switch to the Mumbai testnet
-        await window.ethereum.request({
+        await ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: "0x13881" }], // Check networks.js for hexadecimal network ids
+          params: [{ chainId: polygonTestnetId }], // Check networks.js for hexadecimal network ids
         });
       } catch (error) {
         // This error code means that the chain we want has not been added to MetaMask
         // In this case we ask the user to add it to their MetaMask
         if (error.code === 4902) {
           try {
-            await window.ethereum.request({
+            await ethereum.request({
               method: "wallet_addEthereumChain",
               params: [
                 {
-                  chainId: "0x13881",
+                  chainId: polygonTestnetId,
                   chainName: "Polygon Mumbai Testnet",
                   rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
                   nativeCurrency: {
@@ -495,13 +496,13 @@ export const PlatformProvider = ({ children }) => {
   // This will run any time currentAccount or network are changed
   useEffect(() => {
     checkIfWalletIsConnected();
-    if (network === "Polygon Mumbai Testnet") {
+    if (networkId === "0x13881") {
       getBalance();
       getPlatformFee();
       getRating(currentAccount);
       getAllProjects();
     }
-  }, [currentAccount, network]);
+  }, [currentAccount, networkId]);
 
   useEffect(() => {
     const platformContract = createEthereumContract();
@@ -574,7 +575,7 @@ export const PlatformProvider = ({ children }) => {
       value={{
         connectWallet,
         switchNetwork,
-        network,
+        networkId,
         fee,
         projects,
         project,
@@ -596,6 +597,7 @@ export const PlatformProvider = ({ children }) => {
         handleProjectUpdatedEvent,
         formData,
         address0,
+        polygonTestnetId
       }}
     >
       {children}

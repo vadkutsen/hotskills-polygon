@@ -5,10 +5,10 @@ import { PlatformContext } from "../context/PlatformContext";
 import ProjectCard from "../components/ProjectCard";
 
 export default function Home() {
-  const { projects, currentAccount, network, switchNetwork } =
+  const { projects, currentAccount, networkId, polygonTestnetId, switchNetwork } =
     useContext(PlatformContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  if (network !== "Polygon Mumbai Testnet") {
+  if (networkId !== polygonTestnetId) {
     return (
       <div className="flex flex-col w-full text-white justify-center items-center min-h-screen">
         <p>Please connect to Polygon Mumbai Testnet</p>

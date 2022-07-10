@@ -12,7 +12,7 @@ const NavBarItem = ({ title, classprops }) => (
 );
 
 const Navbar = () => {
-  const { currentAccount, connectWallet, network, fetchedRating } =
+  const { currentAccount, connectWallet, networkId, polygonTestnetId, fetchedRating } =
     useContext(PlatformContext);
   const [toggleMenu, setToggleMenu] = React.useState(false);
 
@@ -35,7 +35,7 @@ const Navbar = () => {
       <img
         alt="Network logo"
         className="w-4 h-4 self-center"
-        src={network.includes("Polygon") ? polygonLogo : ethLogo}
+        src={networkId === polygonTestnetId ? polygonLogo : ethLogo}
       />
       <p>{shortenAddress(currentAccount)}</p>
     </div>
@@ -51,7 +51,7 @@ const Navbar = () => {
         </Link>
       </div>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {currentAccount && network === "Polygon Mumbai Testnet" ? (
+        {currentAccount && networkId === polygonTestnetId ? (
           <div className="flex flex-row">
             <Link to="/new">
               <NavBarItem title="Add Task" />
@@ -95,7 +95,7 @@ const Navbar = () => {
               {!currentAccount && renderNotConnectedContainer()}
               {currentAccount && renderAccountInfo()}
             </li>
-            {network === "Polygon Mumbai Testnet" ? (
+            {networkId === polygonTestnetId ? (
               <>
                 <li>
                   <Link to="/new">
