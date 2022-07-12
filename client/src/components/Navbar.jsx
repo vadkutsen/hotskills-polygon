@@ -6,13 +6,14 @@ import { shortenAddress } from "../utils/shortenAddress";
 import { PlatformContext } from "../context/PlatformContext";
 import polygonLogo from "../../images/polygonlogo.png";
 import ethLogo from "../../images/ethlogo.png";
+import { networks } from "../utils/networks";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
 );
 
 const Navbar = () => {
-  const { currentAccount, connectWallet, networkId, polygonTestnetId, fetchedRating } =
+  const { currentAccount, connectWallet, networkId, fetchedRating } =
     useContext(PlatformContext);
   const [toggleMenu, setToggleMenu] = React.useState(false);
 
@@ -35,7 +36,7 @@ const Navbar = () => {
       <img
         alt="Network logo"
         className="w-4 h-4 self-center"
-        src={networkId === polygonTestnetId ? polygonLogo : ethLogo}
+        src={networkId === networks.testnet.chainId ? polygonLogo : ethLogo}
       />
       <p>{shortenAddress(currentAccount)}</p>
     </div>
@@ -51,7 +52,7 @@ const Navbar = () => {
         </Link>
       </div>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {currentAccount && networkId === polygonTestnetId ? (
+        {currentAccount && networkId === networks.testnet.chainId ? (
           <div className="flex flex-row">
             <Link to="/new">
               <NavBarItem title="Add Task" />
@@ -95,7 +96,7 @@ const Navbar = () => {
               {!currentAccount && renderNotConnectedContainer()}
               {currentAccount && renderAccountInfo()}
             </li>
-            {networkId === polygonTestnetId ? (
+            {networkId === networks.testnet.chainId ? (
               <>
                 <li>
                   <Link to="/new">

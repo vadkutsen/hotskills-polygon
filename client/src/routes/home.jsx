@@ -3,12 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import { HiSearch } from "react-icons/hi";
 import { PlatformContext } from "../context/PlatformContext";
 import ProjectCard from "../components/ProjectCard";
+import { networks } from "../utils/networks";
 
 export default function Home() {
-  const { projects, currentAccount, networkId, polygonTestnetId, switchNetwork } =
+  const { projects, currentAccount, networkId, switchNetwork } =
     useContext(PlatformContext);
   const [searchParams, setSearchParams] = useSearchParams();
-  if (networkId !== polygonTestnetId) {
+  if (networkId !== networks.testnet.chainId) {
     return (
       <div className="flex flex-col w-full text-white justify-center items-center min-h-screen">
         <p>Please connect to Polygon Mumbai Testnet</p>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
-// import { networks } from "../utils/networks";
+import { networks } from "../utils/networks";
 
 import { contractABI, contractAddress } from "../utils/constants";
 
@@ -9,7 +9,7 @@ export const PlatformContext = React.createContext();
 
 const { ethereum } = window;
 const address0 = "0x0000000000000000000000000000000000000000";
-const polygonTestnetId = "0x13881";
+// const polygonTestnetId = "0x13881";
 
 const ProjectType = {
   0: "First Come First Serve",
@@ -34,7 +34,7 @@ function MessageDisplay({ message, hash }) {
       <p>Transaction hash: </p>
       <a
         className="text-[#6366f1]"
-        href={`https://mumbai.polygonscan.com/tx/${hash}`}
+        href={`${networks.testnet.blockExplorerUrls[0]}/tx/${hash}`}
         target="_blank"
         rel="noreferrer"
       >
@@ -108,7 +108,7 @@ export const PlatformProvider = ({ children }) => {
         // Try to switch to the Mumbai testnet
         await ethereum.request({
           method: "wallet_switchEthereumChain",
-          params: [{ chainId: polygonTestnetId }], // Check networks.js for hexadecimal network ids
+          params: [{ chainId: networks.testnet.chainId }], // Check networks.js for hexadecimal network ids
         });
       } catch (error) {
         // This error code means that the chain we want has not been added to MetaMask
@@ -118,17 +118,7 @@ export const PlatformProvider = ({ children }) => {
             await ethereum.request({
               method: "wallet_addEthereumChain",
               params: [
-                {
-                  chainId: polygonTestnetId,
-                  chainName: "Polygon Mumbai Testnet",
-                  rpcUrls: ["https://rpc-mumbai.maticvigil.com/"],
-                  nativeCurrency: {
-                    name: "Mumbai Matic",
-                    symbol: "MATIC",
-                    decimals: 18,
-                  },
-                  blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-                },
+                networks.testnet
               ],
             });
           } catch (err) {
@@ -597,7 +587,6 @@ export const PlatformProvider = ({ children }) => {
         handleProjectUpdatedEvent,
         formData,
         address0,
-        polygonTestnetId
       }}
     >
       {children}
