@@ -60,7 +60,6 @@ export default function Project() {
           <p className="mt-1 italic text-white text-sm md:w-9/12">
             Completed at: {project.completedAt}
           </p>
-
           {isLoading ? (
             <Loader />
           ) : (
