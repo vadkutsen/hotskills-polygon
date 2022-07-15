@@ -1,10 +1,17 @@
 import { useContext, useState } from "react";
 import { PlatformContext } from "../context/PlatformContext";
+import IpfsForm from "./IpfsForm";
 
 const AssigneeActions = () => {
   const { project, unassignProject, submitResult } =
     useContext(PlatformContext);
   const [result, setResult] = useState("");
+  const handleFileUpload = (url) => {
+    setResult(url);
+  };
+  const handleChange = (e) => {
+    setResult(e.target.value);
+  };
   const handleSubmit = (e) => {
     if (result === "") return;
     e.preventDefault();
@@ -26,12 +33,14 @@ const AssigneeActions = () => {
       >
         Unassign
       </button>
+      <IpfsForm onFileUpload={handleFileUpload} />
       <input
         className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
         placeholder="Result Link"
         name="result"
         type="text"
-        onChange={(e) => setResult(e.target.value)}
+        value={result}
+        onChange={handleChange}
       />
       <button
         type="button"

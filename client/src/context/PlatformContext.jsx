@@ -9,7 +9,6 @@ export const PlatformContext = React.createContext();
 
 const { ethereum } = window;
 const address0 = "0x0000000000000000000000000000000000000000";
-// const polygonTestnetId = "0x13881";
 
 const ProjectType = {
   0: "First Come First Serve",
@@ -65,13 +64,11 @@ export const PlatformProvider = ({ children }) => {
       alert("Make sure you have MetaMask! -> https://metamask.io/");
       return;
     }
-    console.log("We have the ethereum object", ethereum);
     // Check if we're authorized to access the user's wallet
     const accounts = await ethereum.request({ method: "eth_accounts" });
     // Users can have multiple authorized accounts, we grab the first one if its there!
     if (accounts.length !== 0) {
       const account = accounts[0];
-      console.log("Found an authorized account:", account);
       setCurrentAccount(account);
     } else {
       console.log("No authorized accounts found");
@@ -95,7 +92,6 @@ export const PlatformProvider = ({ children }) => {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-      console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
     } catch (error) {
       console.log(error);
@@ -221,6 +217,7 @@ export const PlatformProvider = ({ children }) => {
   };
 
   const getProject = async (id) => {
+    setIsLoading(true);
     try {
       if (ethereum) {
         const platformContract = createEthereumContract();
@@ -256,6 +253,7 @@ export const PlatformProvider = ({ children }) => {
       console.log(error);
       alert(error.message);
     }
+    setIsLoading(false);
   };
 
   const addProject = async () => {
