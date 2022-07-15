@@ -1,7 +1,7 @@
-import { create } from "ipfs-http-client";
 import { useState } from "react";
 
 const IpfsForm = (props) => {
+  const IPFS = window.IpfsCore;
   let ipfs;
   const [images, setImages] = useState([]);
   const { onFileUpload } = props;
@@ -28,7 +28,7 @@ const IpfsForm = (props) => {
   };
 
   try {
-    ipfs = create({
+    ipfs = IPFS.create({
       url: "https://ipfs.infura.io:5001/api/v0",
     });
   } catch (e) {
