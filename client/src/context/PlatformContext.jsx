@@ -15,6 +15,24 @@ const ProjectType = {
   1: "Author Selected",
 };
 
+function MessageDisplay({ message, hash }) {
+  return (
+    <div className="w-full">
+      <p>{message}</p>
+      {hash && (
+        <a
+          className="text-[#6366f1]"
+          href={`${networks.testnet.blockExplorerUrls[0]}/tx/${hash}`}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Check on polygonscan
+        </a>
+      )}
+    </div>
+  );
+}
+
 const createEthereumContract = () => {
   const provider = new ethers.providers.Web3Provider(ethereum);
   const signer = provider.getSigner();
@@ -25,23 +43,6 @@ const createEthereumContract = () => {
   );
   return platformContract;
 };
-
-function MessageDisplay({ message, hash }) {
-  return (
-    <div className="w-full">
-      <p>{message}</p>
-      <p>Transaction hash: </p>
-      <a
-        className="text-[#6366f1]"
-        href={`${networks.testnet.blockExplorerUrls[0]}/tx/${hash}`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {hash}
-      </a>
-    </div>
-  );
-}
 
 export const PlatformProvider = ({ children }) => {
   const [formData, setformData] = useState({
@@ -58,6 +59,46 @@ export const PlatformProvider = ({ children }) => {
   const [fee, setFee] = useState(0);
   const [balance, setBalance] = useState(0);
   const [fetchedRating, setFetchedRating] = useState(0);
+  const [ipfsUrl, setIpfsUrl] = useState("");
+
+  const notify = (message, hash) => toast.success(<MessageDisplay message={message} hash={hash} />, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "dark",
+  });
+
+  const onUploadHandler = async (event) => {
+    let ipfs;
+    const IPFS = window.IpfsHttpClient;
+    try {
+      ipfs = IPFS.create({
+        url: "https://ipfs.infura.io:5001/api/v0",
+      });
+    } catch (e) {
+      console.log("IPFS error: ", e);
+    }
+    event.preventDefault();
+    const form = event.target;
+    const { files } = form[0];
+    if (!files || files.length === 0) {
+      return alert("No files selected");
+    }
+    const file = files[0];
+    // uload files
+    setIsLoading(true);
+    const result = await ipfs.add(file);
+    const url = `https://ipfs.infura.io/ipfs/${result.path}`;
+    form.reset();
+    setIpfsUrl(url);
+    console.log(url);
+    setIsLoading(false);
+    notify("File successfully uploaded to IPFS.");
+  };
 
   const checkIfWalletIsConnected = async () => {
     if (!ethereum) {
@@ -113,9 +154,7 @@ export const PlatformProvider = ({ children }) => {
           try {
             await ethereum.request({
               method: "wallet_addEthereumChain",
-              params: [
-                networks.testnet
-              ],
+              params: [networks.testnet],
             });
           } catch (err) {
             console.log(err);
@@ -130,17 +169,6 @@ export const PlatformProvider = ({ children }) => {
       );
     }
   };
-
-  const notify = (message, hash) => toast.success(<MessageDisplay message={message} hash={hash} />, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-  });
 
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -451,9 +479,7 @@ export const PlatformProvider = ({ children }) => {
         title: p.title,
         description: p.description,
         projectType: ProjectType[p.projectType],
-        createdAt: new Date(
-          p.createdAt.toNumber() * 1000
-        ).toLocaleString(),
+        createdAt: new Date(p.createdAt.toNumber() * 1000).toLocaleString(),
         author: p.author.toString().toLowerCase(),
         candidates: p.candidates,
         assignee:
@@ -462,9 +488,7 @@ export const PlatformProvider = ({ children }) => {
             : p.assignee.toString().toLowerCase(),
         completedAt:
           p.completedAt > 0
-            ? new Date(
-              p.completedAt.toNumber() * 1000
-            ).toLocaleString()
+            ? new Date(p.completedAt.toNumber() * 1000).toLocaleString()
             : "Not completed yet",
         reward: parseInt(p.reward, 10) / 10 ** 18,
         result: p.result,
@@ -507,8 +531,7 @@ export const PlatformProvider = ({ children }) => {
           ).toLocaleString(),
           author: task.author,
           candidates: task.candidates,
-          assignee:
-            task.assignee === address0 ? "Unassigned" : task.assignee,
+          assignee: task.assignee === address0 ? "Unassigned" : task.assignee,
           completedAt:
             task.completedAt > 0
               ? new Date(task.completedAt.toNumber() * 1000).toLocaleString()
@@ -585,6 +608,8 @@ export const PlatformProvider = ({ children }) => {
         handleProjectUpdatedEvent,
         formData,
         address0,
+        onUploadHandler,
+        ipfsUrl,
       }}
     >
       {children}
