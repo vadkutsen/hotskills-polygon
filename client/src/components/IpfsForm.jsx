@@ -4,11 +4,9 @@ const IpfsForm = (props) => {
   const IPFS = window.IpfsHttpClient;
   let ipfs;
   const [images, setImages] = useState([]);
-  const [buttonText, setButtonText] = useState("Upload File");
   const { onFileUpload } = props;
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    setButtonText("Processing...");
     const form = event.target;
     const { files } = form[0];
     if (!files || files.length === 0) {
@@ -36,7 +34,6 @@ const IpfsForm = (props) => {
   } catch (e) {
     console.log("IPFS error: ", e);
   }
-  setButtonText("Upload File");
   if (!ipfs) {
     return (
       <div>
@@ -63,7 +60,7 @@ const IpfsForm = (props) => {
           id="upload-btn"
           type="submit"
         >
-          {buttonText}
+          Upload File
         </button>
       </form>
       <div>
