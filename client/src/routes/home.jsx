@@ -67,7 +67,7 @@ export default function Home() {
               const filter = searchParams.get("filter");
               if (!filter) return true;
               const title = p.title.toLowerCase();
-              return title.startsWith(filter.toLowerCase());
+              return title.includes(filter.toLowerCase());
             })
             .map((project, i) => (
               <ProjectCard key={i} {...project} />
