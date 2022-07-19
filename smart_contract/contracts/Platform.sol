@@ -25,6 +25,7 @@ contract Platform is Ownable, ReentrancyGuard {
         ProjectType projectType;
         uint256 reward;
         string result;
+        uint allProjectsIndex;
     }
 
     struct ReceivedProject {
@@ -42,7 +43,7 @@ contract Platform is Ownable, ReentrancyGuard {
     uint8 public platformFeePercentage = 1; // Platform fee in %
     uint256 public totalFees;
     uint256 mappingLength = 0;
-    uint[] projectIds;
+    uint[] allProjects;
     mapping(uint256 => Project) projects;
     mapping(address => uint8) ratings;
 
@@ -159,7 +160,7 @@ contract Platform is Ownable, ReentrancyGuard {
         uint256 amount = _newProject.reward + platformFee;
         require(msg.value == amount, "Wrong amount submitted.");
         totalFees += platformFee;
-        uint256 _id = mappingLength;
+        uint256 _id = mappingLength + 1;
         projects[_id].id = _id;
         projects[_id].title = _newProject.title;
         projects[_id].description = _newProject.description;
@@ -167,8 +168,9 @@ contract Platform is Ownable, ReentrancyGuard {
         projects[_id].createdAt = block.timestamp;
         projects[_id].reward = _newProject.reward;
         projects[_id].projectType = _newProject.projectType;
+        projects[_id].allProjectsIndex = allProjects.length;
+        allProjects.push(_id);
         mappingLength++;
-        projectIds.push(_id);
         emit ProjectAdded(projects[_id]);
         return true;
     }
@@ -274,8 +276,9 @@ contract Platform is Ownable, ReentrancyGuard {
         (bool success, ) = projects[_id].author.call{value: projects[_id].reward}("");
         require(success, "Tranfer failed.");
         delete projects[_id];
-        projectIds[_id] = projectIds[projectIds.length - 1];
-        projectIds.pop();
+        delete allProjects[projects[_id].allProjectsIndex];
+        allProjects[projects[_id].allProjectsIndex] = allProjects[allProjects.length - 1];
+        allProjects.pop();
         emit ProjectDeleted(_id);
         return true;
     }
@@ -296,9 +299,9 @@ contract Platform is Ownable, ReentrancyGuard {
     // Getters
 
     function getAllProjects() public view returns (Project[] memory) {
-        Project[] memory projectList = new Project[](projectIds.length);
-        for (uint256 i; i < projectIds.length; i++) {
-            projectList[i] = projects[projectIds[i]];
+        Project[] memory projectList = new Project[](allProjects.length);
+        for (uint256 i; i < allProjects.length; i++) {
+            projectList[i] = projects[allProjects[i]];
         }
         return projectList;
     }

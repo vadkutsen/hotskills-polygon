@@ -66,7 +66,7 @@ describe("Plarform contract", function () {
     });
 
     it("Should get project", async function () {
-      const getProject = await hardhatPlatform.getProject(0);
+      const getProject = await hardhatPlatform.getProject(1);
       expect(await getProject.title).to.equal("Hola, mundo!");
       expect(await getProject.description).to.equal("Test description");
     });
@@ -74,9 +74,9 @@ describe("Plarform contract", function () {
     it("Should apply for project", async function () {
       const applyForProject = await hardhatPlatform
         .connect(addr2)
-        .applyForProject(0);
+        .applyForProject(1);
       await applyForProject.wait();
-      const getProject = await hardhatPlatform.getProject(0);
+      const getProject = await hardhatPlatform.getProject(1);
       expect(await getProject.assignee).to.equal(addr2.address);
     });
 
@@ -93,7 +93,7 @@ describe("Plarform contract", function () {
         });
       await addProject.wait();
       await expect(
-        hardhatPlatform.connect(addr1).assignProject(1, addr2.address)
+        hardhatPlatform.connect(addr1).assignProject(2, addr2.address)
       ).to.be.revertedWith("Address didn't apply to the project.");
     });
 
@@ -109,18 +109,18 @@ describe("Plarform contract", function () {
           value: 101,
         });
       await addProject.wait();
-      await hardhatPlatform.connect(addr2).applyForProject(1);
+      await hardhatPlatform.connect(addr2).applyForProject(2);
       const assignProject = await hardhatPlatform
         .connect(addr1)
-        .assignProject(1, addr2.address);
+        .assignProject(2, addr2.address);
       await assignProject.wait();
-      const getProject = await hardhatPlatform.getProject(1);
+      const getProject = await hardhatPlatform.getProject(2);
       expect(await getProject.assignee).to.equal(addr2.address);
     });
 
     it("Cannot unassign not assigned project", async function () {
       await expect(
-        hardhatPlatform.connect(addr1).unassignProject(0)
+        hardhatPlatform.connect(addr1).unassignProject(1)
       ).to.be.revertedWith("Project is not assigned yet");
     });
 
@@ -136,13 +136,13 @@ describe("Plarform contract", function () {
           value: 101,
         });
       await addProject.wait();
-      await hardhatPlatform.connect(addr2).applyForProject(1);
+      await hardhatPlatform.connect(addr2).applyForProject(2);
       const assignProject = await hardhatPlatform
         .connect(addr1)
-        .assignProject(1, addr2.address);
+        .assignProject(2, addr2.address);
       await assignProject.wait();
-      await hardhatPlatform.connect(addr1).unassignProject(1);
-      const getProject = await hardhatPlatform.getProject(1);
+      await hardhatPlatform.connect(addr1).unassignProject(2);
+      const getProject = await hardhatPlatform.getProject(2);
       expect(await getProject.assignee).to.equal(
         "0x0000000000000000000000000000000000000000"
       );
@@ -151,10 +151,10 @@ describe("Plarform contract", function () {
     it("Should submit result", async function () {
       const applyForProject = await hardhatPlatform
         .connect(addr2)
-        .applyForProject(0);
+        .applyForProject(1);
       await applyForProject.wait();
-      await hardhatPlatform.connect(addr2).submitResult(0, "result");
-      const getProject = await hardhatPlatform.getProject(0);
+      await hardhatPlatform.connect(addr2).submitResult(1, "result");
+      const getProject = await hardhatPlatform.getProject(1);
       expect(await getProject.result).to.equal("result");
     });
 
@@ -162,11 +162,11 @@ describe("Plarform contract", function () {
       const oldPlatformBalance = await ethers.provider.getBalance(hardhatPlatform.address);
       const applyForProject = await hardhatPlatform
         .connect(addr2)
-        .applyForProject(0);
+        .applyForProject(1);
       await applyForProject.wait();
-      await hardhatPlatform.connect(addr2).submitResult(0, "result");
-      await hardhatPlatform.connect(addr1).completeProject(0, 5);
-      const getProject = await hardhatPlatform.getProject(0);
+      await hardhatPlatform.connect(addr2).submitResult(1, "result");
+      await hardhatPlatform.connect(addr1).completeProject(1, 5);
+      const getProject = await hardhatPlatform.getProject(1);
       expect(await getProject.completedAt).to.be.above(0);
       expect(await hardhatPlatform.getRating(addr2.address)).to.equal(5);
       expect(await ethers.provider.getBalance(hardhatPlatform.address)).to.equal(parseInt(oldPlatformBalance) - 100);
@@ -185,13 +185,26 @@ describe("Plarform contract", function () {
         });
       await addProject.wait();
       const oldBalance = await ethers.provider.getBalance(hardhatPlatform.address);
-      await hardhatPlatform.connect(addr1).deleteProject(1);
+      await hardhatPlatform.connect(addr1).deleteProject(2);
       const getAllProjects = await hardhatPlatform.getAllProjects();
       expect(await getAllProjects.length).to.equal(1);
-      await expect(hardhatPlatform.getProject(1)).to.be.revertedWith(
+      await expect(hardhatPlatform.getProject(2)).to.be.revertedWith(
         "Project does not exist"
       );
       expect(await ethers.provider.getBalance(hardhatPlatform.address)).to.equal(parseInt(oldBalance) - 100);
+      const addAnotherProject = await hardhatPlatform
+        .connect(addr1)
+        .addProject({
+          title: "Title 3",
+          description: "Test description 3",
+          projectType: 0,
+          reward: 100
+        }, {
+          value: 101,
+        });
+      await addAnotherProject.wait();
+      await hardhatPlatform.connect(addr1).deleteProject(3);
+      expect(await getAllProjects.length).to.equal(1);
     });
 
     it("Should withdraw", async function () {
