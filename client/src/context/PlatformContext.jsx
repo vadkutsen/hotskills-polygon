@@ -186,24 +186,26 @@ export const PlatformProvider = ({ children }) => {
       if (ethereum) {
         const platformContract = createEthereumContract();
         const availableProjects = await platformContract.getAllProjects();
-        const structuredProjects = availableProjects.map((item) => ({
-          id: item.id.toNumber(),
-          title: item.title,
-          description: item.description,
-          projectType: ProjectType[item.projectType],
-          createdAt: new Date(
-            item.createdAt.toNumber() * 1000
-          ).toLocaleString(),
-          author: item.author,
-          candidates: item.candidates,
-          assignee: item.assignee === address0 ? "Unassigned" : item.assignee,
-          completedAt:
+        const structuredProjects = availableProjects
+          .filter((item) => item.title && item.title !== "")
+          .map((item) => ({
+            id: item.id.toNumber(),
+            title: item.title,
+            description: item.description,
+            projectType: ProjectType[item.projectType],
+            createdAt: new Date(
+              item.createdAt.toNumber() * 1000
+            ).toLocaleString(),
+            author: item.author,
+            candidates: item.candidates,
+            assignee: item.assignee === address0 ? "Unassigned" : item.assignee,
+            completedAt:
             item.completedAt > 0
               ? new Date(item.completedAt.toNumber() * 1000).toLocaleString()
               : "Not completed yet",
-          reward: parseInt(item.reward, 10) / 10 ** 18,
-          result: item.result,
-        }));
+            reward: parseInt(item.reward, 10) / 10 ** 18,
+            result: item.result,
+          }));
         setProjects(structuredProjects);
       } else {
         console.log("Ethereum is not present");

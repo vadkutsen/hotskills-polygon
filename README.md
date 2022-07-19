@@ -2,7 +2,7 @@
 MeDo is a prototype of a freelancing platform which stores it's data on blockchain.
 
 Application deployed on Spheron Network at [https://medo-5jefp3.spheron.app/](https://medo-5jefp3.spheron.app/), currently running on Mumbai testnet.
-Smart Contract deployed at address 0xBdAA2805028C209B1E3727187f8B50aDB4999C80.
+Smart Contract deployed at address 0x197aF0CB5Ca4d1ca8f0198009379527286757C55.
 
 ## Introduction
 The idea of MeDo is to ease the difficulties faced by freelancers nowadays such as unsurity about payments and high fees charged by middlemen. Blockchain can help by guaranteeing payments with help of smart contracts, providing security and an integrated payment system which can save time delays and fees in cases of international payments and its decentralized nature mean there is no middleman.

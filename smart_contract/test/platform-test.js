@@ -176,8 +176,8 @@ describe("Plarform contract", function () {
       const addProject = await hardhatPlatform
         .connect(addr1)
         .addProject({
-          title: "Hola, mundo!",
-          description: "Test description",
+          title: "Title 2",
+          description: "Test description 2",
           projectType: 0,
           reward: 100
         }, {
