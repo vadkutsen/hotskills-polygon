@@ -332,8 +332,7 @@ export const PlatformProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
-        const projectsList = await platformContract.getAllProjects();
-        setProjects(projectsList);
+        await getAllProjects();
         await getProject(id);
         notify("Successfully applied.", transactionHash.hash);
       } else {
@@ -358,8 +357,7 @@ export const PlatformProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
-        const projectsList = await platformContract.getAllProjects();
-        setProjects(projectsList);
+        await getAllProjects();
         await getProject(id);
         notify("Result submitted.", transactionHash.hash);
       } else {
@@ -383,8 +381,7 @@ export const PlatformProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
-        const projectsList = await platformContract.getAllProjects();
-        setProjects(projectsList);
+        await getAllProjects();
         window.location.replace("/");
         notify("Task deleted.", transactionHash.hash);
       } else {
@@ -409,8 +406,7 @@ export const PlatformProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
-        const projectsList = await platformContract.getAllProjects();
-        setProjects(projectsList);
+        await getAllProjects();
         await getProject(id);
         notify("Task assigned.", transactionHash.hash);
       } else {
@@ -434,8 +430,7 @@ export const PlatformProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
-        const projectsList = await platformContract.getAllProjects();
-        setProjects(projectsList);
+        await getAllProjects();
         await getProject(id);
         notify("Task unassigned.", transactionHash.hash);
       } else {
@@ -460,8 +455,7 @@ export const PlatformProvider = ({ children }) => {
         await transactionHash.wait();
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
-        const projectsList = await platformContract.getAllProjects();
-        setProjects(projectsList);
+        await getAllProjects();
         await getProject(id);
         notify("Task completed.", transactionHash.hash);
       } else {
