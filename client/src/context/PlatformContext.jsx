@@ -467,9 +467,23 @@ export const PlatformProvider = ({ children }) => {
       alert("Oops! Something went wrong. See the browser console for details.");
     }
   };
+
+  // This will run any time currentAccount or network are changed
+  useEffect(() => {
+    checkIfWalletIsConnected();
+    if (networkId === networks.testnet.chainId) {
+      getBalance();
+      getPlatformFee();
+      getRating(currentAccount);
+      getAllProjects();
+    }
+  }, [currentAccount, networkId]);
+
+  // Events listeners
+
   useEffect(() => {
     const platformContract = createEthereumContract();
-    const onProjectUpdated = (p) => {
+    const onTaskUpdated = (p) => {
       const structuredProject = {
         id: p.id.toNumber(),
         title: p.title,
@@ -492,25 +506,14 @@ export const PlatformProvider = ({ children }) => {
       setProject(structuredProject);
     };
     if (ethereum) {
-      platformContract.on("ProjectUpdated", onProjectUpdated);
+      platformContract.on("ProjectUpdated", onTaskUpdated);
     }
     return () => {
       if (platformContract) {
-        platformContract.off("ProjectUpdated", onProjectUpdated);
+        platformContract.off("ProjectUpdated", onTaskUpdated);
       }
     };
   }, []);
-
-  // This will run any time currentAccount or network are changed
-  useEffect(() => {
-    checkIfWalletIsConnected();
-    if (networkId === networks.testnet.chainId) {
-      getBalance();
-      getPlatformFee();
-      getRating(currentAccount);
-      getAllProjects();
-    }
-  }, [currentAccount, networkId]);
 
   useEffect(() => {
     const platformContract = createEthereumContract();
@@ -562,6 +565,21 @@ export const PlatformProvider = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    const platformContract = createEthereumContract();
+    const onFeeUpdated = (newFee) => {
+      setFee(newFee.toNumber());
+    };
+    if (ethereum) {
+      platformContract.on("FeeUpdated", onFeeUpdated);
+    }
+    return () => {
+      if (platformContract) {
+        platformContract.off("FeeUpdated", onFeeUpdated);
+      }
+    };
+  }, []);
+
   return (
     <PlatformContext.Provider
       value={{
@@ -586,7 +604,6 @@ export const PlatformProvider = ({ children }) => {
         handleChange,
         getRating,
         fetchedRating,
-        handleProjectUpdatedEvent,
         formData,
         address0,
         onUploadHandler,
