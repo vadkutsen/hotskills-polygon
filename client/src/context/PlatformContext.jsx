@@ -61,16 +61,17 @@ export const PlatformProvider = ({ children }) => {
   const [fetchedRating, setFetchedRating] = useState(0);
   const [ipfsUrl, setIpfsUrl] = useState("");
 
-  const notify = (message, hash) => toast.success(<MessageDisplay message={message} hash={hash} />, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-  });
+  const notify = (message, hash) =>
+    toast.success(<MessageDisplay message={message} hash={hash} />, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const onUploadHandler = async (event) => {
     let ipfs;
@@ -200,9 +201,9 @@ export const PlatformProvider = ({ children }) => {
             candidates: item.candidates,
             assignee: item.assignee === address0 ? "Unassigned" : item.assignee,
             completedAt:
-            item.completedAt > 0
-              ? new Date(item.completedAt.toNumber() * 1000).toLocaleString()
-              : "Not completed yet",
+              item.completedAt > 0
+                ? new Date(item.completedAt.toNumber() * 1000).toLocaleString()
+                : "Not completed yet",
             reward: parseInt(item.reward, 10) / 10 ** 18,
             result: item.result,
           }));
@@ -269,8 +270,8 @@ export const PlatformProvider = ({ children }) => {
           completedAt:
             fetchedProject.completedAt > 0
               ? new Date(
-                fetchedProject.completedAt.toNumber() * 1000
-              ).toLocaleString()
+                  fetchedProject.completedAt.toNumber() * 1000
+                ).toLocaleString()
               : "Not completed yet",
           reward: parseInt(fetchedProject.reward, 10) / 10 ** 18,
           result: fetchedProject.result,
@@ -466,8 +467,7 @@ export const PlatformProvider = ({ children }) => {
       alert("Oops! Something went wrong. See the browser console for details.");
     }
   };
-
-  const handleProjectUpdatedEvent = () => {
+  useEffect(() => {
     const platformContract = createEthereumContract();
     const onProjectUpdated = (p) => {
       const structuredProject = {
@@ -499,7 +499,7 @@ export const PlatformProvider = ({ children }) => {
         platformContract.off("ProjectUpdated", onProjectUpdated);
       }
     };
-  };
+  }, []);
 
   // This will run any time currentAccount or network are changed
   useEffect(() => {
