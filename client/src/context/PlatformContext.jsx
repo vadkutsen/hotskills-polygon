@@ -382,8 +382,8 @@ export const PlatformProvider = ({ children }) => {
         console.log(`Success - ${transactionHash.hash}`);
         setIsLoading(false);
         await getAllProjects();
-        window.location.replace("/");
         notify("Task deleted.", transactionHash.hash);
+        window.location.replace("/");
       } else {
         console.log("No ethereum object");
       }
@@ -504,7 +504,7 @@ export const PlatformProvider = ({ children }) => {
   // This will run any time currentAccount or network are changed
   useEffect(() => {
     checkIfWalletIsConnected();
-    if (networkId === "0x13881") {
+    if (networkId === networks.testnet.chainId) {
       getBalance();
       getPlatformFee();
       getRating(currentAccount);
@@ -543,21 +543,6 @@ export const PlatformProvider = ({ children }) => {
     return () => {
       if (platformContract) {
         platformContract.off("ProjectAdded", onNewTask);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    const platformContract = createEthereumContract();
-    const onTaskDeleted = (id) => {
-      setProjects((current) => current.filter((p) => p.id !== id));
-    };
-    if (ethereum) {
-      platformContract.on("ProjectDeleted", onTaskDeleted);
-    }
-    return () => {
-      if (platformContract) {
-        platformContract.off("ProjectDeleted", onTaskDeleted);
       }
     };
   }, []);
