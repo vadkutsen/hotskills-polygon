@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose, AiFillPlayCircle } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
 import { shortenAddress } from "../utils/shortenAddress";
 import { PlatformContext } from "../context/PlatformContext";
 import polygonLogo from "../../images/polygonlogo.png";
@@ -30,8 +31,15 @@ const Navbar = () => {
 
   const renderAccountInfo = () => (
     <div className="flex flex-row">
-      <span className="mr-2">
-        My rating: {fetchedRating === 0 ? "unrated" : `${fetchedRating}/5`}
+      <span className="mr-1">
+        My rating:
+      </span>
+      <span className="flex flex-row justify-center items-center mr-4">
+        {fetchedRating === 0
+          ? "unrated"
+          : [...Array(fetchedRating)].map((star, index) => (
+            <FaStar key={index} color="#ffc107" size={20} />
+          ))}
       </span>
       <img
         alt="Network logo"
