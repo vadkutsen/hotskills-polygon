@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
+import { Web3Storage } from "web3.storage";
 import { networks } from "../utils/networks";
 
 import { contractABI, contractAddress } from "../utils/constants";
@@ -74,29 +75,20 @@ export const PlatformProvider = ({ children }) => {
     });
 
   const onUploadHandler = async (event) => {
-    let ipfs;
-    const IPFS = window.IpfsHttpClient;
-    try {
-      ipfs = IPFS.create({
-        url: "https://ipfs.infura.io:5001/api/v0",
-      });
-    } catch (e) {
-      console.log("IPFS error: ", e);
-    }
+    const client = new Web3Storage({ token: import.meta.env.VITE_WEB3_STORAGE_TOKEN });
     event.preventDefault();
     const form = event.target;
     const { files } = form[0];
     if (!files || files.length === 0) {
       return alert("No files selected");
     }
-    const file = files[0];
-    // uload files
     setIsLoading(true);
-    const result = await ipfs.add(file);
-    const url = `https://ipfs.infura.io/ipfs/${result.path}`;
+    const rootCid = await client.put(files);
+    const info = await client.status(rootCid);
+    // const res = await client.get(rootCid);
+    const url = `https://${info.cid}.ipfs.w3s.link`;
     form.reset();
     setIpfsUrl(url);
-    console.log(url);
     setIsLoading(false);
     notify("File successfully uploaded to IPFS.");
   };
