@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vadym Kutsenko <vadkutsen@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.3",
