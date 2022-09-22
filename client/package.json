@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "homepage": "https://vadkutsen.github.io/medo",
   "author": "Vadym Kutsenko <vadkutsen@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
