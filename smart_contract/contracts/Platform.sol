@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.0;
+pragma solidity 0.8.17;
 
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -94,18 +94,18 @@ contract Platform is Ownable, ReentrancyGuard {
         _;
     }
 
-    modifier isCompleted(uint256 _id) {
-        require(projects[_id].completedAt != 0, "Project is not completed yet.");
-        _;
-    }
+    // modifier isCompleted(uint256 _id) {
+    //     require(projects[_id].completedAt != 0, "Project is not completed yet.");
+    //     _;
+    // }
 
-    modifier isFCFS(uint256 _id) {
-        require(
-            projects[_id].projectType == ProjectType.FCFS,
-            "Project type is not FCFS."
-        );
-        _;
-    }
+    // modifier isFCFS(uint256 _id) {
+    //     require(
+    //         projects[_id].projectType == ProjectType.FCFS,
+    //         "Project type is not FCFS."
+    //     );
+    //     _;
+    // }
 
     modifier isAuthorSelected(uint256 _id) {
         require(

@@ -1,8 +1,17 @@
 require('@nomiclabs/hardhat-waffle');
 require('dotenv').config();
+require('solidity-coverage');
+
+task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners();
+
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
 
 module.exports = {
-  solidity: '0.8.0',
+  solidity: '0.8.17',
   // defaultNetwork: "matic",
   networks: {
     // ropsten: {
