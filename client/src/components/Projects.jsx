@@ -43,7 +43,7 @@ const Projects = () => {
           Connect your account to see the latest projects
         </p>
       )}
-      <div className="flex flex-wrap justify-center items-center mt-10">
+      <div className="list-none justify-center items-center mt-10">
         {projects &&
           [...projects]
             .reverse()
