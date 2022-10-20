@@ -5,13 +5,20 @@ import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
+enum ProjectTypes {
+    FCFS,
+    AuthorSelected
+}
+
+enum Statuses {
+    Opened,
+    Assigned,
+    InReview,
+    ChangeRequested,
+    Completed
+}
+
 contract Platform is Ownable, ReentrancyGuard {
-
-    enum ProjectType {
-        FCFS,
-        AuthorSelected
-    }
-
     struct Project {
         uint256 id;
         string title;
@@ -21,16 +28,19 @@ contract Platform is Ownable, ReentrancyGuard {
         Candidate[] candidates;
         uint256 createdAt;
         uint256 completedAt;
-        ProjectType projectType;
+        ProjectTypes projectType;
         uint256 reward;
         string result;
-        uint allProjectsIndex;
+        ChangeRequest[] changeRequests;
+        uint256 allProjectsIndex;
+        Statuses status;
+        uint256 lastStatusChangeAt;
     }
 
     struct ReceivedProject {
         string title;
         string description;
-        ProjectType projectType;
+        ProjectTypes projectType;
         uint256 reward;
     }
 
@@ -39,10 +49,15 @@ contract Platform is Ownable, ReentrancyGuard {
         uint8 rating;
     }
 
+    struct ChangeRequest {
+        string message;
+        uint256 requestedAt;
+    }
+
     uint8 public platformFeePercentage = 1; // Platform fee in %
     uint256 public totalFees;
-    uint256 mappingLength = 0;
-    uint[] allProjects;
+    uint256 private mappingLength = 0;
+    uint256[] private allProjects;
     mapping(uint256 => Project) projects;
     mapping(address => uint8) ratings;
 
@@ -85,22 +100,17 @@ contract Platform is Ownable, ReentrancyGuard {
         _;
     }
 
-    modifier isAssigned(uint256 _id) {
-        require(
-            projects[_id].assignee != address(0),
-            "Project is not assigned yet."
-        );
-        _;
-    }
-
-    // modifier isCompleted(uint256 _id) {
-    //     require(projects[_id].completedAt != 0, "Project is not completed yet.");
+    // modifier isAssigned(uint256 _id) {
+    //     require(
+    //         projects[_id].assignee != address(0),
+    //         "Project is not assigned yet."
+    //     );
     //     _;
     // }
 
     // modifier isFCFS(uint256 _id) {
     //     require(
-    //         projects[_id].projectType == ProjectType.FCFS,
+    //         projects[_id].projectType == ProjectTypes.FCFS,
     //         "Project type is not FCFS."
     //     );
     //     _;
@@ -108,7 +118,7 @@ contract Platform is Ownable, ReentrancyGuard {
 
     modifier isAuthorSelected(uint256 _id) {
         require(
-            projects[_id].projectType == ProjectType.AuthorSelected,
+            projects[_id].projectType == ProjectTypes.AuthorSelected,
             "Project type is not AuthorSelected."
         );
         _;
@@ -129,16 +139,23 @@ contract Platform is Ownable, ReentrancyGuard {
         return false;
     }
 
-    function calculateRating(uint _prevRating, uint8 _newRating) internal pure returns (uint8) {
+    function calculateRating(uint256 _prevRating, uint8 _newRating)
+        internal
+        pure
+        returns (uint8)
+    {
         if (_prevRating == 0) {
             return _newRating;
         }
         return uint8(_prevRating + _newRating) / 2;
     }
 
-    function calculatePlatformFee(uint256 _reward) internal view returns (uint256) {
-        uint256 platformFee = (_reward / 100) *
-            platformFeePercentage;
+    function calculatePlatformFee(uint256 _reward)
+        internal
+        view
+        returns (uint256)
+    {
+        uint256 platformFee = (_reward / 100) * platformFeePercentage;
         return platformFee;
     }
 
@@ -168,6 +185,7 @@ contract Platform is Ownable, ReentrancyGuard {
         projects[_id].reward = _newProject.reward;
         projects[_id].projectType = _newProject.projectType;
         projects[_id].allProjectsIndex = allProjects.length;
+        projects[_id].lastStatusChangeAt = block.timestamp;
         allProjects.push(_id);
         mappingLength++;
         emit ProjectAdded(projects[_id]);
@@ -183,7 +201,7 @@ contract Platform is Ownable, ReentrancyGuard {
     {
         require(_candidateAddress != address(0), "Zero address submitted.");
         require(
-            projects[_id].assignee == address(0),
+            projects[_id].status != Statuses.Assigned,
             "Project already assigned."
         );
         require(
@@ -191,6 +209,8 @@ contract Platform is Ownable, ReentrancyGuard {
             "Address didn't apply to the project."
         );
         projects[_id].assignee = _candidateAddress;
+        projects[_id].status = Statuses.Assigned;
+        projects[_id].lastStatusChangeAt = block.timestamp;
         emit ProjectUpdated(projects[_id]);
         return true;
     }
@@ -198,11 +218,16 @@ contract Platform is Ownable, ReentrancyGuard {
     function unassignProject(uint256 _id)
         public
         projectExists(_id)
-        isAssigned(_id)
         onlyAuthorOrAssignee(_id)
         returns (bool)
     {
+        require(
+            projects[_id].status == Statuses.Assigned,
+            "Project is not assigned."
+        );
         delete projects[_id].assignee;
+        projects[_id].status = Statuses.Opened;
+        projects[_id].lastStatusChangeAt = block.timestamp;
         emit ProjectUpdated(projects[_id]);
         return true;
     }
@@ -213,14 +238,18 @@ contract Platform is Ownable, ReentrancyGuard {
         returns (bool)
     {
         require(
-            projects[_id].assignee == address(0),
+            projects[_id].status != Statuses.Assigned,
             "Project already assigned."
         );
-        if (projects[_id].projectType == ProjectType.FCFS) {
+        if (projects[_id].projectType == ProjectTypes.FCFS) {
             projects[_id].assignee = payable(msg.sender);
+            projects[_id].status = Statuses.Assigned;
+            projects[_id].lastStatusChangeAt = block.timestamp;
             emit ProjectUpdated(projects[_id]);
         } else {
-            projects[_id].candidates.push(Candidate(msg.sender, ratings[msg.sender]));
+            projects[_id].candidates.push(
+                Candidate(msg.sender, ratings[msg.sender])
+            );
         }
         emit ProjectUpdated(projects[_id]);
         return true;
@@ -233,8 +262,35 @@ contract Platform is Ownable, ReentrancyGuard {
         returns (bool)
     {
         require(bytes(_result).length > 0, "Result cannot be empty.");
-        require(bytes(projects[_id].result).length == 0, "Result already submitted.");
+        require(projects[_id].status == Statuses.Assigned || projects[_id].status == Statuses.ChangeRequested, "Invalid project status.");
+        // require(
+        //     bytes(projects[_id].result).length == 0,
+        //     "Result already submitted."
+        // );
         projects[_id].result = _result;
+        projects[_id].status = Statuses.InReview;
+        projects[_id].lastStatusChangeAt = block.timestamp;
+        emit ProjectUpdated(projects[_id]);
+        return true;
+    }
+
+    function requestChange(uint256 _id, string calldata _message)
+        public
+        projectExists(_id)
+        onlyAuthor(_id)
+        returns (bool)
+    {
+        require(
+            projects[_id].status == Statuses.InReview,
+            "Cannot request changes in current status"
+        );
+        require(
+            projects[_id].changeRequests.length < 3,
+            "Change requests limit exceeded"
+        );
+        projects[_id].changeRequests.push(ChangeRequest(_message, block.timestamp));
+        projects[_id].status = Statuses.ChangeRequested;
+        projects[_id].lastStatusChangeAt = block.timestamp;
         emit ProjectUpdated(projects[_id]);
         return true;
     }
@@ -243,7 +299,6 @@ contract Platform is Ownable, ReentrancyGuard {
         external
         projectExists(_id)
         onlyAuthor(_id)
-        isAssigned(_id)
         nonReentrant
         returns (bool)
     {
@@ -251,7 +306,36 @@ contract Platform is Ownable, ReentrancyGuard {
         require(bytes(projects[_id].result).length > 0, "Result is required.");
         require(_rating <= 5, "Rating is invalid.");
         projects[_id].completedAt = block.timestamp;
-        ratings[projects[_id].assignee] = calculateRating(ratings[projects[_id].assignee], _rating);
+        projects[_id].status = Statuses.Completed;
+        projects[_id].lastStatusChangeAt = block.timestamp;
+        ratings[projects[_id].assignee] = calculateRating(
+            ratings[projects[_id].assignee],
+            _rating
+        );
+        (bool success, ) = projects[_id].assignee.call{
+            value: projects[_id].reward
+        }("");
+        require(success, "Tranfer failed.");
+        emit ProjectUpdated(projects[_id]);
+        return true;
+    }
+
+    function requestPayment(uint256 _id)
+        external
+        projectExists(_id)
+        onlyAssignee(_id)
+        nonReentrant
+        returns (bool)
+    {
+        require(projects[_id].status == Statuses.InReview);
+        // Need to wait for 10 days
+        require(
+            projects[_id].lastStatusChangeAt < block.timestamp - 10 days,
+            "Need to wait 10 days."
+        );
+        projects[_id].completedAt = block.timestamp;
+        projects[_id].status = Statuses.Completed;
+        projects[_id].lastStatusChangeAt = block.timestamp;
         (bool success, ) = projects[_id].assignee.call{
             value: projects[_id].reward
         }("");
@@ -272,17 +356,27 @@ contract Platform is Ownable, ReentrancyGuard {
             projects[_id].assignee == address(0),
             "Project already assigned."
         );
-        (bool success, ) = projects[_id].author.call{value: projects[_id].reward}("");
+        (bool success, ) = projects[_id].author.call{
+            value: projects[_id].reward
+        }("");
         require(success, "Tranfer failed.");
         delete projects[_id];
         delete allProjects[projects[_id].allProjectsIndex];
-        allProjects[projects[_id].allProjectsIndex] = allProjects[allProjects.length - 1];
+        allProjects[projects[_id].allProjectsIndex] = allProjects[
+            allProjects.length - 1
+        ];
         allProjects.pop();
         emit ProjectDeleted(_id);
         return true;
     }
 
-    function withdrawFees() public payable onlyOwner nonReentrant returns (bool) {
+    function withdrawFees()
+        public
+        payable
+        onlyOwner
+        nonReentrant
+        returns (bool)
+    {
         (bool success, ) = payable(msg.sender).call{value: totalFees}("");
         require(success, "Tranfer failed.");
         totalFees = 0;
@@ -315,22 +409,21 @@ contract Platform is Ownable, ReentrancyGuard {
         project.id = projects[_id].id;
         project.title = projects[_id].title;
         project.description = projects[_id].description;
-        project.projectType = projects[_id].projectType;
         project.author = projects[_id].author;
-        project.candidates = projects[_id].candidates;
         project.assignee = projects[_id].assignee;
+        project.candidates = projects[_id].candidates;
+        project.projectType = projects[_id].projectType;
         project.createdAt = projects[_id].createdAt;
         project.completedAt = projects[_id].completedAt;
         project.reward = projects[_id].reward;
         project.result = projects[_id].result;
+        project.status = projects[_id].status;
+        project.lastStatusChangeAt = projects[_id].lastStatusChangeAt;
+        project.changeRequests = projects[_id].changeRequests;
         return (project);
     }
 
-    function getRating(address _address)
-        public
-        view
-        returns (uint8)
-    {
+    function getRating(address _address) public view returns (uint8) {
         return ratings[_address];
     }
 }

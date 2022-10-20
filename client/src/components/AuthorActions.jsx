@@ -28,6 +28,11 @@ const AuthorActions = () => {
     completeProject(project.id, rating);
   };
 
+  const handleRequestChange = (e) => {
+    e.preventDefault();
+    // completeProject(project.id);
+  };
+
   // If the task is not assigned
   if (project.assignee === "Unassigned") {
     if (project.candidates.length > 0) {
@@ -135,6 +140,21 @@ const AuthorActions = () => {
             onClick={handleComplete}
           >
             Complete
+          </button>
+          <p className="mt-3 text-white">Not satisfied with the result?</p>
+          <p className="text-white">Submit a change request (You can submit up to 3 change requests).</p>
+          <textarea
+            placeholder="Describe what exactly you'd like to change..."
+            name="message"
+            type="text"
+            // handleChange={handleChange}
+          />
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center my-5 bg-[#9c3a06] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+            onClick={handleRequestChange}
+          >
+            Request Change
           </button>
         </>
       ) : (

@@ -54,7 +54,7 @@ const Navbar = () => {
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.5] flex-initial justify-center items-center">
         <Link to="/">
-          <p className="text-white text-2xl cursor-pointer">
+          <p className="text-white text-2xl cursor-pointer font-bold">
             <span className="text-[#d946ef]">Me</span>Do
           </p>
         </Link>
