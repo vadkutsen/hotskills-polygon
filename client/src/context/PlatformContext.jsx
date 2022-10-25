@@ -262,8 +262,8 @@ export const PlatformProvider = ({ children }) => {
           completedAt:
             fetchedProject.completedAt > 0
               ? new Date(
-                  fetchedProject.completedAt.toNumber() * 1000
-                ).toLocaleString()
+                fetchedProject.completedAt.toNumber() * 1000
+              ).toLocaleString()
               : "Not completed yet",
           reward: parseInt(fetchedProject.reward, 10) / 10 ** 18,
           result: fetchedProject.result,
@@ -460,6 +460,32 @@ export const PlatformProvider = ({ children }) => {
     }
   };
 
+  const requestChange = async (id, message) => {
+    if (message.length === 0) return;
+    try {
+      if (ethereum) {
+        const platformContract = createEthereumContract();
+        const transactionHash = await platformContract.requestChange(
+          ethers.BigNumber.from(id),
+          message
+        );
+        setIsLoading(true);
+        console.log(`Loading - ${transactionHash.hash}`);
+        await transactionHash.wait();
+        console.log(`Success - ${transactionHash.hash}`);
+        setIsLoading(false);
+        await getAllProjects();
+        await getProject(id);
+        notify("Change request submitted.", transactionHash.hash);
+      } else {
+        console.log("No ethereum object");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Oops! Something went wrong. See the browser console for details.");
+    }
+  };
+
   // This will run any time currentAccount or network are changed
   useEffect(() => {
     checkIfWalletIsConnected();
@@ -592,6 +618,7 @@ export const PlatformProvider = ({ children }) => {
         deleteProject,
         assignProject,
         unassignProject,
+        requestChange,
         completeProject,
         handleChange,
         getRating,

@@ -4,6 +4,7 @@ pragma solidity 0.8.17;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
 enum ProjectTypes {
     FCFS,
@@ -19,13 +20,14 @@ enum Statuses {
 }
 
 contract Platform is Ownable, ReentrancyGuard {
+
     struct Project {
         uint256 id;
         string title;
         string description;
         address payable author;
         address payable assignee;
-        Candidate[] candidates;
+        address[] candidates;
         uint256 createdAt;
         uint256 completedAt;
         ProjectTypes projectType;
@@ -44,22 +46,20 @@ contract Platform is Ownable, ReentrancyGuard {
         uint256 reward;
     }
 
-    struct Candidate {
-        address candidate;
-        uint8 rating;
-    }
-
     struct ChangeRequest {
         string message;
         uint256 requestedAt;
     }
 
+    using Counters for Counters.Counter;
+    Counters.Counter private _mappingLength;
+
     uint8 public platformFeePercentage = 1; // Platform fee in %
     uint256 public totalFees;
-    uint256 private mappingLength = 0;
+    // uint256 private mappingLength = 0;
     uint256[] private allProjects;
-    mapping(uint256 => Project) projects;
-    mapping(address => uint8) ratings;
+    mapping(uint256 => Project) private projects;
+    mapping(address => uint8) public ratings;
 
     // Events
 
@@ -73,7 +73,7 @@ contract Platform is Ownable, ReentrancyGuard {
     modifier onlyAuthor(uint256 _id) {
         require(
             msg.sender == projects[_id].author,
-            "Only author can perform this transaction."
+            "Only author"
         );
         _;
     }
@@ -81,60 +81,25 @@ contract Platform is Ownable, ReentrancyGuard {
     modifier onlyAssignee(uint256 _id) {
         require(
             msg.sender == projects[_id].assignee,
-            "Only assignee can perform this transaction."
-        );
-        _;
-    }
-
-    modifier onlyAuthorOrAssignee(uint256 _id) {
-        require(
-            msg.sender == projects[_id].author ||
-                msg.sender == projects[_id].assignee,
-            "Only author or assignee can perform this transaction."
+            "Only assignee"
         );
         _;
     }
 
     modifier projectExists(uint256 _id) {
-        require(projects[_id].author != address(0), "Project does not exist.");
-        _;
-    }
-
-    // modifier isAssigned(uint256 _id) {
-    //     require(
-    //         projects[_id].assignee != address(0),
-    //         "Project is not assigned yet."
-    //     );
-    //     _;
-    // }
-
-    // modifier isFCFS(uint256 _id) {
-    //     require(
-    //         projects[_id].projectType == ProjectTypes.FCFS,
-    //         "Project type is not FCFS."
-    //     );
-    //     _;
-    // }
-
-    modifier isAuthorSelected(uint256 _id) {
-        require(
-            projects[_id].projectType == ProjectTypes.AuthorSelected,
-            "Project type is not AuthorSelected."
-        );
+        require(projects[_id].author != address(0), "Project not found.");
         _;
     }
 
     // Helper functions
 
     function isAddressApplied(uint256 _id, address _address)
-        public
+        internal
         view
         returns (bool)
     {
         for (uint256 i = 0; i < projects[_id].candidates.length; i++) {
-            if (projects[_id].candidates[i].candidate == _address) {
-                return true;
-            }
+            if (projects[_id].candidates[i] == _address) return true;
         }
         return false;
     }
@@ -144,9 +109,7 @@ contract Platform is Ownable, ReentrancyGuard {
         pure
         returns (uint8)
     {
-        if (_prevRating == 0) {
-            return _newRating;
-        }
+        if (_prevRating == 0) return _newRating;
         return uint8(_prevRating + _newRating) / 2;
     }
 
@@ -176,7 +139,7 @@ contract Platform is Ownable, ReentrancyGuard {
         uint256 amount = _newProject.reward + platformFee;
         require(msg.value == amount, "Wrong amount submitted.");
         totalFees += platformFee;
-        uint256 _id = mappingLength + 1;
+        uint256 _id = _mappingLength.current() + 1;
         projects[_id].id = _id;
         projects[_id].title = _newProject.title;
         projects[_id].description = _newProject.description;
@@ -187,7 +150,7 @@ contract Platform is Ownable, ReentrancyGuard {
         projects[_id].allProjectsIndex = allProjects.length;
         projects[_id].lastStatusChangeAt = block.timestamp;
         allProjects.push(_id);
-        mappingLength++;
+        _mappingLength.increment();
         emit ProjectAdded(projects[_id]);
         return true;
     }
@@ -196,17 +159,20 @@ contract Platform is Ownable, ReentrancyGuard {
         external
         projectExists(_id)
         onlyAuthor(_id)
-        isAuthorSelected(_id)
         returns (bool)
     {
         require(_candidateAddress != address(0), "Zero address submitted.");
+        require(
+            projects[_id].projectType == ProjectTypes.AuthorSelected,
+            "Invalid project type"
+        );
         require(
             projects[_id].status != Statuses.Assigned,
             "Project already assigned."
         );
         require(
             isAddressApplied(_id, _candidateAddress),
-            "Address didn't apply to the project."
+            "Invalid address."
         );
         projects[_id].assignee = _candidateAddress;
         projects[_id].status = Statuses.Assigned;
@@ -218,9 +184,13 @@ contract Platform is Ownable, ReentrancyGuard {
     function unassignProject(uint256 _id)
         public
         projectExists(_id)
-        onlyAuthorOrAssignee(_id)
         returns (bool)
     {
+        require(
+            msg.sender == projects[_id].author ||
+                msg.sender == projects[_id].assignee,
+            "Only author or assignee"
+        );
         require(
             projects[_id].status == Statuses.Assigned,
             "Project is not assigned."
@@ -247,9 +217,7 @@ contract Platform is Ownable, ReentrancyGuard {
             projects[_id].lastStatusChangeAt = block.timestamp;
             emit ProjectUpdated(projects[_id]);
         } else {
-            projects[_id].candidates.push(
-                Candidate(msg.sender, ratings[msg.sender])
-            );
+            projects[_id].candidates.push(msg.sender);
         }
         emit ProjectUpdated(projects[_id]);
         return true;
@@ -282,11 +250,11 @@ contract Platform is Ownable, ReentrancyGuard {
     {
         require(
             projects[_id].status == Statuses.InReview,
-            "Cannot request changes in current status"
+            "Invalid status"
         );
         require(
             projects[_id].changeRequests.length < 3,
-            "Change requests limit exceeded"
+            "Limit exceeded"
         );
         projects[_id].changeRequests.push(ChangeRequest(_message, block.timestamp));
         projects[_id].status = Statuses.ChangeRequested;

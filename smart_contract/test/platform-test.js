@@ -121,7 +121,7 @@ describe("Plarform contract tests", function () {
     );
     await expect(
       hardhatPlatform.connect(addr1).assignProject(2, addr2.address)
-    ).to.be.revertedWith("Address didn't apply to the project.");
+    ).to.be.revertedWith("Invalid address.");
   });
 
   it("Should assign project", async function () {
@@ -252,7 +252,7 @@ describe("Plarform contract tests", function () {
       .applyForProject(1);
     await expect(hardhatPlatform
       .connect(addr1)
-      .requestChange(1, "message")).to.be.revertedWith("Cannot request changes in current status");
+      .requestChange(1, "message")).to.be.revertedWith("Invalid status");
   });
 
   it("Cannot request change over the limit", async function () {
@@ -266,7 +266,7 @@ describe("Plarform contract tests", function () {
     }
     await expect(hardhatPlatform
       .connect(addr1)
-      .requestChange(1, "message")).to.be.revertedWith("Change requests limit exceeded");
+      .requestChange(1, "message")).to.be.revertedWith("Limit exceeded");
   });
 
   it("Should delete project", async function () {
@@ -288,7 +288,7 @@ describe("Plarform contract tests", function () {
     const allProjects = await hardhatPlatform.getAllProjects();
     expect(allProjects.length).to.equal(1);
     await expect(hardhatPlatform.getProject(2)).to.be.revertedWith(
-      "Project does not exist"
+      "Project not found."
     );
     expect(await ethers.provider.getBalance(hardhatPlatform.address)).to.equal(
       parseInt(oldBalance) - 100

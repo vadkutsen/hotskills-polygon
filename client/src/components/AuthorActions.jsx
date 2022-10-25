@@ -9,10 +9,12 @@ const AuthorActions = () => {
     deleteProject,
     assignProject,
     unassignProject,
+    requestChange,
     completeProject,
   } = useContext(PlatformContext);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
+  const [message, setMessage] = useState("");
   const defaultSelectValue = "Select a candidate to assign";
   const [selected, setSelected] = useState(defaultSelectValue);
 
@@ -30,7 +32,7 @@ const AuthorActions = () => {
 
   const handleRequestChange = (e) => {
     e.preventDefault();
-    // completeProject(project.id);
+    requestChange(project.id, message);
   };
 
   // If the task is not assigned
@@ -144,10 +146,11 @@ const AuthorActions = () => {
           <p className="mt-3 text-white">Not satisfied with the result?</p>
           <p className="text-white">Submit a change request (You can submit up to 3 change requests).</p>
           <textarea
+            className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
             placeholder="Describe what exactly you'd like to change..."
-            name="message"
+            name="requestMessage"
             type="text"
-            // handleChange={handleChange}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <button
             type="button"
