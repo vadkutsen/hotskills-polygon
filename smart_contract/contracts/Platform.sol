@@ -54,12 +54,16 @@ contract Platform is Ownable, ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _mappingLength;
 
-    uint8 public platformFeePercentage = 1; // Platform fee in %
+    uint8 public platformFeePercentage; // Platform fee in %
     uint256 public totalFees;
-    // uint256 private mappingLength = 0;
     uint256[] private allProjects;
     mapping(uint256 => Project) private projects;
     mapping(address => uint8) public ratings;
+
+    constructor() {
+        platformFeePercentage = 1;
+        _mappingLength.increment();
+    }
 
     // Events
 
@@ -139,7 +143,7 @@ contract Platform is Ownable, ReentrancyGuard {
         uint256 amount = _newProject.reward + platformFee;
         require(msg.value == amount, "Wrong amount submitted.");
         totalFees += platformFee;
-        uint256 _id = _mappingLength.current() + 1;
+        uint256 _id = _mappingLength.current();
         projects[_id].id = _id;
         projects[_id].title = _newProject.title;
         projects[_id].description = _newProject.description;
