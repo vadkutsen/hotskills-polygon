@@ -11,7 +11,7 @@ describe("Plarform contract tests", function () {
 
   beforeEach(async function () {
     // Get the ContractFactory and Signers here.
-    Platform = await ethers.getContractFactory("Platform");
+    Platform = await ethers.getContractFactory("PlatformFactory");
     [owner, addr1, addr2, ...addrs] = await ethers.getSigners();
     hardhatPlatform = await Platform.deploy();
     const addProject = await hardhatPlatform.connect(addr1).addProject(

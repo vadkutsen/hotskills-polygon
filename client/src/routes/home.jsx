@@ -1,30 +1,49 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { PlatformContext } from "../context/PlatformContext";
-import { Projects, Loader } from "../components";
-import { networks } from "../utils/networks";
+import { Welcome, Tasks, Services, Hero, Team, Sponsors, Loader, TestMode } from "../components";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Home() {
-  const { networkId, switchNetwork, isLoading } =
-    useContext(PlatformContext);
-  if (networkId !== networks.testnet.chainId) {
-    return (
-      <div className="flex flex-col w-full text-white justify-center items-center min-h-screen">
-        <p>Please connect to Polygon Mumbai Testnet</p>
-        <button
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-          type="button"
-          onClick={switchNetwork}
-        >
-          <p className="text-white text-base font-semibold">Switch Network</p>
-        </button>
-      </div>
-    );
-  }
+  const { isLoading } = useContext(PlatformContext);
+  const { currentAccount } = useContext(AuthContext);
+
   return (
-    <div className="flex w-full justify-center items-start 2xl:px-20 gradient-bg-welcome min-h-screen">
-      <div className="flex flex-col w-9/12 md:p-12 py-12 px-4">
-        {isLoading ? <Loader /> : <Projects />}
-      </div>
+    <div className="flex flex-col w-full justify-center items-center 2xl:px-20 gradient-bg-welcome min-h-screen">
+      {!currentAccount ? (
+        <>
+          <TestMode />
+          <Hero />
+          <Team />
+          <Sponsors />
+        </>
+      ) : (
+        <div className="flex flex-col items-center w-full">
+          <Welcome />
+          <div className="flex flex-col w-9/12 py-12 px-4">
+            <div className="flex flex-row justify-between text-3xl">
+              <span className="text-left text-white">Recent Services</span>
+              <Link to="/services" className="text-blue-400 text-xl">
+                <i>View all</i>
+              </Link>
+            </div>
+            <div>
+              {isLoading ? <Loader /> : <Services />}
+            </div>
+          </div>
+          <div className="flex flex-col w-9/12 py-12 px-4">
+            <div className="flex flex-row justify-between text-3xl">
+              <span className="text-left text-white">Recent Tasks</span>
+              <Link to="/tasks" className="text-blue-400 text-xl">
+                <i>View all</i>
+              </Link>
+            </div>
+            <div>
+              {isLoading ? <Loader /> : <Tasks />}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

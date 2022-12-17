@@ -4,7 +4,17 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MeDo</title>
+    <title>HotSkills</title>
+    <script>
+      window.global = window;
+    </script>
+    <script type="module">
+      import process from "process";
+      import EventEmitter from "events";
+      import {Buffer} from "buffer";
+      window.Buffer = Buffer;
+      window.EventEmitter = EventEmitter;
+    </script>
   </head>
   <body>
     <div id="root"></div>

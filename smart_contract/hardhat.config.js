@@ -12,7 +12,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 
 module.exports = {
   solidity: '0.8.17',
-  // defaultNetwork: "matic",
+  defaultNetwork: "matic",
   networks: {
     // ropsten: {
     //   url: 'https://eth-ropsten.alchemyapi.io/v2/z4WpA8UKgqnwbTYmrZu15yCOiijBKaRv',
@@ -36,7 +36,7 @@ module.exports = {
   settings: {
     optimizer: {
       enabled: true,
-      runs: 200,
+      runs: 1,
     },
   },
 };

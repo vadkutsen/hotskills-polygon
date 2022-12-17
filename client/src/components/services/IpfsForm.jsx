@@ -1,14 +1,14 @@
 import { useContext } from "react";
-import { PlatformContext } from "../context/PlatformContext";
+import { ServiceContext } from "../../context/ServiceContext";
 
 const IpfsForm = () => {
-  const { onUploadHandler } = useContext(PlatformContext);
+  const { onUploadHandler } = useContext(ServiceContext);
 
   return (
     <div>
       <p className="mt-5 text-2xl text-white text-basetext-white">
         Upload file using IPFS or paste a link to your result on any other
-        hosting
+        hosting (preferably BTTC).
       </p>
       <form onSubmit={onUploadHandler}>
         <input

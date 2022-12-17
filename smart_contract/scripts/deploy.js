@@ -1,5 +1,5 @@
 const main = async () => {
-  const platformFactory = await hre.ethers.getContractFactory("Platform");
+  const platformFactory = await hre.ethers.getContractFactory("PlatformFactory");
   const platformContract = await platformFactory.deploy();
 
   await platformContract.deployed();

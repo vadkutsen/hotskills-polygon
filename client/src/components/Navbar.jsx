@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiMenuAlt4 } from "react-icons/hi";
-import { AiOutlineClose, AiFillPlayCircle } from "react-icons/ai";
-import { FaStar } from "react-icons/fa";
-import { shortenAddress } from "../utils/shortenAddress";
-import { PlatformContext } from "../context/PlatformContext";
-import polygonLogo from "../../images/polygonlogo.png";
-import ethLogo from "../../images/ethlogo.png";
+import { AiOutlineClose } from "react-icons/ai";
+import { AuthContext } from "../context/AuthContext";
+import logo1 from "../../images/logo1.png";
+import Wallet from "./Wallet";
+import ConnectWalletButton from "./ConnectWalletButton";
+import Notifications from "./Notifications";
 import { networks } from "../utils/networks";
 
 const NavBarItem = ({ title, classprops }) => (
@@ -14,60 +14,56 @@ const NavBarItem = ({ title, classprops }) => (
 );
 
 const Navbar = () => {
-  const { currentAccount, connectWallet, networkId, fetchedRating } =
-    useContext(PlatformContext);
-  const [toggleMenu, setToggleMenu] = React.useState(false);
-
-  const renderNotConnectedContainer = () => (
-    <button
-      type="button"
-      onClick={connectWallet}
-      className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-    >
-      <AiFillPlayCircle className="text-white mr-2" />
-      <p className="text-white text-base font-semibold">Connect Wallet</p>
-    </button>
-  );
+  const { currentAccount, networkId, switchNetwork } = useContext(AuthContext);
+  const [toggleMenu, setToggleMenu] = useState(false);
+  const renderNotConnectedContainer = () => {
+    if (networkId !== networks.testnet.chainId) {
+      return (
+        <div className="flex flex-col w-full text-white justify-center items-center">
+          <button
+            type="button"
+            onClick={switchNetwork}
+            className="flex flex-row justify-center items-center gap-1 bg-[#2952e3] pt-1 pb-1 pl-2 pr-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
+          >
+            <p className="text-white text-base font-semibold">Switch Network</p>
+          </button>
+        </div>
+      );
+    }
+    return <ConnectWalletButton />;
+  };
 
   const renderAccountInfo = () => (
     <div className="flex flex-row">
-      <span className="mr-1">
-        My rating:
-      </span>
-      <span className="flex flex-row justify-center items-center mr-4">
-        {fetchedRating === 0
-          ? "unrated"
-          : [...Array(fetchedRating)].map((star, index) => (
-            <FaStar key={index} color="#ffc107" size={20} />
-          ))}
-      </span>
-      <img
-        alt="Network logo"
-        className="w-4 h-4 self-center"
-        src={networkId === networks.testnet.chainId ? polygonLogo : ethLogo}
-      />
-      <p>{shortenAddress(currentAccount)}</p>
+      <Wallet />
     </div>
   );
 
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
-      <div className="md:flex-[0.5] flex-initial justify-center items-center">
+      <div className="md:flex-[0.9] flex-initial justify-center items-center">
         <Link to="/">
           <p className="text-white text-2xl cursor-pointer font-bold">
-            <span className="text-[#d946ef]">Me</span>Do
+            <img alt="Brand logo" className="h-7 self-center" src={logo1} />
           </p>
         </Link>
       </div>
       <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
         {currentAccount && networkId === networks.testnet.chainId ? (
           <div className="flex flex-row">
-            <Link to="/new">
+            <Link to="/tasks">
+              <NavBarItem title="Find Tasks" />
+            </Link>
+            <Link to="/services">
+              <NavBarItem title="Find Freelancers" />
+            </Link>
+            <Link to="/services/new">
+              <NavBarItem title="Add Service" />
+            </Link>
+            <Link to="/tasks/new">
               <NavBarItem title="Add Task" />
             </Link>
-            <Link to="/mytasks">
-              <NavBarItem title="My Tasks" />
-            </Link>
+            <Notifications />
           </div>
         ) : (
           <li />
@@ -100,24 +96,29 @@ const Navbar = () => {
             <li className="text-xl w-full my-2">
               <AiOutlineClose onClick={() => setToggleMenu(false)} />
             </li>
+            {currentAccount && networkId === networks.testnet.chainId ? (
+              <li>
+                <Link to="/tasks">
+                  <NavBarItem title="Find Tasks" />
+                </Link>
+                <Link to="/services">
+                  <NavBarItem title="Find Freelancers" />
+                </Link>
+                <Link to="/services/new">
+                  <NavBarItem title="Add Service" />
+                </Link>
+                <Link to="/tasks/new">
+                  <NavBarItem title="Add Task" />
+                </Link>
+                <Notifications />
+              </li>
+            ) : (
+              <li />
+            )}
             <li>
               {!currentAccount && renderNotConnectedContainer()}
               {currentAccount && renderAccountInfo()}
             </li>
-            {networkId === networks.testnet.chainId ? (
-              <>
-                <li>
-                  <Link to="/new">
-                    <NavBarItem title="Add Project" />
-                  </Link>
-                </li>
-                <Link to="/mytasks">
-                  <NavBarItem title="My Tasks" />
-                </Link>
-              </>
-            ) : (
-              <li />
-            )}
           </ul>
         )}
       </div>
