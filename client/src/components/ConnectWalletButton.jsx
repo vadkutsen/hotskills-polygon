@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import logo from "../../images/aurora-logo.png";
+import logo from "../../images/polygonlogo.png";
 
 const ConnectWalletButton = () => {
   const { connectWallet } = useContext(AuthContext);
@@ -10,7 +10,7 @@ const ConnectWalletButton = () => {
       onClick={connectWallet}
       className="flex flex-row justify-center items-center gap-1 bg-[#2952e3] pt-1 pb-1 pl-2 pr-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
     >
-      <img alt="Aurora logo" className="w-6 h-6 self-center rounded-full" src={logo} />
+      <img alt="Aurora logo" className="w-4 h-4 self-center" src={logo} />
       <p className="text-white text-base font-semibold">Connect Wallet</p>
     </button>
   );

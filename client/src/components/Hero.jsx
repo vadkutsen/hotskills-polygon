@@ -1,14 +1,14 @@
 import { React } from "react";
 import hero1 from "../../images/hero1.png";
 import hero2 from "../../images/hero2.png";
-import logo1 from "../../images/logo1.png";
+// import logo1 from "../../images/logo1.png";
 import ConnectWalletButton from "./ConnectWalletButton";
 
 function Hero() {
   return (
     <>
       <div className="flex flex-col items-center">
-        <h1 className="mt-10 text-white text-6xl">Meet <span className="text-[#d946ef]">Me</span>Pay!</h1>
+        <h1 className="mt-10 text-white text-6xl">Meet <span className="text-[#d946ef]">Hot</span>Skills!</h1>
         {/* <img alt="Brand logo" className="w-6/12 self-center" src={logo1} /> */}
         <h2 className="mt-2 text-white text-4xl">Probably</h2>
         <p className="mt-2 text-white text-4xl">the best decentralized freelance platform</p>
