@@ -33,7 +33,7 @@ export const TaskProvider = ({ children }) => {
 
   const [tasks, setTasks] = useState("");
   const [task, setTask] = useState([]);
-  const { notify, fee, setIsLoading } = useContext(PlatformContext);
+  const { notify, fee, setIsLoading, setNotifications } = useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
   const [ipfsUrl, setIpfsUrl] = useState("");
 
@@ -219,7 +219,7 @@ export const TaskProvider = ({ children }) => {
         const bnId = ethers.BigNumber.from(id);
         const contract = createEthereumContract();
         const transaction = await contract.applyForTask(bnId);
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         await getTask(id);
@@ -393,6 +393,7 @@ export const TaskProvider = ({ children }) => {
         ...prevState,
         formatTask(t)
       ]);
+      setNotifications((prevState) => [...prevState, "New task added"]);
     };
     if (ethereum) {
       contract.on("TaskAdded", onNewTask);
@@ -408,6 +409,7 @@ export const TaskProvider = ({ children }) => {
     const contract = createEthereumContract();
     const onTaskUpdated = (t) => {
       setTask(formatTask(t));
+      setNotifications((prevState) => [...prevState, `Task ${t.id} updated`]);
     };
     if (ethereum) {
       contract.on("TaskUpdated", onTaskUpdated);

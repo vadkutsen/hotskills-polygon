@@ -43,6 +43,7 @@ export const PlatformProvider = ({ children }) => {
   const [fetchedRating, setFetchedRating] = useState(0);
   // const [contract, setContract] = useState(undefined);
   const { currentAccount, networkId } = useContext(AuthContext);
+  const [notifications, setNotifications] = useState([]);
 
   const notify = (message, hash) => toast.success(<MessageDisplay message={message} hash={hash} />, {
     position: "top-right",
@@ -151,7 +152,9 @@ export const PlatformProvider = ({ children }) => {
         getRating,
         fetchedRating,
         address0,
-        balance
+        balance,
+        notifications,
+        setNotifications
       }}
     >
       {children}
