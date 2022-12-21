@@ -36,25 +36,27 @@ export const TaskProvider = ({ children }) => {
   const [task, setTask] = useState([]);
   const { notify, fee, setIsLoading, setNotifications } = useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
-  const [ipfsUrl, setIpfsUrl] = useState("");
+  const [ipfsUrl, setIpfsUrl] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const onUploadHandler = async (event) => {
+  const onUploadHandler = async (files) => {
     const client = new Web3Storage({ token: import.meta.env.VITE_WEB3_STORAGE_TOKEN });
-    event.preventDefault();
-    const form = event.target;
-    const { files } = form[0];
+    // event.preventDefault();
+    // const form = event.target;
+    // const { files } = form[0];
     if (!files || files.length === 0) {
-      return alert("No files selected");
+      return;
     }
-    setIsLoading(true);
+    // setIsLoading(true);
     const rootCid = await client.put(files);
     const info = await client.status(rootCid);
     // const res = await client.get(rootCid);
-    const url = `https://${info.cid}.ipfs.w3s.link/${files[0].name}`;
-    form.reset();
-    setIpfsUrl(url);
-    setIsLoading(false);
-    notify("File successfully uploaded to IPFS.");
+    const url = `https://${info.cid}.ipfs.w3s.link/`;
+    // form.reset();
+    // setIpfsUrl(url);
+    // setIsLoading(false);
+    notify("File(s) successfully uploaded to IPFS.");
+    return url;
   };
 
   const handleChange = (e, name) => {
@@ -242,9 +244,19 @@ export const TaskProvider = ({ children }) => {
       try {
         setIsLoading(true);
         const contract = createEthereumContract();
+        let res;
+        if (!result && selectedFiles.length > 0) {
+          res = await onUploadHandler(selectedFiles);
+        } else if (result && selectedFiles.length === 0) {
+          res = result;
+        } else {
+          alert("Plese select files for uploading or enter a link to your result.");
+          return;
+        }
+        console.log("result: ", res);
         const transaction = await contract
-          .submitResult(ethers.BigNumber.from(id), result);
-        console.log(`Success - ${transaction}`);
+          .submitResult(ethers.BigNumber.from(id), res);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         await getTask(id);
@@ -268,7 +280,7 @@ export const TaskProvider = ({ children }) => {
         const contract = createEthereumContract();
         const transaction = await contract
           .deleteTask(ethers.BigNumber.from(id));
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         notify("Task deleted successfully.");
@@ -292,7 +304,7 @@ export const TaskProvider = ({ children }) => {
         const contract = createEthereumContract();
         const transaction = await contract
           .assignTask(ethers.BigNumber.from(id), candidate);
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         await getTask(id);
@@ -316,7 +328,7 @@ export const TaskProvider = ({ children }) => {
         const contract = createEthereumContract();
         const transaction = await contract
           .unassignTask(ethers.BigNumber.from(id));
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         await getTask(id);
@@ -341,7 +353,7 @@ export const TaskProvider = ({ children }) => {
         const contract = createEthereumContract();
         const transaction = await contract
           .requestChange(ethers.BigNumber.from(id), message);
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         await getTask(id);
@@ -365,7 +377,7 @@ export const TaskProvider = ({ children }) => {
         const contract = createEthereumContract();
         const transaction = await contract
           .completeTask(ethers.BigNumber.from(id), newRating);
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
         await getTask(id);
@@ -461,7 +473,9 @@ export const TaskProvider = ({ children }) => {
         composeCandidateProfiles,
         composeAuthorProfile,
         calculateTotalAmount,
-        formatTask
+        formatTask,
+        selectedFiles,
+        setSelectedFiles
       }}
     >
       {children}

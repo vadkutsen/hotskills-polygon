@@ -6,20 +6,19 @@ import { TaskStatuses } from "../../utils/constants";
 import IpfsForm from "./IpfsForm";
 
 const AssigneeActions = (params) => {
-  
   const { task } = params;
-  const { unassignTask, submitResult, ipfsUrl } = useContext(TaskContext);
+  const { unassignTask, submitResult, ipfsUrl, selectedFiles } = useContext(TaskContext);
   const { rateUser } = useContext(PlatformContext);
   const [result, setResult] = useState("");
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
 
-  useEffect(() => {
-    setResult(ipfsUrl);
-  }, [ipfsUrl]);
+  // useEffect(() => {
+  //   setResult(ipfsUrl);
+  // }, [ipfsUrl]);
 
   const handleSubmit = (e) => {
-    if (result === "") return;
+    if (result === "" && selectedFiles.length === 0) return;
     e.preventDefault();
     submitResult(task.id, result);
   };
@@ -44,13 +43,6 @@ const AssigneeActions = (params) => {
   if (task.status === TaskStatuses[1]) {
     return (
       <div>
-        <button
-          type="button"
-          className="flex flex-row justify-center items-center my-5 bg-yellow-700 pl-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
-          onClick={() => unassignTask(task.id)}
-        >
-          Unassign
-        </button>
         <IpfsForm />
         <input
           className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
@@ -62,10 +54,18 @@ const AssigneeActions = (params) => {
         />
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={handleSubmit}
         >
           Submit Result
+        </button>
+        <p className="mt-5 text-2xl text-white">Cannot complete the task? Please unassign yourself.</p>
+        <button
+          type="button"
+          className="flex flex-row justify-center items-center my-5 bg-yellow-700 p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
+          onClick={() => unassignTask(task.id)}
+        >
+          Unassign
         </button>
       </div>
     );
@@ -75,13 +75,13 @@ const AssigneeActions = (params) => {
     return (
       <>
         <p className="mt-5 text-2xl text-white text-basetext-white">
-          Result submitted. Waiting for completion from the author.
+          Result submitted. Waiting for approval from the author.
         </p>
         <p>Feel free to request payment if you did not receive your reward within 10 days</p>
         <p>(Request Payment will be available in {calculateDaysLeft(task.lastStatusChangeAt)} days)</p>
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
         >
           Request Payment
         </button>
@@ -97,7 +97,7 @@ const AssigneeActions = (params) => {
         </p>
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-yellow-700 pl-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-yellow-700 pl-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={() => unassignTask(task.id)}
         >
           Unassign
@@ -113,7 +113,7 @@ const AssigneeActions = (params) => {
         />
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={handleSubmit}
         >
           Re-submit Result
@@ -134,7 +134,8 @@ const AssigneeActions = (params) => {
             const ratingValue = i + 1;
             return (
               <label
-              key={i}>
+                key={i}
+              >
                 <input
                   type="radio"
                   name="rating"
@@ -156,7 +157,7 @@ const AssigneeActions = (params) => {
         </div>
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#134e4a] p-3 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#134e4a] p-2 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={handleClick}
         >
           Rate The Task Author
