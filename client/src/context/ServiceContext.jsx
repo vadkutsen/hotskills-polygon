@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { Web3Storage } from "web3.storage";
 import { ethers } from "ethers";
+import { Link } from "react-router-dom";
 import { ServiceStatuses, Categories, contractAddress } from "../utils/constants";
 import contractABI from "../utils/contractABI.json";
 import { PlatformContext } from "./PlatformContext";
@@ -33,7 +34,7 @@ export const ServiceProvider = ({ children }) => {
   const [services, setServices] = useState([]);
   const [service, setService] = useState([]);
   const [ipfsUrl, setIpfsUrl] = useState(null);
-  const { notify, setIsLoading } = useContext(PlatformContext);
+  const { notify, setIsLoading, setNotifications } = useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
 
   const onUploadHandler = async (event) => {
@@ -314,6 +315,7 @@ export const ServiceProvider = ({ children }) => {
         ...prevState,
         formatService(s)
       ]);
+      setNotifications((prevState) => [...prevState, <Link to={`/services/${s.id}`}>New service added</Link>]);
     };
     if (ethereum) {
       contract.on("ServiceAdded", onNewService);

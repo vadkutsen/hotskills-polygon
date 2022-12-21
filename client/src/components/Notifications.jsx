@@ -1,17 +1,20 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { AiFillBell } from "react-icons/ai";
+import { PlatformContext } from "../context/PlatformContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Notifications() {
+  const { notifications, setNotifications } = useContext(PlatformContext);
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center w-full font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none">
           <AiFillBell size={24} />
+          {notifications.length > 0 && <span className="text-xs absolute -top-2 -right-2 p-0.5 border rounded-full bg-red-500">{notifications.length}</span>}
         </Menu.Button>
       </div>
 
@@ -31,12 +34,12 @@ export default function Notifications() {
                 <div
                   className={classNames(
                     active
-                      ? "bg-[#2546bd] text-white cursor-not-allowed"
+                      ? "bg-[#2546bd] text-white"
                       : "text-white",
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  No new notifications
+                  {notifications.length > 0 ? notifications.map((n) => <p>{n}</p>) : "No new notifications"}
                 </div>
               )}
             </Menu.Item>

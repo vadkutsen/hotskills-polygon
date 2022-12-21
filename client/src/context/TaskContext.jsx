@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState, useContext } from "react";
 import { ethers } from "ethers";
+import { Link } from "react-router-dom";
 import { Web3Storage } from "web3.storage";
 import contractABI from "../utils/contractABI.json";
 import { TaskTypes, address0, TaskStatuses, Categories, contractAddress } from "../utils/constants";
@@ -393,7 +394,7 @@ export const TaskProvider = ({ children }) => {
         ...prevState,
         formatTask(t)
       ]);
-      setNotifications((prevState) => [...prevState, "New task added"]);
+      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`}>New task added</Link>]);
     };
     if (ethereum) {
       contract.on("TaskAdded", onNewTask);
@@ -409,7 +410,7 @@ export const TaskProvider = ({ children }) => {
     const contract = createEthereumContract();
     const onTaskUpdated = (t) => {
       setTask(formatTask(t));
-      setNotifications((prevState) => [...prevState, `Task ${t.id} updated`]);
+      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`}>Task updated</Link>]);
     };
     if (ethereum) {
       contract.on("TaskUpdated", onTaskUpdated);
