@@ -1,5 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { ImWarning } from "react-icons/im";
 import { TaskContext } from "../../context/TaskContext";
 import { PlatformContext } from "../../context/PlatformContext";
 import { TaskStatuses } from "../../utils/constants";
@@ -7,8 +8,8 @@ import IpfsForm from "./IpfsForm";
 
 const AssigneeActions = (params) => {
   const { task } = params;
-  const { unassignTask, submitResult, ipfsUrl, selectedFiles } = useContext(TaskContext);
-  const { rateUser } = useContext(PlatformContext);
+  const { unassignTask, submitResult, selectedFiles } = useContext(TaskContext);
+  const { rateUser, openDispute, arbiterReward } = useContext(PlatformContext);
   const [result, setResult] = useState("");
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -27,6 +28,11 @@ const AssigneeActions = (params) => {
     if (rating === 0) return;
     e.preventDefault();
     rateUser(task.author, rating);
+  };
+
+  const handleOpenDispute = (e) => {
+    e.preventDefault();
+    openDispute(task.id);
   };
 
   const calculateDaysLeft = (date) => {
@@ -59,7 +65,9 @@ const AssigneeActions = (params) => {
         >
           Submit Result
         </button>
-        <p className="mt-5 text-2xl text-white">Cannot complete the task? Please unassign yourself.</p>
+        <p className="mt-5 text-2xl text-white">
+          Cannot complete the task? Please unassign yourself.
+        </p>
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-yellow-700 p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
@@ -77,8 +85,14 @@ const AssigneeActions = (params) => {
         <p className="mt-5 text-2xl text-white text-basetext-white">
           Result submitted. Waiting for approval from the author.
         </p>
-        <p>Feel free to request payment if you did not receive your reward within 10 days</p>
-        <p>(Request Payment will be available in {calculateDaysLeft(task.lastStatusChangeAt)} days)</p>
+        <p>
+          Feel free to request payment if you did not receive your reward within
+          10 days
+        </p>
+        <p>
+          (Request Payment will be available in{" "}
+          {calculateDaysLeft(task.lastStatusChangeAt)} days)
+        </p>
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
@@ -92,9 +106,12 @@ const AssigneeActions = (params) => {
   if (task.status === TaskStatuses[3]) {
     return (
       <div>
-        <p className="mt-5 text-2xl text-white text-basetext-white">
-          Changes requested form the author! Please resubmit your result.
-        </p>
+        <div className="flex gap-2 justify-center items-center">
+          <ImWarning size={32} color="yellow" />
+          <p className="text-2xl">
+            Changes requested form the author! Please resubmit your result.
+          </p>
+        </div>
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-yellow-700 pl-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
@@ -118,11 +135,36 @@ const AssigneeActions = (params) => {
         >
           Re-submit Result
         </button>
+        <div className="flex gap-2 items-center">
+          <button
+            type="button"
+            className="flex flex-row justify-center items-center my-5 bg-red-700 p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
+            onClick={handleOpenDispute}
+          >
+            Open Dispute
+          </button>
+          <div className="flex justify-centers items-center gap-2">
+            <ImWarning size={32} color="yellow" />
+            <p>
+              Dispute is a paid function. We will charge {arbiterReward}% of the
+              task reward in order to reward the dispute arbiter.
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
 
+  // If the task is disputed
   if (task.status === TaskStatuses[4]) {
+    return (
+      <div>
+        <p>Dispute opened. Please wait for the arbiter decision.</p>
+      </div>
+    );
+  }
+
+  if (task.status === TaskStatuses[5]) {
     return (
       <div>
         <p className="mt-5 text-2xl text-white text-basetext-white">
@@ -133,9 +175,7 @@ const AssigneeActions = (params) => {
           {[...Array(5)].map((star, i) => {
             const ratingValue = i + 1;
             return (
-              <label
-                key={i}
-              >
+              <label key={i}>
                 <input
                   type="radio"
                   name="rating"

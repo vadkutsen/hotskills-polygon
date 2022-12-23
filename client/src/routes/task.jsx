@@ -68,7 +68,7 @@ export default function Task() {
               Assignee: {task.assignee !== "Unassigned" ? shortenAddress(task.assignee) : task.assignee}
             </p>
             {task.changeRequests && (
-              <div className="mt-1 text-sm md:w-9/12">
+              <div className="mt-1 text-l w-9/12 white-glassmorphism mt-2 mb-2">
                 Change Requests:{" "}
                 {task.changeRequests.map((c, i) => (
                   <div key={i}>

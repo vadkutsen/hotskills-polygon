@@ -41,7 +41,7 @@ export const PlatformProvider = ({ children }) => {
   const [balance, setBalance] = useState(0);
   const [fee, setFee] = useState(0);
   const [fetchedRating, setFetchedRating] = useState(0);
-  // const [contract, setContract] = useState(undefined);
+  const [arbiterReward, setArbiterReward] = useState(undefined);
   const { currentAccount, networkId } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
 
@@ -69,6 +69,21 @@ export const PlatformProvider = ({ children }) => {
         const contract = createEthereumContract();
         const fetchedFee = await contract.platformFeePercentage();
         setFee(fetchedFee);
+      } catch (error) {
+        console.log(error);
+        // alert(error.message);
+      }
+    } else {
+      console.log("Ethereum is not present");
+    }
+  };
+
+  const getArbiterReward = async () => {
+    if (ethereum) {
+      try {
+        const contract = createEthereumContract();
+        const fetchedArbiterReward = await contract.arbiterRewardPercentage();
+        setArbiterReward(fetchedArbiterReward);
       } catch (error) {
         console.log(error);
         // alert(error.message);
@@ -120,6 +135,7 @@ export const PlatformProvider = ({ children }) => {
       getPlatformFee();
       getRating(currentAccount);
       getBalance();
+      getArbiterReward();
     }
   }, [currentAccount, networkId]);
 
@@ -154,7 +170,8 @@ export const PlatformProvider = ({ children }) => {
         address0,
         balance,
         notifications,
-        setNotifications
+        setNotifications,
+        arbiterReward
       }}
     >
       {children}

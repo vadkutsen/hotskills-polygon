@@ -205,9 +205,9 @@ export const TaskProvider = ({ children }) => {
         notify("New task added successfully.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(
+          error.message
+        );
         setIsLoading(false);
       }
     } else {
@@ -227,11 +227,12 @@ export const TaskProvider = ({ children }) => {
         await getAllTasks();
         await getTask(id);
         notify("Successfully applied.");
+        window.location.reload();
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(
+          error.message
+        );
         setIsLoading(false);
       }
     } else {
@@ -263,9 +264,9 @@ export const TaskProvider = ({ children }) => {
         notify("Result submitted successfully.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(
+          error.message
+        );
         setIsLoading(false);
       }
     } else {
@@ -370,6 +371,30 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
+  const openDispute = async (id) => {
+    if (ethereum) {
+      try {
+        setIsLoading(true);
+        const contract = createEthereumContract();
+        const transaction = await contract
+          .openDispute(ethers.BigNumber.from(id));
+        console.log(`Success - ${transaction.hash}`);
+        setIsLoading(false);
+        await getAllTasks();
+        await getTask(id);
+        notify("Dispute opened successfuly.");
+      } catch (error) {
+        console.log(error);
+        alert(
+          error.message
+        );
+        setIsLoading(false);
+      }
+    } else {
+      console.log("No Ethereum object");
+    }
+  };
+
   const completeTask = async (id, newRating) => {
     try {
       if (ethereum) {
@@ -406,7 +431,7 @@ export const TaskProvider = ({ children }) => {
         ...prevState,
         formatTask(t)
       ]);
-      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`}>New task added</Link>]);
+      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>New task added</Link>]);
     };
     if (ethereum) {
       contract.on("TaskAdded", onNewTask);
@@ -422,7 +447,7 @@ export const TaskProvider = ({ children }) => {
     const contract = createEthereumContract();
     const onTaskUpdated = (t) => {
       setTask(formatTask(t));
-      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`}>Task updated</Link>]);
+      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>Task updated</Link>]);
     };
     if (ethereum) {
       contract.on("TaskUpdated", onTaskUpdated);
@@ -475,7 +500,8 @@ export const TaskProvider = ({ children }) => {
         calculateTotalAmount,
         formatTask,
         selectedFiles,
-        setSelectedFiles
+        setSelectedFiles,
+        openDispute
       }}
     >
       {children}

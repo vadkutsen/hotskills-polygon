@@ -1,17 +1,21 @@
 import { useContext, useState } from "react";
 import { FaStar } from "react-icons/fa";
+import { ImWarning } from "react-icons/im";
 import { TaskContext } from "../../context/TaskContext";
+import { PlatformContext } from "../../context/PlatformContext";
 import { TaskStatuses } from "../../utils/constants";
 import { shortenAddress } from "../../utils/shortenAddress";
 
 const AuthorActions = (params) => {
   const { task } = params;
+  const { arbiterReward } = useContext(PlatformContext);
   const {
     deleteTask,
     assignTask,
     unassignTask,
     requestChange,
     completeTask,
+    openDispute
   } = useContext(TaskContext);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
@@ -34,6 +38,11 @@ const AuthorActions = (params) => {
   const handleRequestChange = (e) => {
     e.preventDefault();
     requestChange(task.id, message);
+  };
+
+  const handleOpenDispute = (e) => {
+    e.preventDefault();
+    openDispute(task.id);
   };
 
   // If the task is not assigned
@@ -90,19 +99,19 @@ const AuthorActions = (params) => {
       <div>
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#831843] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#831843] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={() => deleteTask(task.id)}
         >
           Delete Task
         </button>
-        <p className="text-white">
-          * NOTE: If you delete the task, only reward amount will be returned to
-          your wallet.
-        </p>
-        <p className="text-white">
-          Platform fee will not be returned in order to prevent spamming on the
-          platform.
-        </p>
+        <div className="flex justify-center items-center gap-2">
+          <ImWarning size={32} color="yellow" />
+          <p>
+            If you delete the task, only reward amount will be returned to
+            your wallet. Platform fee will not be returned in order to prevent spamming on the
+            platform.
+          </p>
+        </div>
       </div>
     );
   }
@@ -112,7 +121,7 @@ const AuthorActions = (params) => {
       <div>
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={() => unassignTask(task.id)}
         >
           Unassign
@@ -153,7 +162,7 @@ const AuthorActions = (params) => {
         </div>
         <button
           type="button"
-          className="flex flex-row justify-center items-center my-5 bg-[#134e4a] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+          className="flex flex-row justify-center items-center my-5 bg-[#134e4a] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
           onClick={handleComplete}
         >
           Complete
@@ -172,21 +181,38 @@ const AuthorActions = (params) => {
         <div className="flex flex-row gap-2">
           <button
             type="button"
-            className="flex flex-row justify-center items-center my-5 bg-[#9c3a06] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+            className="flex flex-row justify-center items-center my-5 bg-[#9c3a06] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
             onClick={handleRequestChange}
           >
             Request Change
           </button>
           <button
             type="button"
-            className="flex flex-row justify-center items-center my-5 bg-red-700 p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+            className="flex flex-row justify-center items-center my-5 bg-red-700 p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
+            onClick={handleOpenDispute}
           >
             Open Dispute
           </button>
+          <div className="flex justify-centers items-center gap-2">
+            <ImWarning size={32} color="yellow" />
+            <p>
+              Dispute is a paid function. We will charge {arbiterReward}% of the task reward in order to reward the dispute arbiter.
+            </p>
+          </div>
         </div>
       </div>
     );
   }
+
+  // If the task is disputed
+  if (task.status === TaskStatuses[4]) {
+    return (
+      <div className="mt-2">
+        <p className="text-3xl">Dispute opened. Please wait for the arbiter decision.</p>
+      </div>
+    );
+  }
+
   return null;
 };
 

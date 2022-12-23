@@ -34,7 +34,7 @@
 						"type": "uint8"
 					}
 				],
-				"internalType": "struct Profiles.ReceivedProfile",
+				"internalType": "struct PlatformStructs.ReceivedProfile",
 				"name": "_newProfile",
 				"type": "tuple"
 			}
@@ -85,7 +85,7 @@
 						"type": "uint8"
 					}
 				],
-				"internalType": "struct Services.ReceivedService",
+				"internalType": "struct PlatformStructs.ReceivedService",
 				"name": "_newService",
 				"type": "tuple"
 			}
@@ -121,7 +121,7 @@
 						"type": "string"
 					},
 					{
-						"internalType": "enum Tasks.TaskTypes",
+						"internalType": "enum PlatformStructs.TaskTypes",
 						"name": "taskType",
 						"type": "uint8"
 					},
@@ -136,7 +136,7 @@
 						"type": "address"
 					}
 				],
-				"internalType": "struct Tasks.ReceivedTask",
+				"internalType": "struct PlatformStructs.ReceivedTask",
 				"name": "_newTask",
 				"type": "tuple"
 			}
@@ -144,9 +144,9 @@
 		"name": "addTask",
 		"outputs": [
 			{
-				"internalType": "bool",
+				"internalType": "uint256",
 				"name": "",
-				"type": "bool"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "payable",
@@ -271,6 +271,98 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			}
+		],
+		"name": "openDispute",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_rating",
+				"type": "uint8"
+			}
+		],
+		"name": "rateUser",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_message",
+				"type": "string"
+			}
+		],
+		"name": "requestChange",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "taskId",
+				"type": "uint256"
+			}
+		],
+		"name": "DisputeOpened",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "taskId",
+				"type": "uint256"
+			}
+		],
+		"name": "DisputeResolved",
+		"type": "event"
+	},
+	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -368,7 +460,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Profiles.Profile",
+				"internalType": "struct PlatformStructs.Profile",
 				"name": "_profile",
 				"type": "tuple"
 			}
@@ -423,7 +515,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Profiles.Profile",
+				"internalType": "struct PlatformStructs.Profile",
 				"name": "_profile",
 				"type": "tuple"
 			}
@@ -478,7 +570,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Profiles.Profile",
+				"internalType": "struct PlatformStructs.Profile",
 				"name": "_profile",
 				"type": "tuple"
 			}
@@ -487,57 +579,9 @@
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "_rating",
-				"type": "uint8"
-			}
-		],
-		"name": "rateUser",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"name": "renounceOwnership",
 		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_message",
-				"type": "string"
-			}
-		],
-		"name": "requestChange",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -557,6 +601,24 @@
 				"type": "bool"
 			}
 		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_winner",
+				"type": "address"
+			}
+		],
+		"name": "resolveDispute",
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -635,7 +697,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Services.ServiceStatuses",
+						"internalType": "enum PlatformStructs.ServiceStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -646,7 +708,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Services.Service",
+				"internalType": "struct PlatformStructs.Service",
 				"name": "_service",
 				"type": "tuple"
 			}
@@ -723,7 +785,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Services.ServiceStatuses",
+						"internalType": "enum PlatformStructs.ServiceStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -734,7 +796,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Services.Service",
+				"internalType": "struct PlatformStructs.Service",
 				"name": "_service",
 				"type": "tuple"
 			}
@@ -836,7 +898,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.TaskTypes",
+						"internalType": "enum PlatformStructs.TaskTypes",
 						"name": "taskType",
 						"type": "uint8"
 					},
@@ -861,7 +923,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.Statuses",
+						"internalType": "enum PlatformStructs.TaskStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -872,7 +934,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Tasks.Task",
+				"internalType": "struct PlatformStructs.Task",
 				"name": "_task",
 				"type": "tuple"
 			}
@@ -944,7 +1006,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.TaskTypes",
+						"internalType": "enum PlatformStructs.TaskTypes",
 						"name": "taskType",
 						"type": "uint8"
 					},
@@ -969,7 +1031,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.Statuses",
+						"internalType": "enum PlatformStructs.TaskStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -980,7 +1042,7 @@
 					}
 				],
 				"indexed": false,
-				"internalType": "struct Tasks.Task",
+				"internalType": "struct PlatformStructs.Task",
 				"name": "_task",
 				"type": "tuple"
 			}
@@ -1055,7 +1117,7 @@
 						"type": "uint8"
 					}
 				],
-				"internalType": "struct Profiles.ReceivedProfile",
+				"internalType": "struct PlatformStructs.ReceivedProfile",
 				"name": "_newProfile",
 				"type": "tuple"
 			}
@@ -1111,7 +1173,7 @@
 						"type": "uint8"
 					}
 				],
-				"internalType": "struct Services.ReceivedService",
+				"internalType": "struct PlatformStructs.ReceivedService",
 				"name": "_newService",
 				"type": "tuple"
 			}
@@ -1138,6 +1200,134 @@
 			}
 		],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "allServices",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "allTasks",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "arbiterRewardPercentage",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_reward",
+				"type": "uint256"
+			}
+		],
+		"name": "calculatePlatformFee",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_prevRating",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_newRating",
+				"type": "uint8"
+			}
+		],
+		"name": "calculateRating",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "disputes",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "taskId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "creator",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "resolved",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -1197,7 +1387,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Services.ServiceStatuses",
+						"internalType": "enum PlatformStructs.ServiceStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -1207,7 +1397,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Services.Service[]",
+				"internalType": "struct PlatformStructs.Service[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -1267,7 +1457,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.TaskTypes",
+						"internalType": "enum PlatformStructs.TaskTypes",
 						"name": "taskType",
 						"type": "uint8"
 					},
@@ -1292,7 +1482,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.Statuses",
+						"internalType": "enum PlatformStructs.TaskStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -1302,7 +1492,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Tasks.Task[]",
+				"internalType": "struct PlatformStructs.Task[]",
 				"name": "",
 				"type": "tuple[]"
 			}
@@ -1363,7 +1553,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Profiles.Profile",
+				"internalType": "struct PlatformStructs.Profile",
 				"name": "",
 				"type": "tuple"
 			}
@@ -1453,7 +1643,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Services.ServiceStatuses",
+						"internalType": "enum PlatformStructs.ServiceStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -1463,7 +1653,7 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Services.Service",
+				"internalType": "struct PlatformStructs.Service",
 				"name": "",
 				"type": "tuple"
 			}
@@ -1529,7 +1719,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.TaskTypes",
+						"internalType": "enum PlatformStructs.TaskTypes",
 						"name": "taskType",
 						"type": "uint8"
 					},
@@ -1554,7 +1744,7 @@
 						"type": "uint256"
 					},
 					{
-						"internalType": "enum Tasks.Statuses",
+						"internalType": "enum PlatformStructs.TaskStatuses",
 						"name": "status",
 						"type": "uint8"
 					},
@@ -1564,9 +1754,33 @@
 						"type": "uint256"
 					}
 				],
-				"internalType": "struct Tasks.Task",
+				"internalType": "struct PlatformStructs.Task",
 				"name": "",
 				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "isAddressApplied",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -1606,12 +1820,219 @@
 				"type": "address"
 			}
 		],
+		"name": "profiles",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "avatar",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "username",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "skills",
+				"type": "string"
+			},
+			{
+				"internalType": "uint16",
+				"name": "rate",
+				"type": "uint16"
+			},
+			{
+				"internalType": "uint8",
+				"name": "availability",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "createdAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "updatedAt",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
 		"name": "ratings",
 		"outputs": [
 			{
 				"internalType": "uint8",
 				"name": "",
 				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "services",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "image",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "category",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"internalType": "address payable",
+				"name": "author",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "createdAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "price",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "deliveryTime",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "allServicesIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum PlatformStructs.ServiceStatuses",
+				"name": "status",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lastStatusChangeAt",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "tasks",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "category",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "description",
+				"type": "string"
+			},
+			{
+				"internalType": "address payable",
+				"name": "author",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "assignee",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "createdAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "completedAt",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum PlatformStructs.TaskTypes",
+				"name": "taskType",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reward",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "result",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "allTasksIndex",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum PlatformStructs.TaskStatuses",
+				"name": "status",
+				"type": "uint8"
+			},
+			{
+				"internalType": "uint256",
+				"name": "lastStatusChangeAt",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

@@ -39,7 +39,7 @@ export default function Notifications() {
                     "block px-4 py-2 text-sm"
                   )}
                 >
-                  {notifications.length > 0 ? notifications.map((n) => <p>{n}</p>) : "No new notifications"}
+                  {notifications.length > 0 ? notifications.map((n, i) => <p key={i}>{n}</p>) : "No new notifications"}
                 </div>
               )}
             </Menu.Item>

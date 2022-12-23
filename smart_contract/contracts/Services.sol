@@ -1,57 +1,24 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
+import "./PlatformStructs.sol";
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Services is Ownable, ReentrancyGuard {
-
-
-    enum ServiceStatuses {
-        Active,
-        Paused
-    }
-
-    struct Service {
-        uint256 id;
-        string image;
-        string category;
-        string title;
-        string description;
-        address payable author;
-        uint256 createdAt;
-        uint256 price;
-        uint8 deliveryTime;
-        uint256 allServicesIndex;
-        ServiceStatuses status;
-        uint256 lastStatusChangeAt;
-    }
-
-    struct ReceivedService {
-        string image;
-        string category;
-        string title;
-        string description;
-        uint256 price;
-        uint8 deliveryTime;
-    }
+contract Services is ReentrancyGuard {
 
     using Counters for Counters.Counter;
     Counters.Counter private _mappingLength;
 
-    uint256[] internal allServices;
-    mapping(uint256 => Service) internal services;
+    uint256[] public allServices;
+    mapping(uint256 => PlatformStructs.Service) public services;
 
     constructor() {
-        // serviceFeePercentage = 1;
         _mappingLength.increment();
     }
 
-    // Events
-
-    event ServiceAdded(Service _service);
-    event ServiceUpdated(Service _service);
+    event ServiceAdded(PlatformStructs.Service _service);
+    event ServiceUpdated(PlatformStructs.Service _service);
     event ServiceDeleted(uint256 _id);
 
     // Modifiers
@@ -69,10 +36,8 @@ contract Services is Ownable, ReentrancyGuard {
         _;
     }
 
-    // Helper functions
-
-    function addService(ReceivedService calldata _newService)
-        external
+    function addService(PlatformStructs.ReceivedService calldata _newService)
+        public
         returns (bool)
     {
         require(bytes(_newService.category).length > 0, "category is required.");
@@ -80,26 +45,26 @@ contract Services is Ownable, ReentrancyGuard {
         require(bytes(_newService.description).length > 0,"Description is required.");
         require(_newService.price > 0, "Price is required.");
         require(_newService.deliveryTime > 0, "Delivery time is required.");
-        uint256 _id = _mappingLength.current();
-        services[_id].id = _id;
-        services[_id].image = _newService.image;
-        services[_id].category = _newService.category;
-        services[_id].title = _newService.title;
-        services[_id].description = _newService.description;
-        services[_id].author = payable(msg.sender);
-        services[_id].createdAt = block.timestamp;
-        services[_id].price = _newService.price;
-        services[_id].deliveryTime = _newService.deliveryTime;
-        services[_id].allServicesIndex = allServices.length;
-        services[_id].lastStatusChangeAt = block.timestamp;
-        allServices.push(_id);
+        // uint256 _id = _mappingLength.current();
+        services[_mappingLength.current()].id = _mappingLength.current();
+        services[_mappingLength.current()].image = _newService.image;
+        services[_mappingLength.current()].category = _newService.category;
+        services[_mappingLength.current()].title = _newService.title;
+        services[_mappingLength.current()].description = _newService.description;
+        services[_mappingLength.current()].author = payable(msg.sender);
+        services[_mappingLength.current()].createdAt = block.timestamp;
+        services[_mappingLength.current()].price = _newService.price;
+        services[_mappingLength.current()].deliveryTime = _newService.deliveryTime;
+        services[_mappingLength.current()].allServicesIndex = allServices.length;
+        services[_mappingLength.current()].lastStatusChangeAt = block.timestamp;
+        allServices.push(_mappingLength.current());
         _mappingLength.increment();
-        emit ServiceAdded(services[_id]);
+        emit ServiceAdded(services[_mappingLength.current()]);
         return true;
     }
 
-    function updateService(uint256 _id, ReceivedService calldata _newService)
-        external
+    function updateService(uint256 _id, PlatformStructs.ReceivedService calldata _newService)
+        public
         serviceExists(_id)
         onlyServiceAuthor(_id)
         returns (bool)
@@ -118,26 +83,26 @@ contract Services is Ownable, ReentrancyGuard {
     }
 
     function pauseService(uint256 _id)
-        external
+        public
         serviceExists(_id)
         onlyServiceAuthor(_id)
         returns (bool)
     {
-        require(services[_id].status == ServiceStatuses.Active, "Invalid service status.");
-        services[_id].status = ServiceStatuses.Paused;
+        require(services[_id].status == PlatformStructs.ServiceStatuses.Active, "Invalid service status.");
+        services[_id].status = PlatformStructs.ServiceStatuses.Paused;
         services[_id].lastStatusChangeAt = block.timestamp;
         emit ServiceUpdated(services[_id]);
         return true;
     }
 
     function resumeService(uint256 _id)
-        external
+        public
         serviceExists(_id)
         onlyServiceAuthor(_id)
         returns (bool)
     {
-        require(services[_id].status == ServiceStatuses.Paused, "Invalid service status.");
-        services[_id].status = ServiceStatuses.Active;
+        require(services[_id].status == PlatformStructs.ServiceStatuses.Paused, "Invalid service status.");
+        services[_id].status = PlatformStructs.ServiceStatuses.Active;
         services[_id].lastStatusChangeAt = block.timestamp;
         emit ServiceUpdated(services[_id]);
         return true;
@@ -145,20 +110,19 @@ contract Services is Ownable, ReentrancyGuard {
 
 
     function deleteService(uint256 _id)
-        external
+        public
         serviceExists(_id)
         onlyServiceAuthor(_id)
         returns (bool)
     {
-        uint index = services[_id].allServicesIndex;
         delete services[_id];
-        delete allServices[index];
-        if (allServices[index] == allServices[allServices.length - 1]) {
+        delete allServices[services[_id].allServicesIndex];
+        if (allServices[services[_id].allServicesIndex] == allServices[allServices.length - 1]) {
             allServices.pop();
         } else {
-            allServices[index] = allServices[allServices.length - 1];
+            allServices[services[_id].allServicesIndex] = allServices[allServices.length - 1];
             allServices.pop();
-            services[allServices[index]].allServicesIndex = index;
+            services[allServices[services[_id].allServicesIndex]].allServicesIndex = services[_id].allServicesIndex;
         }
         emit ServiceDeleted(_id);
         return true;

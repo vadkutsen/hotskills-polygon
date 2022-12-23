@@ -1,77 +1,30 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
+import "./PlatformStructs.sol";
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Tasks is Ownable, ReentrancyGuard {
-
- enum TaskTypes {
-        FCFS,
-        SelectedByAuthor,
-        ServiceTask,
-        Escrow
-    }
-
-    enum Statuses {
-        Active,
-        Assigned,
-        InReview,
-        ChangeRequested,
-        Completed
-    }
-
-    struct Task {
-        uint256 id;
-        string category;
-        string title;
-        string description;
-        address payable author;
-        address payable assignee;
-        address[] candidates;
-        uint256 createdAt;
-        uint256 completedAt;
-        TaskTypes taskType;
-        uint256 reward;
-        string result;
-        string[] changeRequests;
-        uint256 allTasksIndex;
-        Statuses status;
-        uint256 lastStatusChangeAt;
-    }
-
-    struct ReceivedTask {
-        string category;
-        string title;
-        string description;
-        TaskTypes taskType;
-        uint256 reward;
-        address payable assignee;
-    }
+contract Tasks is ReentrancyGuard {
 
     using Counters for Counters.Counter;
     Counters.Counter private _idCounter;
 
     uint8 public platformFeePercentage; // Platform fee in %
     uint256 public totalFees;
-    uint256[] internal allTasks;
-    mapping(uint256 => Task) internal tasks;
+    uint256[] public allTasks;
+    mapping(uint256 => PlatformStructs.Task) public tasks;
     mapping(address => uint8) public ratings;
 
     constructor() {
-        platformFeePercentage = 1;
+        platformFeePercentage = 3;
         _idCounter.increment();
     }
 
-    // Events
-
-    event TaskAdded(Task _task);
-    event TaskUpdated(Task _task);
+    event TaskAdded(PlatformStructs.Task _task);
+    event TaskUpdated(PlatformStructs.Task _task);
     event TaskDeleted(uint256 _id);
     event FeeUpdated(uint8 _fee);
-
-    // Modifiers
 
     modifier onlyAuthor(uint256 _id) {
         require(
@@ -94,10 +47,8 @@ contract Tasks is Ownable, ReentrancyGuard {
         _;
     }
 
-    // // Helper functions
-
     function isAddressApplied(uint256 _id, address _address)
-        internal
+        public
         view
         returns (bool)
     {
@@ -108,7 +59,7 @@ contract Tasks is Ownable, ReentrancyGuard {
     }
 
     function calculateRating(uint256 _prevRating, uint8 _newRating)
-        internal
+        public
         pure
         returns (uint8)
     {
@@ -117,7 +68,7 @@ contract Tasks is Ownable, ReentrancyGuard {
     }
 
     function calculatePlatformFee(uint256 _reward)
-        internal
+        public
         view
         returns (uint256)
     {
@@ -125,10 +76,10 @@ contract Tasks is Ownable, ReentrancyGuard {
         return platformFee;
     }
 
-    function addTask(ReceivedTask calldata _newTask)
-        external
+    function addTask(PlatformStructs.ReceivedTask calldata _newTask)
+        public
         payable
-        returns (bool)
+        returns (uint256)
     {
         require(bytes(_newTask.title).length > 0, "Title is required.");
         require(
@@ -155,25 +106,25 @@ contract Tasks is Ownable, ReentrancyGuard {
         allTasks.push(_id);
         _idCounter.increment();
         if (tasks[_id].assignee != address(0)) {
-            tasks[_id].status = Statuses.Assigned;
+            tasks[_id].status = PlatformStructs.TaskStatuses.Assigned;
         }
         emit TaskAdded(tasks[_id]);
-        return true;
+        return _id;
     }
 
  function assignTask(uint256 _id, address payable _candidateAddress)
-        external
+        public
         taskExists(_id)
         onlyAuthor(_id)
         returns (bool)
     {
-        require(_candidateAddress != address(0), "Zero address submitted.");
+        require(_candidateAddress != address(0), "Address required.");
         require(
-            tasks[_id].taskType == TaskTypes.SelectedByAuthor,
+            tasks[_id].taskType == PlatformStructs.TaskTypes.SelectedByAuthor,
             "Invalid task type"
         );
         require(
-            tasks[_id].status != Statuses.Assigned,
+            tasks[_id].status != PlatformStructs.TaskStatuses.Assigned,
             "Task already assigned."
         );
         require(
@@ -181,7 +132,7 @@ contract Tasks is Ownable, ReentrancyGuard {
             "Invalid address."
         );
         tasks[_id].assignee = _candidateAddress;
-        tasks[_id].status = Statuses.Assigned;
+        tasks[_id].status = PlatformStructs.TaskStatuses.Assigned;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         emit TaskUpdated(tasks[_id]);
         return true;
@@ -198,28 +149,28 @@ contract Tasks is Ownable, ReentrancyGuard {
             "Only author or assignee"
         );
         require(
-            tasks[_id].status == Statuses.Assigned,
+            tasks[_id].status == PlatformStructs.TaskStatuses.Assigned,
             "Task is not assigned."
         );
         delete tasks[_id].assignee;
-        tasks[_id].status = Statuses.Active;
+        tasks[_id].status = PlatformStructs.TaskStatuses.Active;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         emit TaskUpdated(tasks[_id]);
         return true;
     }
 
     function applyForTask(uint256 _id)
-        external
+        public
         taskExists(_id)
         returns (bool)
     {
         require(
-            tasks[_id].status != Statuses.Assigned,
+            tasks[_id].status != PlatformStructs.TaskStatuses.Assigned,
             "Task already assigned."
         );
-        if (tasks[_id].taskType == TaskTypes.FCFS) {
+        if (tasks[_id].taskType == PlatformStructs.TaskTypes.FCFS) {
             tasks[_id].assignee = payable(msg.sender);
-            tasks[_id].status = Statuses.Assigned;
+            tasks[_id].status = PlatformStructs.TaskStatuses.Assigned;
             tasks[_id].lastStatusChangeAt = block.timestamp;
             emit TaskUpdated(tasks[_id]);
         } else {
@@ -230,15 +181,15 @@ contract Tasks is Ownable, ReentrancyGuard {
     }
 
     function submitResult(uint256 _id, string calldata _result)
-        external
+        public
         taskExists(_id)
         onlyAssignee(_id)
         returns (bool)
     {
         require(bytes(_result).length > 0, "Result cannot be empty.");
-        require(tasks[_id].status == Statuses.Assigned || tasks[_id].status == Statuses.ChangeRequested, "Invalid task status.");
+        require(tasks[_id].status == PlatformStructs.TaskStatuses.Assigned || tasks[_id].status == PlatformStructs.TaskStatuses.ChangeRequested, "Invalid task status.");
         tasks[_id].result = _result;
-        tasks[_id].status = Statuses.InReview;
+        tasks[_id].status = PlatformStructs.TaskStatuses.InReview;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         emit TaskUpdated(tasks[_id]);
         return true;
@@ -251,7 +202,7 @@ contract Tasks is Ownable, ReentrancyGuard {
         returns (bool)
     {
         require(
-            tasks[_id].status == Statuses.InReview,
+            tasks[_id].status == PlatformStructs.TaskStatuses.InReview,
             "Invalid status"
         );
         require(
@@ -259,14 +210,14 @@ contract Tasks is Ownable, ReentrancyGuard {
             "Limit exceeded"
         );
         tasks[_id].changeRequests.push(_message);
-        tasks[_id].status = Statuses.ChangeRequested;
+        tasks[_id].status = PlatformStructs.TaskStatuses.ChangeRequested;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         emit TaskUpdated(tasks[_id]);
         return true;
     }
 
     function completeTask(uint256 _id, uint8 _rating)
-        external
+        public
         taskExists(_id)
         onlyAuthor(_id)
         nonReentrant
@@ -276,7 +227,7 @@ contract Tasks is Ownable, ReentrancyGuard {
         require(bytes(tasks[_id].result).length > 0, "Result is required.");
         require(_rating <= 5, "Rating is invalid.");
         tasks[_id].completedAt = block.timestamp;
-        tasks[_id].status = Statuses.Completed;
+        tasks[_id].status = PlatformStructs.TaskStatuses.Completed;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         ratings[tasks[_id].assignee] = calculateRating(
             ratings[tasks[_id].assignee],
@@ -291,20 +242,19 @@ contract Tasks is Ownable, ReentrancyGuard {
     }
 
     function requestPayment(uint256 _id)
-        external
+        public
         taskExists(_id)
         onlyAssignee(_id)
         nonReentrant
         returns (bool)
     {
-        require(tasks[_id].status == Statuses.InReview);
-        // Need to wait for 10 days
+        require(tasks[_id].status == PlatformStructs.TaskStatuses.InReview);
         require(
             tasks[_id].lastStatusChangeAt < block.timestamp - 10 days,
             "Need to wait 10 days."
         );
         tasks[_id].completedAt = block.timestamp;
-        tasks[_id].status = Statuses.Completed;
+        tasks[_id].status = PlatformStructs.TaskStatuses.Completed;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         (bool success, ) = tasks[_id].assignee.call{
             value: tasks[_id].reward
@@ -315,7 +265,7 @@ contract Tasks is Ownable, ReentrancyGuard {
     }
 
     function deleteTask(uint256 _id)
-        external
+        public
         payable
         taskExists(_id)
         onlyAuthor(_id)
@@ -324,7 +274,7 @@ contract Tasks is Ownable, ReentrancyGuard {
     {
         require(
             tasks[_id].assignee == address(0),
-            "Task already assigned."
+            "Task assigned."
         );
         (bool success, ) = tasks[_id].author.call{
             value: tasks[_id].reward

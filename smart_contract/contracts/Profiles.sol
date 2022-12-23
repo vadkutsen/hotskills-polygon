@@ -1,40 +1,17 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.17;
+import "./PlatformStructs.sol";
 
 contract Profiles {
 
-    struct Profile {
-        string avatar;
-        string username;
-        string skills;
-        string[] languages;
-        uint16 rate;
-        uint8 availability;
-        uint256 createdAt;
-        uint256 updatedAt;
-    }
+    mapping(address => PlatformStructs.Profile) public profiles;
 
-    struct ReceivedProfile {
-        string avatar;
-        string username;
-        string skills;
-        string[] languages;
-        uint16 rate;
-        uint8 availability;
-    }
+    event ProfileAdded(PlatformStructs.Profile _profile);
+    event ProfileUpdated(PlatformStructs.Profile _profile);
+    event ProfileDeleted(PlatformStructs.Profile _profile);
 
-
-    mapping(address => Profile) internal profiles;
-
-    // Events
-
-    event ProfileAdded(Profile _profile);
-    event ProfileUpdated(Profile _profile);
-    event ProfileDeleted(Profile _profile);
-
-
-    function addProfile(ReceivedProfile calldata _newProfile)
-        external
+    function addProfile(PlatformStructs.ReceivedProfile calldata _newProfile)
+        public
         returns (bool)
     {
         require(bytes(_newProfile.username).length > 0, "Username is required.");
@@ -50,8 +27,8 @@ contract Profiles {
         return true;
     }
 
-    function updateProfile(ReceivedProfile calldata _newProfile)
-        external
+    function updateProfile(PlatformStructs.ReceivedProfile calldata _newProfile)
+        public
         returns (bool)
     {
         require(bytes(_newProfile.username).length > 0, "Username is required.");
@@ -68,7 +45,7 @@ contract Profiles {
     }
 
     function deleteProfile()
-        external
+        public
         returns (bool)
     {
         delete profiles[msg.sender];
