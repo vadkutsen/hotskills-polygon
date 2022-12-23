@@ -38,9 +38,7 @@ export const ServiceProvider = ({ children }) => {
   const { currentAccount, networkId } = useContext(AuthContext);
 
   const onUploadHandler = async (event) => {
-    const client = new Web3Storage({
-      token: import.meta.env.VITE_WEB3_STORAGE_TOKEN,
-    });
+    const client = new Web3Storage({ token: import.meta.env.VITE_WEB3_STORAGE_TOKEN });
     event.preventDefault();
     const form = event.target;
     const { files } = form[0];
