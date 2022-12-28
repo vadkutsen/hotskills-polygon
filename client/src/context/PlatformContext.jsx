@@ -115,20 +115,36 @@ export const PlatformProvider = ({ children }) => {
     }
   };
 
+  // const getRating = async (address) => {
+  //   if (ethereum && address) {
+  //     try {
+  //       const contract = createEthereumContract();
+  //       const r = await contract.getRating(address);
+  //       setFetchedRating(r);
+  //     } catch (error) {
+  //       console.log(error);
+  //       // alert(error.message);
+  //     }
+  //   } else {
+  //     console.log("Ethereum is not present");
+  //   }
+  // };
+
   const getRating = async (address) => {
     if (ethereum && address) {
       try {
         const contract = createEthereumContract();
         const r = await contract.getRating(address);
-        setFetchedRating(r);
+        return r;
       } catch (error) {
         console.log(error);
-        // alert(error.message);
+        alert(error.message);
       }
     } else {
       console.log("Ethereum is not present");
     }
   };
+
 
   useEffect(() => {
     if (networkId === networks.testnet.chainId) {

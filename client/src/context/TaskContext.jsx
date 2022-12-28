@@ -22,6 +22,8 @@ const createEthereumContract = () => {
   return platformContract;
 };
 
+const contract = createEthereumContract();
+
 export const TaskProvider = ({ children }) => {
   const [formData, setformData] = useState({
     category: Categories[0],
@@ -100,7 +102,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum && address) {
       try {
         const user = {};
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const fetchedProfile = await contract.getProfile(address);
         user.profile = fetchedProfile;
         user.address = address;
@@ -136,7 +138,7 @@ export const TaskProvider = ({ children }) => {
     try {
       if (ethereum) {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const availableTasks = await contract.getAllTasks();
         const structuredTasks = availableTasks
           .filter((item) => item.title && item.title !== "")
@@ -157,7 +159,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const fetchedTask = await contract.getTask(id);
         // setTask(formatTask(fetchedTask));
         setIsLoading(false);
@@ -195,7 +197,7 @@ export const TaskProvider = ({ children }) => {
           assignee
         ];
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract.addTask(taskToSend, {
           value: ethers.utils.parseEther(calculateTotalAmount(reward, fee).toString()),
         });
@@ -220,7 +222,7 @@ export const TaskProvider = ({ children }) => {
       try {
         setIsLoading(true);
         const bnId = ethers.BigNumber.from(id);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract.applyForTask(bnId);
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
@@ -244,7 +246,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         let res;
         if (!result && selectedFiles.length > 0) {
           res = await onUploadHandler(selectedFiles);
@@ -278,7 +280,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .deleteTask(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction.hash}`);
@@ -302,7 +304,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .assignTask(ethers.BigNumber.from(id), candidate);
         console.log(`Success - ${transaction.hash}`);
@@ -326,7 +328,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .unassignTask(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction.hash}`);
@@ -351,7 +353,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .requestChange(ethers.BigNumber.from(id), message);
         console.log(`Success - ${transaction.hash}`);
@@ -375,7 +377,7 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .openDispute(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction.hash}`);
@@ -399,7 +401,7 @@ export const TaskProvider = ({ children }) => {
     try {
       if (ethereum) {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .completeTask(ethers.BigNumber.from(id), newRating);
         console.log(`Success - ${transaction.hash}`);
@@ -425,7 +427,7 @@ export const TaskProvider = ({ children }) => {
 
   // Event listeners
   useEffect(() => {
-    const contract = createEthereumContract();
+    // const contract = createEthereumContract();
     const onNewTask = (t) => {
       setTasks((prevState) => [
         ...prevState,
@@ -444,7 +446,7 @@ export const TaskProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const contract = createEthereumContract();
+    // const contract = createEthereumContract();
     const onTaskUpdated = (t) => {
       setTask(formatTask(t));
       setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>Task updated</Link>]);
@@ -460,7 +462,7 @@ export const TaskProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const contract = createEthereumContract();
+    // const contract = createEthereumContract();
     const onTaskDeleted = (id) => {
       setTasks((current) => current.filter((p) => p.id !== id.toNumber()));
     };
@@ -501,7 +503,8 @@ export const TaskProvider = ({ children }) => {
         formatTask,
         selectedFiles,
         setSelectedFiles,
-        openDispute
+        openDispute,
+        contract
       }}
     >
       {children}

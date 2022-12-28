@@ -13,21 +13,39 @@ import { networks } from "../utils/networks";
 
 export default function Task() {
   const params = useParams();
-  const { isLoading } = useContext(PlatformContext);
-  const { formatTask, getTask, composeAuthorProfile } = useContext(TaskContext);
+  const { isLoading, getRating } = useContext(PlatformContext);
+  const { formatTask, getTask, composeAuthorProfile, contract } = useContext(TaskContext);
   const taskId = params.id;
   const [authorProfile, setAuthorProfile] = useState(null);
   const [task, setTask] = useState(null);
+  const [rating, setRating] = useState(0);
 
   useEffect(() => {
     getTask(taskId).then((t) => {
       setTask(formatTask(t));
+      getRating(t.author).then((r) => setRating(r));
     });
     // composeAuthorProfile(task.author).then((a) => setAuthorProfile(a));
 
     return () => {
       // this now gets called when the component unmounts
       // setAuthorProfile(null);
+    };
+  }, []);
+
+  useEffect(() => {
+    // const contract = createEthereumContract();
+    const onTaskUpdated = (t) => {
+      setTask(formatTask(t));
+      // setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>Task updated</Link>]);
+    };
+    if (contract) {
+      contract.on("TaskUpdated", onTaskUpdated);
+    }
+    return () => {
+      if (contract) {
+        contract.off("TaskUpdated", onTaskUpdated);
+      }
     };
   }, []);
 
@@ -58,7 +76,7 @@ export default function Task() {
               {authorProfile && authorProfile.profile.username ? <span>{authorProfile.profile.username} ({shortenAddress(task.author)})</span> : shortenAddress(task.author)}
               <div className="flex flex-row justify-center items-center">
                 <FaStar color="#ffc107" />
-                {authorProfile && authorProfile.rating.toFixed(1)}
+                {authorProfile ? authorProfile.rating.toFixed(1) : rating.toFixed(1)}
               </div>
             </div>
             <p className="mt-1 italic text-sm">
@@ -67,8 +85,8 @@ export default function Task() {
             <p className="mt-1 text-sm md:w-9/12">
               Assignee: {task.assignee !== "Unassigned" ? shortenAddress(task.assignee) : task.assignee}
             </p>
-            {task.changeRequests && (
-              <div className="mt-1 text-l w-9/12 white-glassmorphism mt-2 mb-2">
+            {(task.changeRequests && task.changeRequests.length > 0) && (
+              <div className="mt-1 text-l w-9/12 blue-glassmorphism mt-2 mb-2">
                 Change Requests:{" "}
                 {task.changeRequests.map((c, i) => (
                   <div key={i}>
@@ -100,7 +118,7 @@ export default function Task() {
                     <div className="w-6/12">{task.candidates && <Candidates candidates={task.candidates} />}</div> : null}
                 </div>
               )}
-            {task.status === TaskStatuses[4] && (
+            {task.status === TaskStatuses[5] && (
               <p className="mt-1 italic text-sm md:w-9/12">
                 Completed at: {task.completedAt}
               </p>

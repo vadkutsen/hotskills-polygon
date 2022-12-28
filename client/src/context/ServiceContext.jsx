@@ -22,6 +22,8 @@ const createEthereumContract = () => {
   return platformContract;
 };
 
+const contract = createEthereumContract();
+
 export const ServiceProvider = ({ children }) => {
   const [formData, setformData] = useState({
     category: Categories[0],
@@ -82,7 +84,7 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const availableServices = await contract.getAllServices();
         const structuredServices = availableServices.map((item) => formatService(item));
         setServices(structuredServices);
@@ -101,7 +103,7 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const fetchedService = await contract.getService(id);
         // setService(formatService(fetchedService));
         setIsLoading(false);
@@ -130,7 +132,7 @@ export const ServiceProvider = ({ children }) => {
           deliveryTime
         ];
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract.addService(serviceToSend);
         console.log(`Success - ${transaction}`);
         setIsLoading(false);
@@ -162,7 +164,7 @@ export const ServiceProvider = ({ children }) => {
           deliveryTime
         ];
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract.updateService(serviceToSend);
         console.log(`Success - ${transaction}`);
         setIsLoading(false);
@@ -184,7 +186,7 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .pauseService(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction}`);
@@ -210,7 +212,7 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .resumeService(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction}`);
@@ -236,7 +238,7 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract
           .deleteService(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction}`);
@@ -278,7 +280,7 @@ export const ServiceProvider = ({ children }) => {
         ];
         console.log(taskToSend);
         setIsLoading(true);
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const transaction = await contract.addTask(taskToSend, {
           value: ethers.utils.parseEther(calculateTotalAmount(reward, fee).toString())
         });
@@ -307,7 +309,7 @@ export const ServiceProvider = ({ children }) => {
   // Event listeners
 
   useEffect(() => {
-    const contract = createEthereumContract();
+    // const contract = createEthereumContract();
     const onNewService = (s) => {
       setServices((prevState) => [
         ...prevState,
@@ -326,7 +328,7 @@ export const ServiceProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const contract = createEthereumContract();
+    // const contract = createEthereumContract();
     const onServiceUpdated = (s) => {
       setService(formatService(s));
     };
@@ -341,7 +343,7 @@ export const ServiceProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    const contract = createEthereumContract();
+    // const contract = createEthereumContract();
     const onServiceDeleted = (id) => {
       setServices((current) => current.filter((s) => s.id !== id.toNumber()));
     };
@@ -373,7 +375,8 @@ export const ServiceProvider = ({ children }) => {
         onUploadHandler,
         ipfsUrl,
         calculateTotalAmount,
-        formatService
+        formatService,
+        contract
       }}
     >
       {children}

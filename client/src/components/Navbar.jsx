@@ -17,9 +17,6 @@ const NavBarItem = ({ title, classprops }) => (
 const Navbar = () => {
   const { currentAccount, networkId } = useContext(AuthContext);
   const [toggleMenu, setToggleMenu] = useState(false);
-  const renderNotConnectedContainer = () => {
-    return <ConnectWalletButton />;
-  };
 
   const renderAccountInfo = () => (
     <div className="flex flex-row">
@@ -58,7 +55,7 @@ const Navbar = () => {
           <li />
         )}
         <li>
-          {!currentAccount && renderNotConnectedContainer()}
+          {!currentAccount && <ConnectWalletButton />}
           {currentAccount && renderAccountInfo()}
         </li>
       </ul>
@@ -105,7 +102,7 @@ const Navbar = () => {
               <li />
             )}
             <li>
-              {!currentAccount && renderNotConnectedContainer()}
+              {!currentAccount && <ConnectWalletButton />}
               {currentAccount && renderAccountInfo()}
             </li>
           </ul>

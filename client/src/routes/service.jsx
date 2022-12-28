@@ -16,46 +16,46 @@ import { networks } from "../utils/networks";
 
 const { ethereum } = window;
 
-const createEthereumContract = () => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const platformContract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    signer
-  );
-  return platformContract;
-};
+// const createEthereumContract = () => {
+//   const provider = new ethers.providers.Web3Provider(ethereum);
+//   const signer = provider.getSigner();
+//   const platformContract = new ethers.Contract(
+//     contractAddress,
+//     contractABI,
+//     signer
+//   );
+//   return platformContract;
+// };
 
 export default function Service() {
   const params = useParams();
-  const { currentAccount, networkId } = useContext(AuthContext);
-  const { getService, formatService } = useContext(ServiceContext);
-  const { isLoading } = useContext(PlatformContext);
+  // const { currentAccount, networkId } = useContext(AuthContext);
+  const { getService, formatService, contract } = useContext(ServiceContext);
+  const { isLoading, getRating } = useContext(PlatformContext);
   const serviceId = params.id;
   const [service, setService] = useState([]);
   const [rating, setRating] = useState(0);
   const [profile, setProfile] = useState(null);
 
-  const getRating = async (address) => {
-    if (ethereum && address) {
-      try {
-        const contract = createEthereumContract();
-        const r = await contract.getRating(address);
-        setRating(r);
-      } catch (error) {
-        console.log(error);
-        alert(error.message);
-      }
-    } else {
-      console.log("Ethereum is not present");
-    }
-  };
+  // const getRating = async (address) => {
+  //   if (ethereum && address) {
+  //     try {
+  //       // const contract = createEthereumContract();
+  //       const r = await contract.getRating(address);
+  //       setRating(r);
+  //     } catch (error) {
+  //       console.log(error);
+  //       alert(error.message);
+  //     }
+  //   } else {
+  //     console.log("Ethereum is not present");
+  //   }
+  // };
 
   const getProfile = async (address) => {
     if (ethereum && address) {
       try {
-        const contract = createEthereumContract();
+        // const contract = createEthereumContract();
         const r = await contract.getProfile(address);
         setProfile(r);
       } catch (error) {
@@ -70,9 +70,24 @@ export default function Service() {
   useEffect(() => {
     getService(serviceId).then((s) => {
       setService(formatService(s));
-      getRating(s.author);
+      getRating(s.author).then((r) => setRating(r));
       getProfile(s.author);
     });
+  }, []);
+
+  useEffect(() => {
+    // const contract = createEthereumContract();
+    const onServiceUpdated = (s) => {
+      setService(formatService(s));
+    };
+    if (ethereum) {
+      contract.on("ServiceUpdated", onServiceUpdated);
+    }
+    return () => {
+      if (contract) {
+        contract.off("ServiceUpdated", onServiceUpdated);
+      }
+    };
   }, []);
 
   if (service) {

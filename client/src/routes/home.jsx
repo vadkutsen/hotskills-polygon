@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { PlatformContext } from "../context/PlatformContext";
-import { Welcome, Tasks, Services, Loader } from "../components";
+import { Welcome, Tasks, Services, Loader, Connect } from "../components";
 import { AuthContext } from "../context/AuthContext";
-import Connect from "../components/Connect";
 
 export default function Home() {
   const { isLoading } = useContext(PlatformContext);
