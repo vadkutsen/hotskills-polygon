@@ -4,7 +4,7 @@ import { TaskContext } from "../../context/TaskContext";
 const MAX_COUNT = 5;
 
 const IpfsForm = () => {
-  const { onUploadHandler, selectedFiles, setSelectedFiles } = useContext(TaskContext);
+  const { selectedFiles, setSelectedFiles } = useContext(TaskContext);
   const [fileLimit, setFileLimit] = useState(false);
   const handleUploadFiles = (files) => {
     const selected = [...selectedFiles];
@@ -37,33 +37,24 @@ const IpfsForm = () => {
       <p className="text-2xl text-white">
         or paste a link to your results from any other hosting.
       </p>
-      {/* <form onSubmit={onUploadHandler}> */}
-        <input
-          id="fileUpload"
-          type="file"
-          name="file"
-          multiple
-          onChange={handleFileEvent}
-          disabled={fileLimit}
-          className="hidden"
-        />
-        <label htmlFor="fileUpload">
-          <a
-            className={`${
-              !fileLimit ? "" : "disabled"
-            } flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]`}
-          >
-            Select Files
-          </a>
-        </label>
-        {/* <button
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
-          id="upload-btn"
-          type="submit"
+      <input
+        id="fileUpload"
+        type="file"
+        name="file"
+        multiple
+        onChange={handleFileEvent}
+        disabled={fileLimit}
+        className="hidden"
+      />
+      <label htmlFor="fileUpload">
+        <a
+          className={`${
+            !fileLimit ? "" : "disabled"
+          } flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]`}
         >
-          Upload File
-        </button> */}
-      {/* </form> */}
+          Select Files
+        </a>
+      </label>
       <div className="uploaded-files-list">
         {selectedFiles.map((file, i) => (
           <div key={i}>{file.name}</div>
