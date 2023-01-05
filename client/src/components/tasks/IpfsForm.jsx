@@ -32,7 +32,7 @@ const IpfsForm = () => {
   return (
     <div>
       <p className="mt-5 text-2xl text-white">
-        Select result files (up to 5 - we will store them on IPFS)
+        Select result files (up to {MAX_COUNT} - we will store them on IPFS)
       </p>
       <p className="text-2xl text-white">
         or paste a link to your results from any other hosting.
@@ -52,7 +52,7 @@ const IpfsForm = () => {
             !fileLimit ? "" : "disabled"
           } flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]`}
         >
-          Select Files
+          Choose Files
         </a>
       </label>
       <div className="uploaded-files-list">

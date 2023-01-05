@@ -1,29 +1,63 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ServiceContext } from "../../context/ServiceContext";
 
+const MAX_COUNT = 1;
+
 const IpfsForm = () => {
-  const { onUploadHandler } = useContext(ServiceContext);
+  const { selectedFiles, setSelectedFiles } = useContext(ServiceContext);
+  const [fileLimit, setFileLimit] = useState(false);
+  const handleUploadFiles = (files) => {
+    const selected = [...selectedFiles];
+    let limitExceeded = false;
+    files.some((file) => {
+      if (selected.findIndex((f) => f.name === file.name) === -1) {
+        selected.push(file);
+        if (selected.length === MAX_COUNT) setFileLimit(true);
+        if (selected.length > MAX_COUNT) {
+          alert(`You can only add a maximum of ${MAX_COUNT} files`);
+          setFileLimit(false);
+          limitExceeded = true;
+          return true;
+        }
+      }
+    });
+    if (!limitExceeded) setSelectedFiles(selected);
+  };
+
+  const handleFileEvent = (e) => {
+    const chosenFiles = Array.prototype.slice.call(e.target.files);
+    handleUploadFiles(chosenFiles);
+  };
 
   return (
     <div>
-      <p className="mt-5 text-2xl text-white text-basetext-white">
-        Upload file using IPFS or paste a link to your result on any other
-        hosting (preferably BTTC).
+      <p className="mt-5 text-white">
+        Upload images (up to {MAX_COUNT}) to your service gallery
       </p>
-      <form onSubmit={onUploadHandler}>
-        <input
-          className="mt-5 text-l text-white text-basetext-white"
-          type="file"
-          name="file"
-        />
-        <button
-          className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
-          id="upload-btn"
-          type="submit"
+      <input
+        id="fileUpload"
+        type="file"
+        name="file"
+        multiple
+        onChange={handleFileEvent}
+        disabled={fileLimit}
+        className="hidden"
+        accept="image/png,image/jpeg,image/gif"
+      />
+      <label htmlFor="fileUpload">
+        <a
+          className={`${
+            !fileLimit ? "" : "disabled"
+          } flex flex-row justify-center items-center my-5 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] text-white rounded-2xl cursor-pointer`}
         >
-          Upload File
-        </button>
-      </form>
+          Choose Files
+        </a>
+      </label>
+      <div className="uploaded-files-list">
+        {selectedFiles.map((file, i) => (
+          <div key={i}>{file.name}</div>
+        ))}
+      </div>
     </div>
   );
 };

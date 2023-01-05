@@ -36,26 +36,21 @@ export const ServiceProvider = ({ children }) => {
   const [services, setServices] = useState([]);
   const [service, setService] = useState([]);
   const [ipfsUrl, setIpfsUrl] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const { notify, setIsLoading, setNotifications } = useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
 
-  const onUploadHandler = async (event) => {
+  const onUploadHandler = async (files) => {
     const client = new Web3Storage({ token: import.meta.env.VITE_WEB3_STORAGE_TOKEN });
-    event.preventDefault();
-    const form = event.target;
-    const { files } = form[0];
     if (!files || files.length === 0) {
       return alert("No files selected");
     }
-    setIsLoading(true);
     const rootCid = await client.put(files);
     const info = await client.status(rootCid);
     // const res = await client.get(rootCid);
     const url = `https://${info.cid}.ipfs.w3s.link/${files[0].name}`;
-    form.reset();
-    setIpfsUrl(url);
-    setIsLoading(false);
     notify("File successfully uploaded to IPFS.");
+    return url;
   };
 
   const handleChange = (e, name) => {
@@ -122,7 +117,7 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         const { category, title, description, price, deliveryTime } = formData;
-        const image = ipfsUrl || "";
+        const image = await onUploadHandler(selectedFiles);
         const serviceToSend = [
           image,
           category,
@@ -376,6 +371,8 @@ export const ServiceProvider = ({ children }) => {
         ipfsUrl,
         calculateTotalAmount,
         formatService,
+        selectedFiles,
+        setSelectedFiles,
         contract
       }}
     >

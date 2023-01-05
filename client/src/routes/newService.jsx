@@ -6,6 +6,7 @@ import { ServiceContext } from "../context/ServiceContext";
 import { Loader } from "../components";
 import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
+import IpfsForm from "../components/services/IpfsForm";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -97,12 +98,13 @@ export default function NewService() {
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
-                Image
+                Gallery
               </span>
               <div className="relative">
-                <div>
+                <IpfsForm />
+                {/* <div>
                   <p className=" text-l text-white text-basetext-white">
-                    Upload an image for your service to IPFS
+                    Upload images for your service gallery to IPFS
                   </p>
                   {ipfsUrl && <img alt="Service" className="self-center" src={ipfsUrl} />}
                   <form onSubmit={onUploadHandler}>
@@ -124,7 +126,7 @@ export default function NewService() {
                       </button>
                     )}
                   </form>
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
@@ -199,7 +201,7 @@ export default function NewService() {
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
+                className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-2xl cursor-pointer"
               >
                 Add Service
               </button>
