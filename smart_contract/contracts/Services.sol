@@ -21,8 +21,6 @@ contract Services is ReentrancyGuard {
     event ServiceUpdated(PlatformStructs.Service _service);
     event ServiceDeleted(uint256 _id);
 
-    // Modifiers
-
     modifier onlyServiceAuthor(uint256 _id) {
         require(
             msg.sender == services[_id].author,
@@ -45,18 +43,18 @@ contract Services is ReentrancyGuard {
         require(bytes(_newService.description).length > 0,"Description is required.");
         require(_newService.price > 0, "Price is required.");
         require(_newService.deliveryTime > 0, "Delivery time is required.");
-        // uint256 _id = _mappingLength.current();
-        services[_mappingLength.current()].id = _mappingLength.current();
-        services[_mappingLength.current()].image = _newService.image;
-        services[_mappingLength.current()].category = _newService.category;
-        services[_mappingLength.current()].title = _newService.title;
-        services[_mappingLength.current()].description = _newService.description;
-        services[_mappingLength.current()].author = payable(msg.sender);
-        services[_mappingLength.current()].createdAt = block.timestamp;
-        services[_mappingLength.current()].price = _newService.price;
-        services[_mappingLength.current()].deliveryTime = _newService.deliveryTime;
-        services[_mappingLength.current()].allServicesIndex = allServices.length;
-        services[_mappingLength.current()].lastStatusChangeAt = block.timestamp;
+        uint256 _id = _mappingLength.current();
+        services[_id].id = _mappingLength.current();
+        services[_id].image = _newService.image;
+        services[_id].category = _newService.category;
+        services[_id].title = _newService.title;
+        services[_id].description = _newService.description;
+        services[_id].author = payable(msg.sender);
+        services[_id].createdAt = block.timestamp;
+        services[_id].price = _newService.price;
+        services[_id].deliveryTime = _newService.deliveryTime;
+        services[_id].allServicesIndex = allServices.length;
+        services[_id].lastStatusChangeAt = block.timestamp;
         allServices.push(_mappingLength.current());
         _mappingLength.increment();
         emit ServiceAdded(services[_mappingLength.current()]);
@@ -115,14 +113,15 @@ contract Services is ReentrancyGuard {
         onlyServiceAuthor(_id)
         returns (bool)
     {
+        uint index = services[_id].allServicesIndex;
         delete services[_id];
-        delete allServices[services[_id].allServicesIndex];
-        if (allServices[services[_id].allServicesIndex] == allServices[allServices.length - 1]) {
+        delete allServices[index];
+        if (allServices[index] == allServices[allServices.length - 1]) {
             allServices.pop();
         } else {
-            allServices[services[_id].allServicesIndex] = allServices[allServices.length - 1];
+            allServices[index] = allServices[allServices.length - 1];
             allServices.pop();
-            services[allServices[services[_id].allServicesIndex]].allServicesIndex = services[_id].allServicesIndex;
+            services[allServices[index]].allServicesIndex = index;
         }
         emit ServiceDeleted(_id);
         return true;

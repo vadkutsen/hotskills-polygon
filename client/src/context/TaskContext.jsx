@@ -3,7 +3,13 @@ import { ethers } from "ethers";
 import { Link } from "react-router-dom";
 import { Web3Storage } from "web3.storage";
 import contractABI from "../utils/contractABI.json";
-import { TaskTypes, address0, TaskStatuses, Categories, contractAddress } from "../utils/constants";
+import {
+  TaskTypes,
+  address0,
+  TaskStatuses,
+  Categories,
+  contractAddress,
+} from "../utils/constants";
 import { PlatformContext } from "./PlatformContext";
 import { AuthContext } from "./AuthContext";
 import { networks } from "../utils/networks";
@@ -31,18 +37,22 @@ export const TaskProvider = ({ children }) => {
     description: "",
     taskType: 0,
     reward: 0,
-    assignee: address0
+    assignee: address0,
+    dueDate: new Date(),
   });
 
   const [tasks, setTasks] = useState("");
   const [task, setTask] = useState([]);
-  const { notify, fee, setIsLoading, setNotifications } = useContext(PlatformContext);
+  const { notify, fee, setIsLoading, setNotifications } =
+    useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
   const [ipfsUrl, setIpfsUrl] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const onUploadHandler = async (files) => {
-    const client = new Web3Storage({ token: import.meta.env.VITE_WEB3_STORAGE_TOKEN });
+    const client = new Web3Storage({
+      token: import.meta.env.VITE_WEB3_STORAGE_TOKEN,
+    });
     if (!files || files.length === 0) {
       return;
     }
@@ -50,36 +60,33 @@ export const TaskProvider = ({ children }) => {
     const info = await client.status(rootCid);
     // const res = await client.get(rootCid);
     const url = `https://${info.cid}.ipfs.w3s.link/`;
-    notify("File(s) successfully uploaded to IPFS.");
+    // notify("File(s) successfully uploaded to IPFS.");
     return url;
   };
 
   const handleChange = (e, name) => {
-    setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+    if (name === "dueDate") {
+      setformData((prevState) => ({ ...prevState, [name]: e }));
+    } else {
+      setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+    }
   };
 
   function formatTask(t) {
-    return ({
+    return {
       id: t.id.toNumber(),
       category: t.category,
       title: t.title,
       description: t.description,
       taskType: TaskTypes[t.taskType],
-      createdAt: new Date(
-        t.createdAt.toNumber() * 1000
-      ).toLocaleDateString(),
+      dueDate: new Date(t.dueDate.toNumber()).toLocaleDateString(),
+      createdAt: new Date(t.createdAt.toNumber() * 1000).toLocaleDateString(),
       author: t.author,
-      candidates:
-        t.candidates.map((c) => c.toLowerCase()),
-      assignee:
-        t.assignee === address0
-          ? "Unassigned"
-          : t.assignee,
+      candidates: t.candidates.map((c) => c.toLowerCase()),
+      assignee: t.assignee === address0 ? "Unassigned" : t.assignee,
       completedAt:
         t.completedAt > 0
-          ? new Date(
-            t.completedAt.toNumber() * 1000
-          ).toLocaleDateString()
+          ? new Date(t.completedAt.toNumber() * 1000).toLocaleDateString()
           : "Not completed yet",
       reward: parseInt(t.reward, 10) / 10 ** 18,
       result: t.result,
@@ -88,14 +95,13 @@ export const TaskProvider = ({ children }) => {
         t.lastStatusChangeAt.toNumber() * 1000
       ).toLocaleDateString(),
       changeRequests: t.changeRequests,
-    });
+    };
   }
 
   const formatUser = async (address) => {
     if (ethereum && address) {
       try {
         const user = {};
-        // const contract = createEthereumContract();
         const fetchedProfile = await contract.getProfile(address);
         user.profile = fetchedProfile;
         user.address = address;
@@ -104,7 +110,7 @@ export const TaskProvider = ({ children }) => {
         return user;
       } catch (error) {
         console.log(error);
-        // alert(error.message);
+        alert(error.message);
       }
     } else {
       console.log("Ethereum is not present");
@@ -128,23 +134,22 @@ export const TaskProvider = ({ children }) => {
   };
 
   const getAllTasks = async () => {
-    try {
-      if (ethereum) {
+    if (ethereum) {
+      try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const availableTasks = await contract.getAllTasks();
         const structuredTasks = availableTasks
           .filter((item) => item.title && item.title !== "")
-          .map((item) => (formatTask(item)));
+          .map((item) => formatTask(item));
         setTasks(structuredTasks);
         setIsLoading(false);
-      } else {
-        console.log("Ehtereum is not present");
+      } catch (error) {
+        console.log(error);
+        alert(error.message);
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.log(error);
-      // alert(error.message);
-      setIsLoading(false);
+    } else {
+      console.log("Ehtereum is not present");
     }
   };
 
@@ -152,14 +157,12 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const fetchedTask = await contract.getTask(id);
-        // setTask(formatTask(fetchedTask));
         setIsLoading(false);
         return fetchedTask;
       } catch (error) {
         console.log(error);
-        // alert(error.message);
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -178,7 +181,15 @@ export const TaskProvider = ({ children }) => {
   const addTask = async () => {
     if (ethereum) {
       try {
-        const { category, title, description, taskType, reward, assignee } = formData;
+        const {
+          category,
+          title,
+          description,
+          taskType,
+          reward,
+          assignee,
+          dueDate,
+        } = formData;
         // const feeAmount = (ethers.utils.parseEther(reward) / 100) * fee;
         // const totalAmount = ethers.utils.formatEther(ethers.utils.parseEther(reward) + feeAmount);
         const taskToSend = [
@@ -187,12 +198,15 @@ export const TaskProvider = ({ children }) => {
           description,
           taskType,
           ethers.utils.parseEther(reward),
-          assignee
+          assignee,
+          dueDate.getTime(),
         ];
+        console.log(taskToSend);
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const transaction = await contract.addTask(taskToSend, {
-          value: ethers.utils.parseEther(calculateTotalAmount(reward, fee).toString()),
+          value: ethers.utils.parseEther(
+            calculateTotalAmount(reward, fee).toString()
+          ),
         });
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
@@ -200,9 +214,7 @@ export const TaskProvider = ({ children }) => {
         notify("New task added successfully.");
       } catch (error) {
         console.log(error);
-        alert(
-          error.message
-        );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -215,7 +227,6 @@ export const TaskProvider = ({ children }) => {
       try {
         setIsLoading(true);
         const bnId = ethers.BigNumber.from(id);
-        // const contract = createEthereumContract();
         const transaction = await contract.applyForTask(bnId);
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
@@ -225,9 +236,7 @@ export const TaskProvider = ({ children }) => {
         window.location.reload();
       } catch (error) {
         console.log(error);
-        alert(
-          error.message
-        );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -239,19 +248,22 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         let res;
         if (!result && selectedFiles.length > 0) {
           res = await onUploadHandler(selectedFiles);
         } else if (result && selectedFiles.length === 0) {
           res = result;
         } else {
-          alert("Plese select files for uploading or enter a link to your result.");
+          alert(
+            "Plese select files for uploading or enter a link to your result."
+          );
           return;
         }
         console.log("result: ", res);
-        const transaction = await contract
-          .submitResult(ethers.BigNumber.from(id), res);
+        const transaction = await contract.submitResult(
+          ethers.BigNumber.from(id),
+          res
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -259,9 +271,7 @@ export const TaskProvider = ({ children }) => {
         notify("Result submitted successfully.");
       } catch (error) {
         console.log(error);
-        alert(
-          error.message
-        );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -273,9 +283,9 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
-        const transaction = await contract
-          .deleteTask(ethers.BigNumber.from(id));
+        const transaction = await contract.deleteTask(
+          ethers.BigNumber.from(id)
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -283,9 +293,7 @@ export const TaskProvider = ({ children }) => {
         window.location.replace("/tasks");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -297,9 +305,10 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
-        const transaction = await contract
-          .assignTask(ethers.BigNumber.from(id), candidate);
+        const transaction = await contract.assignTask(
+          ethers.BigNumber.from(id),
+          candidate
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -307,9 +316,7 @@ export const TaskProvider = ({ children }) => {
         notify("Task assigned.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -321,9 +328,9 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
-        const transaction = await contract
-          .unassignTask(ethers.BigNumber.from(id));
+        const transaction = await contract.unassignTask(
+          ethers.BigNumber.from(id)
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -331,9 +338,7 @@ export const TaskProvider = ({ children }) => {
         notify("Task unassigned.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -346,9 +351,10 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
-        const transaction = await contract
-          .requestChange(ethers.BigNumber.from(id), message);
+        const transaction = await contract.requestChange(
+          ethers.BigNumber.from(id),
+          message
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -356,9 +362,7 @@ export const TaskProvider = ({ children }) => {
         notify("Change reaquest submitted.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -370,9 +374,9 @@ export const TaskProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
-        const transaction = await contract
-          .openDispute(ethers.BigNumber.from(id));
+        const transaction = await contract.openDispute(
+          ethers.BigNumber.from(id)
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -380,9 +384,7 @@ export const TaskProvider = ({ children }) => {
         notify("Dispute opened successfuly.");
       } catch (error) {
         console.log(error);
-        alert(
-          error.message
-        );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -394,9 +396,10 @@ export const TaskProvider = ({ children }) => {
     try {
       if (ethereum) {
         setIsLoading(true);
-        // const contract = createEthereumContract();
-        const transaction = await contract
-          .completeTask(ethers.BigNumber.from(id), newRating);
+        const transaction = await contract.completeTask(
+          ethers.BigNumber.from(id),
+          newRating
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllTasks();
@@ -407,7 +410,7 @@ export const TaskProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error);
-      // alert("Oops! Something went wrong. See the browser console for details.");
+      alert(error.message);
       setIsLoading(false);
     }
   };
@@ -420,13 +423,14 @@ export const TaskProvider = ({ children }) => {
 
   // Event listeners
   useEffect(() => {
-    // const contract = createEthereumContract();
     const onNewTask = (t) => {
-      setTasks((prevState) => [
+      setTasks((prevState) => [...prevState, formatTask(t)]);
+      setNotifications((prevState) => [
         ...prevState,
-        formatTask(t)
+        <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>
+          New task added
+        </Link>,
       ]);
-      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>New task added</Link>]);
     };
     if (ethereum) {
       contract.on("TaskAdded", onNewTask);
@@ -439,10 +443,14 @@ export const TaskProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // const contract = createEthereumContract();
     const onTaskUpdated = (t) => {
       setTask(formatTask(t));
-      setNotifications((prevState) => [...prevState, <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>Task updated</Link>]);
+      setNotifications((prevState) => [
+        ...prevState,
+        <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>
+          Task updated
+        </Link>,
+      ]);
     };
     if (ethereum) {
       contract.on("TaskUpdated", onTaskUpdated);
@@ -455,7 +463,6 @@ export const TaskProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // const contract = createEthereumContract();
     const onTaskDeleted = (id) => {
       setTasks((current) => current.filter((p) => p.id !== id.toNumber()));
     };
@@ -497,7 +504,7 @@ export const TaskProvider = ({ children }) => {
         selectedFiles,
         setSelectedFiles,
         openDispute,
-        contract
+        contract,
       }}
     >
       {children}

@@ -101,6 +101,7 @@ contract Tasks is ReentrancyGuard {
         tasks[_id].createdAt = block.timestamp;
         tasks[_id].reward = _newTask.reward;
         tasks[_id].assignee = _newTask.assignee;
+        tasks[_id].dueDate = _newTask.dueDate;
         tasks[_id].allTasksIndex = allTasks.length;
         tasks[_id].lastStatusChangeAt = block.timestamp;
         allTasks.push(_id);
@@ -120,7 +121,7 @@ contract Tasks is ReentrancyGuard {
     {
         require(_candidateAddress != address(0), "Address required.");
         require(
-            tasks[_id].taskType == PlatformStructs.TaskTypes.SelectedByAuthor,
+            tasks[_id].taskType == PlatformStructs.TaskTypes.Casting,
             "Invalid task type"
         );
         require(
@@ -233,8 +234,10 @@ contract Tasks is ReentrancyGuard {
             ratings[tasks[_id].assignee],
             _rating
         );
+        uint256 platformFee = calculatePlatformFee(tasks[_id].reward);
+        totalFees += platformFee;
         (bool success, ) = tasks[_id].assignee.call{
-            value: tasks[_id].reward
+            value: tasks[_id].reward - platformFee
         }("");
         require(success, "Tranfer failed.");
         emit TaskUpdated(tasks[_id]);
@@ -256,8 +259,10 @@ contract Tasks is ReentrancyGuard {
         tasks[_id].completedAt = block.timestamp;
         tasks[_id].status = PlatformStructs.TaskStatuses.Completed;
         tasks[_id].lastStatusChangeAt = block.timestamp;
+        uint256 platformFee = calculatePlatformFee(tasks[_id].reward);
+        totalFees += platformFee;
         (bool success, ) = tasks[_id].assignee.call{
-            value: tasks[_id].reward
+            value: tasks[_id].reward - platformFee
         }("");
         require(success, "Tranfer failed.");
         emit TaskUpdated(tasks[_id]);

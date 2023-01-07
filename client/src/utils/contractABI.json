@@ -1,337 +1,5 @@
 [
 	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "avatar",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "username",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "skills",
-						"type": "string"
-					},
-					{
-						"internalType": "string[]",
-						"name": "languages",
-						"type": "string[]"
-					},
-					{
-						"internalType": "uint16",
-						"name": "rate",
-						"type": "uint16"
-					},
-					{
-						"internalType": "uint8",
-						"name": "availability",
-						"type": "uint8"
-					}
-				],
-				"internalType": "struct PlatformStructs.ReceivedProfile",
-				"name": "_newProfile",
-				"type": "tuple"
-			}
-		],
-		"name": "addProfile",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "image",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "category",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "title",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "description",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "price",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint8",
-						"name": "deliveryTime",
-						"type": "uint8"
-					}
-				],
-				"internalType": "struct PlatformStructs.ReceivedService",
-				"name": "_newService",
-				"type": "tuple"
-			}
-		],
-		"name": "addService",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "category",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "title",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "description",
-						"type": "string"
-					},
-					{
-						"internalType": "enum PlatformStructs.TaskTypes",
-						"name": "taskType",
-						"type": "uint8"
-					},
-					{
-						"internalType": "uint256",
-						"name": "reward",
-						"type": "uint256"
-					},
-					{
-						"internalType": "address payable",
-						"name": "assignee",
-						"type": "address"
-					}
-				],
-				"internalType": "struct PlatformStructs.ReceivedTask",
-				"name": "_newTask",
-				"type": "tuple"
-			}
-		],
-		"name": "addTask",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "applyForTask",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address payable",
-				"name": "_candidateAddress",
-				"type": "address"
-			}
-		],
-		"name": "assignTask",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint8",
-				"name": "_rating",
-				"type": "uint8"
-			}
-		],
-		"name": "completeTask",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "deleteProfile",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "deleteService",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "deleteTask",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_taskId",
-				"type": "uint256"
-			}
-		],
-		"name": "openDispute",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			},
-			{
-				"internalType": "uint8",
-				"name": "_rating",
-				"type": "uint8"
-			}
-		],
-		"name": "rateUser",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_message",
-				"type": "string"
-			}
-		],
-		"name": "requestChange",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
@@ -393,25 +61,6 @@
 		],
 		"name": "OwnershipTransferred",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "pauseService",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -579,69 +228,6 @@
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "requestPayment",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_taskId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address payable",
-				"name": "_winner",
-				"type": "address"
-			}
-		],
-		"name": "resolveDispute",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "resumeService",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -805,49 +391,6 @@
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint8",
-				"name": "_fee",
-				"type": "uint8"
-			}
-		],
-		"name": "setPlatformFee",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_result",
-				"type": "string"
-			}
-		],
-		"name": "submitResult",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -881,6 +424,11 @@
 						"internalType": "address payable",
 						"name": "assignee",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dueDate",
+						"type": "uint256"
 					},
 					{
 						"internalType": "address[]",
@@ -991,6 +539,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "uint256",
+						"name": "dueDate",
+						"type": "uint256"
+					},
+					{
 						"internalType": "address[]",
 						"name": "candidates",
 						"type": "address[]"
@@ -1053,38 +606,6 @@
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "unassignTask",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"components": [
 					{
 						"internalType": "string",
@@ -1122,7 +643,7 @@
 				"type": "tuple"
 			}
 		],
-		"name": "updateProfile",
+		"name": "addProfile",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -1135,11 +656,6 @@
 	},
 	{
 		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
 			{
 				"components": [
 					{
@@ -1178,7 +694,7 @@
 				"type": "tuple"
 			}
 		],
-		"name": "updateService",
+		"name": "addService",
 		"outputs": [
 			{
 				"internalType": "bool",
@@ -1190,13 +706,56 @@
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "withdrawFees",
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "category",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "enum PlatformStructs.TaskTypes",
+						"name": "taskType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reward",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address payable",
+						"name": "assignee",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dueDate",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct PlatformStructs.ReceivedTask",
+				"name": "_newTask",
+				"type": "tuple"
+			}
+		],
+		"name": "addTask",
 		"outputs": [
 			{
-				"internalType": "bool",
+				"internalType": "uint256",
 				"name": "",
-				"type": "bool"
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "payable",
@@ -1241,6 +800,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "applyForTask",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "arbiterRewardPercentage",
 		"outputs": [
@@ -1251,6 +829,30 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_candidateAddress",
+				"type": "address"
+			}
+		],
+		"name": "assignTask",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1300,6 +902,81 @@
 		"inputs": [
 			{
 				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_rating",
+				"type": "uint8"
+			}
+		],
+		"name": "completeTask",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "deleteProfile",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "deleteService",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "deleteTask",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
@@ -1325,6 +1002,203 @@
 				"internalType": "bool",
 				"name": "resolved",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_from",
+				"type": "uint256"
+			}
+		],
+		"name": "get20Services",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "image",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "category",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "address payable",
+						"name": "author",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "createdAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "deliveryTime",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "allServicesIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum PlatformStructs.ServiceStatuses",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastStatusChangeAt",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct PlatformStructs.Service[20]",
+				"name": "",
+				"type": "tuple[20]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_from",
+				"type": "uint256"
+			}
+		],
+		"name": "get20Tasks",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "id",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "category",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "address payable",
+						"name": "author",
+						"type": "address"
+					},
+					{
+						"internalType": "address payable",
+						"name": "assignee",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dueDate",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address[]",
+						"name": "candidates",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "createdAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "completedAt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum PlatformStructs.TaskTypes",
+						"name": "taskType",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "reward",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "result",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "changeRequests",
+						"type": "string[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "allTasksIndex",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum PlatformStructs.TaskStatuses",
+						"name": "status",
+						"type": "uint8"
+					},
+					{
+						"internalType": "uint256",
+						"name": "lastStatusChangeAt",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct PlatformStructs.Task[20]",
+				"name": "",
+				"type": "tuple[20]"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -1440,6 +1314,11 @@
 						"internalType": "address payable",
 						"name": "assignee",
 						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dueDate",
+						"type": "uint256"
 					},
 					{
 						"internalType": "address[]",
@@ -1704,6 +1583,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "uint256",
+						"name": "dueDate",
+						"type": "uint256"
+					},
+					{
 						"internalType": "address[]",
 						"name": "candidates",
 						"type": "address[]"
@@ -1787,6 +1671,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			}
+		],
+		"name": "openDispute",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -1797,6 +1694,25 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "pauseService",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1865,6 +1781,30 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_rating",
+				"type": "uint8"
+			}
+		],
+		"name": "rateUser",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -1878,6 +1818,93 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_message",
+				"type": "string"
+			}
+		],
+		"name": "requestChange",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "requestPayment",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_taskId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_winner",
+				"type": "address"
+			}
+		],
+		"name": "resolveDispute",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "resumeService",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1957,6 +1984,49 @@
 	{
 		"inputs": [
 			{
+				"internalType": "uint8",
+				"name": "_fee",
+				"type": "uint8"
+			}
+		],
+		"name": "setPlatformFee",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_result",
+				"type": "string"
+			}
+		],
+		"name": "submitResult",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
@@ -1993,6 +2063,11 @@
 				"internalType": "address payable",
 				"name": "assignee",
 				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "dueDate",
+				"type": "uint256"
 			},
 			{
 				"internalType": "uint256",
@@ -2049,6 +2124,158 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "unassignTask",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "avatar",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "username",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "skills",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "languages",
+						"type": "string[]"
+					},
+					{
+						"internalType": "uint16",
+						"name": "rate",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint8",
+						"name": "availability",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct PlatformStructs.ReceivedProfile",
+				"name": "_newProfile",
+				"type": "tuple"
+			}
+		],
+		"name": "updateProfile",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_id",
+				"type": "uint256"
+			},
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "image",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "category",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "title",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "description",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "deliveryTime",
+						"type": "uint8"
+					}
+				],
+				"internalType": "struct PlatformStructs.ReceivedService",
+				"name": "_newService",
+				"type": "tuple"
+			}
+		],
+		"name": "updateService",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawFees",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "payable",
 		"type": "function"
 	}
 ]

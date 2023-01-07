@@ -1,13 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ethers } from "ethers";
+// import { ethers } from "ethers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DatePicker from "react-datepicker";
 import { PlatformContext } from "../context/PlatformContext";
 import { TaskContext } from "../context/TaskContext";
-import { AuthContext } from "../context/AuthContext";
+// import { AuthContext } from "../context/AuthContext";
 import { Loader } from "../components";
 import { Categories, TaskTypes } from "../utils/constants";
 import { networks } from "../utils/networks";
+
+import "react-datepicker/dist/react-datepicker.css";
+import { ImWarning } from "react-icons/im";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   switch (name) {
@@ -50,7 +54,7 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
           type={type}
           value={value}
           onChange={(e) => handleChange(e, name)}
-          className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
+          className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border text-sm"
         />
       );
   }
@@ -59,6 +63,8 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
 export default function NewTask() {
   const { isLoading, fee, balance } = useContext(PlatformContext);
   const { handleChange, addTask, formData, calculateTotalAmount } = useContext(TaskContext);
+
+  const [dueDate, setDueDate] = useState(new Date());
 
   const handleSubmit = (e) => {
     const { title, description, reward } = formData;
@@ -141,6 +147,19 @@ export default function NewTask() {
                 </div>
               </div>
             </div>
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+              <span
+                className="block tracking-wide text-gray-500 text-xs font-bold mb-2"
+                htmlFor="grid-state"
+              >
+                Due Date
+              </span>
+              <DatePicker
+                selected={formData.dueDate}
+                onChange={(date) => handleChange(date, "dueDate")}
+                className="w-full bg-transparent border text-white py-3 px-4 pr-8 rounded"
+              />
+            </div>
             <p className="text-white self-end">Balance: {balance} {networks.testnet.nativeCurrency.symbol}</p>
             <div className="flex flex-row w-full gap-2">
               <FormField
@@ -151,6 +170,12 @@ export default function NewTask() {
                 handleChange={handleChange}
               />
               <span className="text-white self-center">{networks.testnet.nativeCurrency.symbol}</span>
+            </div>
+            <div className="flex justify-centers items-center gap-2 text-white">
+              <ImWarning color="green" className="w-36" />
+              <i className="text-sm">
+                Reward amount will be securely locked in the contract and will be paid after the task result is approved by you or will be returned if you delete the task.
+              </i>
             </div>
             <div className="h-[1px] w-full bg-gray-400 my-2" />
             <p className="text-white text-center">

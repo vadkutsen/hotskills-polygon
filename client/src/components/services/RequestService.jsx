@@ -12,7 +12,7 @@ const RequestService = (params) => {
     category: service.category,
     title: service.title,
     description: "",
-    taskType: "0",
+    taskType: "1",
     assignee: service.author,
     reward: service.price,
     fee

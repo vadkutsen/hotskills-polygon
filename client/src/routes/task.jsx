@@ -26,7 +26,6 @@ export default function Task() {
       getRating(t.author).then((r) => setRating(r));
     });
     // composeAuthorProfile(task.author).then((a) => setAuthorProfile(a));
-
     return () => {
       // this now gets called when the component unmounts
       // setAuthorProfile(null);
@@ -68,6 +67,9 @@ export default function Task() {
             </div>
             <p className="mt-1 text-2xl md:w-9/12">
               {task.description}
+            </p>
+            <p>
+              Due Date: {task.dueDate}
             </p>
             <div className="pt-4 flex flex-row gap-2 items-center italic">
               {authorProfile && authorProfile.profile.avatar ?

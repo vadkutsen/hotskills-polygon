@@ -49,7 +49,7 @@ export const ServiceProvider = ({ children }) => {
     const info = await client.status(rootCid);
     // const res = await client.get(rootCid);
     const url = `https://${info.cid}.ipfs.w3s.link/${files[0].name}`;
-    notify("File successfully uploaded to IPFS.");
+    // notify("File successfully uploaded to IPFS.");
     return url;
   };
 
@@ -79,7 +79,6 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const availableServices = await contract.getAllServices();
         const structuredServices = availableServices.map((item) => formatService(item));
         setServices(structuredServices);
@@ -98,7 +97,6 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const fetchedService = await contract.getService(id);
         // setService(formatService(fetchedService));
         setIsLoading(false);
@@ -116,6 +114,7 @@ export const ServiceProvider = ({ children }) => {
   const addService = async () => {
     if (ethereum) {
       try {
+        setIsLoading(true);
         const { category, title, description, price, deliveryTime } = formData;
         const image = await onUploadHandler(selectedFiles);
         const serviceToSend = [
@@ -126,18 +125,14 @@ export const ServiceProvider = ({ children }) => {
           ethers.utils.parseEther(price),
           deliveryTime
         ];
-        setIsLoading(true);
-        // const contract = createEthereumContract();
         const transaction = await contract.addService(serviceToSend);
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         window.location.replace("/services");
         notify("Service added successfully.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -159,9 +154,8 @@ export const ServiceProvider = ({ children }) => {
           deliveryTime
         ];
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const transaction = await contract.updateService(serviceToSend);
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         window.location.reload();
         notify("Service updated successfully.");
@@ -184,18 +178,16 @@ export const ServiceProvider = ({ children }) => {
         // const contract = createEthereumContract();
         const transaction = await contract
           .pauseService(ethers.BigNumber.from(id));
-        console.log(`Success - ${transaction}`);
+        console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllServices();
         notify("Service paused successfully.");
         // window.location.reload();
-        getAllServices();
-        getService();
+        // getAllServices();
+        // getService();
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -207,7 +199,6 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const transaction = await contract
           .resumeService(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction}`);
@@ -219,9 +210,7 @@ export const ServiceProvider = ({ children }) => {
         getService();
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -233,7 +222,6 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const transaction = await contract
           .deleteService(ethers.BigNumber.from(id));
         console.log(`Success - ${transaction}`);
@@ -243,9 +231,7 @@ export const ServiceProvider = ({ children }) => {
         window.location.replace("/services");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -275,7 +261,6 @@ export const ServiceProvider = ({ children }) => {
         ];
         console.log(taskToSend);
         setIsLoading(true);
-        // const contract = createEthereumContract();
         const transaction = await contract.addTask(taskToSend, {
           value: ethers.utils.parseEther(calculateTotalAmount(reward, fee).toString())
         });
@@ -285,9 +270,7 @@ export const ServiceProvider = ({ children }) => {
         notify("New task added successfully.");
       } catch (error) {
         console.log(error);
-        // alert(
-        //   "Oops! Something went wrong. See the browser console for details."
-        // );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -304,7 +287,6 @@ export const ServiceProvider = ({ children }) => {
   // Event listeners
 
   useEffect(() => {
-    // const contract = createEthereumContract();
     const onNewService = (s) => {
       setServices((prevState) => [
         ...prevState,
@@ -323,7 +305,6 @@ export const ServiceProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // const contract = createEthereumContract();
     const onServiceUpdated = (s) => {
       setService(formatService(s));
     };
@@ -338,7 +319,6 @@ export const ServiceProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    // const contract = createEthereumContract();
     const onServiceDeleted = (id) => {
       setServices((current) => current.filter((s) => s.id !== id.toNumber()));
     };

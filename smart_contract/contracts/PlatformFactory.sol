@@ -64,6 +64,19 @@ contract PlatformFactory is Ownable, Tasks, Services, Profiles {
         return taskList;
     }
 
+    function get20Tasks(uint _from) view public returns(PlatformStructs.Task[20] memory, uint) {
+        PlatformStructs.Task[20] memory tempTasks;
+        uint count = 0;
+        uint i = allTasks.length-1 - _from;
+        for(i; i >= 0 && count < 20; i--){
+            if(tasks[allTasks[i]].id != 0) {
+                tempTasks[count] = tasks[allTasks[i]];
+                count++;
+            }
+        }
+        return (tempTasks, allTasks.length-1-i);
+    }
+
     function getTask(uint256 _id)
         public
         view
@@ -81,6 +94,19 @@ contract PlatformFactory is Ownable, Tasks, Services, Profiles {
             }
         }
         return serviceList;
+    }
+
+    function get20Services(uint _from) view public returns(PlatformStructs.Service[20] memory, uint) {
+        PlatformStructs.Service[20] memory tempServices;
+        uint count = 0;
+        uint i = allServices.length-1 - _from;
+        for(i; i >= 0 && count < 20; i--){
+            if(services[allServices[i]].id != 0) {
+                tempServices[count] = services[allServices[i]];
+                count++;
+            }
+        }
+        return (tempServices, allServices.length-1-i);
     }
 
     function getService(uint256 _id)
@@ -145,13 +171,17 @@ contract PlatformFactory is Ownable, Tasks, Services, Profiles {
 
     tasks[_taskId].status = PlatformStructs.TaskStatuses.Completed;
 
+    uint256 arbiterReward = (tasks[_taskId].reward / 100) * arbiterRewardPercentage;
+    uint256 platformFee = calculatePlatformFee(tasks[_taskId].reward);
+    totalFees += platformFee;
+
     (bool success, ) = _winner.call{
-        value: tasks[_taskId].reward - (tasks[_taskId].reward / 100) * arbiterRewardPercentage
+        value: tasks[_taskId].reward - arbiterReward - platformFee
     }("");
     require(success, "Tranfer failed.");
 
     (success, ) = msg.sender.call{
-        value: (tasks[_taskId].reward / 100) * arbiterRewardPercentage
+        value: arbiterReward
     }("");
     require(success, "Tranfer failed.");
 

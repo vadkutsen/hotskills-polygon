@@ -5,9 +5,8 @@ contract PlatformStructs {
 
     enum TaskTypes {
         FCFS,
-        SelectedByAuthor,
-        ServiceTask,
-        Escrow
+        Casting,
+        Challenge
     }
 
     enum TaskStatuses {
@@ -26,6 +25,7 @@ contract PlatformStructs {
         string description;
         address payable author;
         address payable assignee;
+        uint256 dueDate;
         address[] candidates;
         uint256 createdAt;
         uint256 completedAt;
@@ -45,6 +45,7 @@ contract PlatformStructs {
         TaskTypes taskType;
         uint256 reward;
         address payable assignee;
+        uint256 dueDate;
     }
 
     enum ServiceStatuses {
