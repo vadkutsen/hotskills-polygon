@@ -22,7 +22,7 @@ const createEthereumContract = () => {
 };
 
 export const ProfileProvider = ({ children }) => {
-  const [ipfsUrl, setIpfsUrl] = useState(null);
+  // const [ipfsUrl, setIpfsUrl] = useState(null);
   const [profile, setProfile] = useState([]);
   const [formData, setformData] = useState({
     avatar: "",
@@ -48,14 +48,11 @@ export const ProfileProvider = ({ children }) => {
     if (!files || files.length === 0) {
       return alert("No files selected");
     }
-    setIsLoading(true);
     const rootCid = await client.put(files);
     const info = await client.status(rootCid);
     // const res = await client.get(rootCid);
     const url = `https://${info.cid}.ipfs.w3s.link/${files[0].name}`;
-    setIpfsUrl(url);
-    setIsLoading(false);
-    notify("File successfully uploaded to IPFS.");
+    return url;
   };
 
   const getProfile = async (address) => {
@@ -92,13 +89,18 @@ export const ProfileProvider = ({ children }) => {
     }
   };
 
-  const addProfile = async () => {
+  const addProfile = async (file) => {
     if (ethereum) {
       try {
-        const { username, skills, languages, rate, availability } = formData;
         setIsLoading(true);
+        const { username, skills, languages, rate, availability } = formData;
         const contract = createEthereumContract();
-        const avatar = ipfsUrl || "";
+        let avatar;
+        if (file) {
+          avatar = await onUploadHandler(file);
+        } else {
+          avatar = "";
+        }
         const profileToSend = [avatar, username, skills, languages, rate, availability];
         const transaction = await contract.addProfile(profileToSend);
         console.log(`Success - ${transaction}`);
@@ -107,9 +109,7 @@ export const ProfileProvider = ({ children }) => {
         window.location.reload();
       } catch (error) {
         console.log(error);
-        alert(
-          "Oops! Something went wrong. See the browser console for details."
-        );
+        alert(error.message);
         setIsLoading(false);
       }
     } else {
@@ -132,8 +132,6 @@ export const ProfileProvider = ({ children }) => {
         handleChange,
         profile,
         formData,
-        onUploadHandler,
-        ipfsUrl,
       }}
     >
       {children}
