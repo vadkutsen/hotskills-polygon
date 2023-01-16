@@ -250,7 +250,7 @@ export const ServiceProvider = ({ children }) => {
   const requestService = async (data) => {
     if (ethereum) {
       try {
-        const { category, title, description, taskType, assignee, reward, fee } = data;
+        const { category, title, description, taskType, assignee, dueDate, reward, fee } = data;
         const taskToSend = [
           category,
           title,
@@ -258,6 +258,7 @@ export const ServiceProvider = ({ children }) => {
           taskType,
           ethers.utils.parseEther(reward.toString()),
           assignee,
+          dueDate
         ];
         console.log(taskToSend);
         setIsLoading(true);

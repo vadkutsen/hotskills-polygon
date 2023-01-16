@@ -8,12 +8,14 @@ const RequestService = (params) => {
   const { requestService, calculateTotalAmount } = useContext(ServiceContext);
   const { fee } = useContext(PlatformContext);
 
+  const date = new Date();
   const [formData, setformData] = useState({
     category: service.category,
     title: service.title,
     description: "",
     taskType: "1",
     assignee: service.author,
+    dueDate: date.setDate(date.getDate() + service.deliveryTime),
     reward: service.price,
     fee
   });
