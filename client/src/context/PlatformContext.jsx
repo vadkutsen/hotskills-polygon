@@ -26,14 +26,16 @@ const MessageDisplay = ({ message, hash }) => (
 const { ethereum } = window;
 
 const createEthereumContract = () => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const platformContract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    signer
-  );
-  return platformContract;
+  if (ethereum) {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    const platformContract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+    return platformContract;
+  }
 };
 
 export const PlatformProvider = ({ children }) => {
@@ -45,16 +47,17 @@ export const PlatformProvider = ({ children }) => {
   const { currentAccount, networkId } = useContext(AuthContext);
   const [notifications, setNotifications] = useState([]);
 
-  const notify = (message, hash) => toast.success(<MessageDisplay message={message} hash={hash} />, {
-    position: "top-right",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "dark",
-  });
+  const notify = (message, hash) =>
+    toast.success(<MessageDisplay message={message} hash={hash} />, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const getBalance = async () => {
     const provider = new ethers.providers.Web3Provider(ethereum);
@@ -145,7 +148,6 @@ export const PlatformProvider = ({ children }) => {
     }
   };
 
-
   useEffect(() => {
     if (networkId === networks.testnet.chainId) {
       getPlatformFee();
@@ -187,7 +189,7 @@ export const PlatformProvider = ({ children }) => {
         balance,
         notifications,
         setNotifications,
-        arbiterReward
+        arbiterReward,
       }}
     >
       {children}

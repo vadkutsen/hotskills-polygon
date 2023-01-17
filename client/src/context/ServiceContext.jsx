@@ -2,7 +2,11 @@ import { createContext, useEffect, useState, useContext } from "react";
 import { Web3Storage } from "web3.storage";
 import { ethers } from "ethers";
 import { Link } from "react-router-dom";
-import { ServiceStatuses, Categories, contractAddress } from "../utils/constants";
+import {
+  ServiceStatuses,
+  Categories,
+  contractAddress,
+} from "../utils/constants";
 import contractABI from "../utils/contractABI.json";
 import { PlatformContext } from "./PlatformContext";
 import { networks } from "../utils/networks";
@@ -12,14 +16,16 @@ export const ServiceContext = createContext();
 
 const { ethereum } = window;
 const createEthereumContract = () => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const platformContract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    signer
-  );
-  return platformContract;
+  if (ethereum) {
+    const provider = new ethers.providers.Web3Provider(ethereum);
+    const signer = provider.getSigner();
+    const platformContract = new ethers.Contract(
+      contractAddress,
+      contractABI,
+      signer
+    );
+    return platformContract;
+  }
 };
 
 const contract = createEthereumContract();
@@ -31,17 +37,20 @@ export const ServiceProvider = ({ children }) => {
     title: "",
     description: "",
     price: 0,
-    deliveryTime: 0
+    deliveryTime: 0,
   });
   const [services, setServices] = useState([]);
   const [service, setService] = useState([]);
   const [ipfsUrl, setIpfsUrl] = useState(null);
   const [selectedFiles, setSelectedFiles] = useState([]);
-  const { notify, setIsLoading, setNotifications } = useContext(PlatformContext);
+  const { notify, setIsLoading, setNotifications } =
+    useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
 
   const onUploadHandler = async (files) => {
-    const client = new Web3Storage({ token: import.meta.env.VITE_WEB3_STORAGE_TOKEN });
+    const client = new Web3Storage({
+      token: import.meta.env.VITE_WEB3_STORAGE_TOKEN,
+    });
     if (!files || files.length === 0) {
       return alert("No files selected");
     }
@@ -80,7 +89,9 @@ export const ServiceProvider = ({ children }) => {
       try {
         setIsLoading(true);
         const availableServices = await contract.getAllServices();
-        const structuredServices = availableServices.map((item) => formatService(item));
+        const structuredServices = availableServices.map((item) =>
+          formatService(item)
+        );
         setServices(structuredServices);
         setIsLoading(false);
       } catch (error) {
@@ -123,7 +134,7 @@ export const ServiceProvider = ({ children }) => {
           title,
           description,
           ethers.utils.parseEther(price),
-          deliveryTime
+          deliveryTime,
         ];
         const transaction = await contract.addService(serviceToSend);
         console.log(`Success - ${transaction.hash}`);
@@ -151,7 +162,7 @@ export const ServiceProvider = ({ children }) => {
           title,
           description,
           ethers.utils.parseEther(price),
-          deliveryTime
+          deliveryTime,
         ];
         setIsLoading(true);
         const transaction = await contract.updateService(serviceToSend);
@@ -176,8 +187,9 @@ export const ServiceProvider = ({ children }) => {
       try {
         setIsLoading(true);
         // const contract = createEthereumContract();
-        const transaction = await contract
-          .pauseService(ethers.BigNumber.from(id));
+        const transaction = await contract.pauseService(
+          ethers.BigNumber.from(id)
+        );
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
         await getAllServices();
@@ -199,8 +211,9 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const transaction = await contract
-          .resumeService(ethers.BigNumber.from(id));
+        const transaction = await contract.resumeService(
+          ethers.BigNumber.from(id)
+        );
         console.log(`Success - ${transaction}`);
         setIsLoading(false);
         await getAllServices();
@@ -222,8 +235,9 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         setIsLoading(true);
-        const transaction = await contract
-          .deleteService(ethers.BigNumber.from(id));
+        const transaction = await contract.deleteService(
+          ethers.BigNumber.from(id)
+        );
         console.log(`Success - ${transaction}`);
         setIsLoading(false);
         await getAllServices();
@@ -250,7 +264,16 @@ export const ServiceProvider = ({ children }) => {
   const requestService = async (data) => {
     if (ethereum) {
       try {
-        const { category, title, description, taskType, assignee, dueDate, reward, fee } = data;
+        const {
+          category,
+          title,
+          description,
+          taskType,
+          assignee,
+          dueDate,
+          reward,
+          fee,
+        } = data;
         const taskToSend = [
           category,
           title,
@@ -258,12 +281,14 @@ export const ServiceProvider = ({ children }) => {
           taskType,
           ethers.utils.parseEther(reward.toString()),
           assignee,
-          dueDate
+          dueDate,
         ];
         console.log(taskToSend);
         setIsLoading(true);
         const transaction = await contract.addTask(taskToSend, {
-          value: ethers.utils.parseEther(calculateTotalAmount(reward, fee).toString())
+          value: ethers.utils.parseEther(
+            calculateTotalAmount(reward, fee).toString()
+          ),
         });
         console.log(`Success - ${transaction}`);
         setIsLoading(false);
@@ -289,11 +314,11 @@ export const ServiceProvider = ({ children }) => {
 
   useEffect(() => {
     const onNewService = (s) => {
-      setServices((prevState) => [
+      setServices((prevState) => [...prevState, formatService(s)]);
+      setNotifications((prevState) => [
         ...prevState,
-        formatService(s)
+        <Link to={`/services/${s.id}`}>New service added</Link>,
       ]);
-      setNotifications((prevState) => [...prevState, <Link to={`/services/${s.id}`}>New service added</Link>]);
     };
     if (ethereum) {
       contract.on("ServiceAdded", onNewService);
@@ -354,7 +379,7 @@ export const ServiceProvider = ({ children }) => {
         formatService,
         selectedFiles,
         setSelectedFiles,
-        contract
+        contract,
       }}
     >
       {children}

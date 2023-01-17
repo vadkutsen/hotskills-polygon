@@ -5,6 +5,9 @@ import { networks } from "../utils/networks";
 
 const ConnectWalletButton = () => {
   const { connectWallet, switchNetwork, networkId } = useContext(AuthContext);
+  const { ethereum } = window;
+
+  if (!ethereum) return <span>Wallet not found</span>;
   if (networkId !== networks.testnet.chainId) {
     return (
       <div className="flex flex-col w-full text-white justify-center items-center">

@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkIfWalletIsConnected = () => {
     if (!ethereum) {
-      alert("MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html");
+      // alert("MetaMask is not installed. Please install it to use this app: https://metamask.io/download.html");
       return;
     }
 
