@@ -44,7 +44,7 @@ export const TaskProvider = ({ children }) => {
   });
 
   const [tasks, setTasks] = useState("");
-  const [task, setTask] = useState([]);
+  // const [task, setTask] = useState([]);
   const { notify, fee, setIsLoading, setNotifications } =
     useContext(PlatformContext);
   const { currentAccount, networkId } = useContext(AuthContext);
@@ -155,22 +155,22 @@ export const TaskProvider = ({ children }) => {
     }
   };
 
-  const getTask = async (id) => {
-    if (ethereum) {
-      try {
-        setIsLoading(true);
-        const fetchedTask = await contract.getTask(id);
-        setIsLoading(false);
-        return fetchedTask;
-      } catch (error) {
-        console.log(error);
-        alert(error.message);
-        setIsLoading(false);
-      }
-    } else {
-      console.log("Ethereum is not present");
-    }
-  };
+  // const getTask = async (id) => {
+  //   if (ethereum) {
+  //     try {
+  //       setIsLoading(true);
+  //       const fetchedTask = await contract.getTask(id);
+  //       setIsLoading(false);
+  //       return fetchedTask;
+  //     } catch (error) {
+  //       console.log(error);
+  //       alert(error.message);
+  //       setIsLoading(false);
+  //     }
+  //   } else {
+  //     console.log("Ethereum is not present");
+  //   }
+  // };
 
   const calculateTotalAmount = (amount, feePercent) => {
     if (feePercent && amount) {
@@ -483,10 +483,10 @@ export const TaskProvider = ({ children }) => {
       value={{
         tasks,
         TaskTypes,
-        task,
+        // task,
         getAllTasks,
-        getTask,
-        setTask,
+        // getTask,
+        // setTask,
         addTask,
         applyForTask,
         submitResult,

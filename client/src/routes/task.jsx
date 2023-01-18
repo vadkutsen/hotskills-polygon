@@ -6,25 +6,27 @@ import { PlatformContext } from "../context/PlatformContext";
 import { TaskContext } from "../context/TaskContext";
 import { Loader, ActionControls, Candidates } from "../components";
 import { TaskStatuses, TaskTypes } from "../utils/constants";
-
+import { getTask } from "../services/TaskService";
 import AutoAvatar from "../components/AutoAvatar";
 import { shortenAddress } from "../utils/shortenAddress";
 import { networks } from "../utils/networks";
 
 export default function Task() {
   const params = useParams();
-  const { isLoading, getRating } = useContext(PlatformContext);
-  const { formatTask, getTask, composeAuthorProfile, contract } = useContext(TaskContext);
+  const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
+  const { formatTask, composeAuthorProfile, contract } = useContext(TaskContext);
   const taskId = params.id;
   const [authorProfile, setAuthorProfile] = useState(null);
   const [task, setTask] = useState(null);
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
+    setIsLoading(true);
     getTask(taskId).then((t) => {
       setTask(formatTask(t));
       getRating(t.author).then((r) => setRating(r));
     });
+    setIsLoading(false);
     // composeAuthorProfile(task.author).then((a) => setAuthorProfile(a));
     return () => {
       // this now gets called when the component unmounts
@@ -142,6 +144,9 @@ export default function Task() {
   }
 
   return (
-    <p className="text-white text-center">Fetching data. Please wait.</p>
+    <div className="h-screen">
+      <Loader />
+      <p className="text-white text-center">Fetching data. Please wait.</p>
+    </div>
   );
 }

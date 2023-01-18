@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import AutoAvatar from "../AutoAvatar";
 import { shortenAddress } from "../../utils/shortenAddress";
-import { TaskTypes } from "../../utils/constants";
+// import { TaskTypes } from "../../utils/constants";
 import { networks } from "../../utils/networks";
 
 const TaskCard = ({
@@ -24,9 +24,9 @@ const TaskCard = ({
         </div>
         <p className="mt-2 text-sm truncate ...">{description}</p>
         {/* {taskType !== TaskTypes[0] && <p className="mt-1 italic text-sm">Candidates: {candidates.length}</p>} */}
-        <p className="mt-2 text-center italic text-sm white-glassmorphism">{taskType}</p>
+        <p className="mt-2 text-center italic text-sm white-glassmorphism">{category}</p>
         <div className="flex flex-row gap-2 items-center">
-          <div className="mt-2 pl-2 pr-2 text-center white-glassmorphism">{category}</div>
+          <div className="mt-2 pl-2 pr-2 text-center white-glassmorphism">{taskType}</div>
           <div className="mt-2 pl-2 pr-2 text-center white-glassmorphism">{status}</div>
         </div>
         {/* <p className="mt-1 italic text-sm">Created at: {createdAt} by {shortenAddress(author)}</p> */}
@@ -35,7 +35,7 @@ const TaskCard = ({
             ?
               <img alt="Avatar" className="" src={profile.avatar} /> */}
         {/* : */}
-        <div className=" mt-6 flex flex-row items-center">
+        <div className="mt-6 flex flex-row items-center">
           <AutoAvatar userId={author} size={36} /> {shortenAddress(author)}{" "}
           {createdAt}
         </div>
