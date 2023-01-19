@@ -80,7 +80,7 @@ contract PlatformStructs {
     struct Profile {
         string avatar;
         string username;
-        string skills;
+        uint16[] skills;
         string[] languages;
         uint16 rate;
         uint8 availability;
@@ -91,7 +91,7 @@ contract PlatformStructs {
     struct ReceivedProfile {
         string avatar;
         string username;
-        string skills;
+        uint16[] skills;
         string[] languages;
         uint16 rate;
         uint8 availability;

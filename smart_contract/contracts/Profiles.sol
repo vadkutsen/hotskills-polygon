@@ -17,7 +17,8 @@ contract Profiles {
         require(bytes(_newProfile.username).length > 0, "Username is required.");
         profiles[msg.sender].avatar = _newProfile.avatar;
         profiles[msg.sender].username = _newProfile.username;
-        profiles[msg.sender].skills = _newProfile.skills;
+        uint16[] memory skills = _newProfile.skills;
+        profiles[msg.sender].skills = skills;
         string[] memory lang = _newProfile.languages;
         profiles[msg.sender].languages = lang;
         profiles[msg.sender].rate = _newProfile.rate;
@@ -34,7 +35,8 @@ contract Profiles {
         require(bytes(_newProfile.username).length > 0, "Username is required.");
         profiles[msg.sender].avatar = _newProfile.avatar;
         profiles[msg.sender].username = _newProfile.username;
-        profiles[msg.sender].skills = _newProfile.skills;
+        uint16[] memory skills = _newProfile.skills;
+        profiles[msg.sender].skills = skills;
         string[] memory lang = _newProfile.languages;
         profiles[msg.sender].languages = lang;
         profiles[msg.sender].rate = _newProfile.rate;
