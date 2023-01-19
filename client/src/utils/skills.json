@@ -1,0 +1,5918 @@
+[
+    {
+        "id": 1,
+        "name": "Web, Mobile & Software Dev",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 2,
+        "name": "IT & Networking",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 4,
+        "name": "Engineering & Architecture",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 5,
+        "name": "Design & Creative",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 6,
+        "name": "Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 7,
+        "name": "Translation",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 8,
+        "name": "Legal",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 9,
+        "name": "Admin Support",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 10,
+        "name": "Customer Service",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 11,
+        "name": "Sales & Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 12,
+        "name": "Accounting and Consulting Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 14,
+        "name": "Digital Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 14,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 20,
+        "name": "iOS",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 20,
+                    "parent_id": 164
+                },
+                {
+                    "skill_id": 20,
+                    "parent_id": 405
+                }
+            ]
+        }
+    },
+    {
+        "id": 21,
+        "name": "Swift",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 21,
+                    "parent_id": 164
+                }
+            ]
+        }
+    },
+    {
+        "id": 24,
+        "name": "Json",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 24,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 27,
+        "name": "HTML",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 27,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 44,
+        "name": "Shopify",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 44,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 44,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 46,
+        "name": "Telemarketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 46,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 46,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 47,
+        "name": "Data Entry",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 47,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 47,
+                    "parent_id": 12
+                },
+                {
+                    "skill_id": 47,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 54,
+        "name": "Javascript",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 54,
+                    "parent_id": 149
+                },
+                {
+                    "skill_id": 54,
+                    "parent_id": 402
+                },
+                {
+                    "skill_id": 54,
+                    "parent_id": 403
+                }
+            ]
+        }
+    },
+    {
+        "id": 55,
+        "name": "React",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 55,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 58,
+        "name": "CSS",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 58,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 59,
+        "name": "HTML5",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 59,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 60,
+        "name": "Node.js",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 60,
+                    "parent_id": 403
+                },
+                {
+                    "skill_id": 60,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 63,
+        "name": "Photo Editing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 63,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 67,
+        "name": "Gaming",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 69,
+        "name": "Graphic Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 69,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 70,
+        "name": "Editing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 70,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 70,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 71,
+        "name": "Illustration",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 71,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 72,
+        "name": "SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 72,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 74,
+        "name": "MySQL",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 74,
+                    "parent_id": 403
+                },
+                {
+                    "skill_id": 74,
+                    "parent_id": 408
+                },
+                {
+                    "skill_id": 74,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 89,
+        "name": "MongoDB",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 89,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 96,
+        "name": "C#",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 96,
+                    "parent_id": 403
+                },
+                {
+                    "skill_id": 96,
+                    "parent_id": 405
+                },
+                {
+                    "skill_id": 96,
+                    "parent_id": 406
+                },
+                {
+                    "skill_id": 96,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 98,
+        "name": "Microsoft SQL Server",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 98,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 100,
+        "name": "Android Developer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 100,
+                    "parent_id": 164
+                },
+                {
+                    "skill_id": 100,
+                    "parent_id": 405
+                }
+            ]
+        }
+    },
+    {
+        "id": 103,
+        "name": "Marketing Strategy",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 103,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 104,
+        "name": "WordPress",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 104,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 104,
+                    "parent_id": 404
+                },
+                {
+                    "skill_id": 104,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 108,
+        "name": "Google Ads",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 108,
+                    "parent_id": 576
+                },
+                {
+                    "skill_id": 108,
+                    "parent_id": 577
+                },
+                {
+                    "skill_id": 108,
+                    "parent_id": 578
+                }
+            ]
+        }
+    },
+    {
+        "id": 111,
+        "name": "Email Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 111,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 124,
+        "name": "Creative Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 124,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 126,
+        "name": "Content Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 126,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 126,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 127,
+        "name": "3D Modeling Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 127,
+                    "parent_id": 355
+                },
+                {
+                    "skill_id": 127,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 130,
+        "name": "Logo Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 130,
+                    "parent_id": 353
+                }
+            ]
+        }
+    },
+    {
+        "id": 135,
+        "name": "Video Editing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 135,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 139,
+        "name": "Adobe Premiere Editor",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 139,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 144,
+        "name": "PHP",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 144,
+                    "parent_id": 403
+                }
+            ]
+        }
+    },
+    {
+        "id": 145,
+        "name": "CSS3",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 145,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 149,
+        "name": "Blockchain & Crypto",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 164,
+        "name": "Mobile Apps",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 164,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 178,
+        "name": "Copywriting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 178,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 178,
+                    "parent_id": 111
+                }
+            ]
+        }
+    },
+    {
+        "id": 179,
+        "name": "Content Creation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 179,
+                    "parent_id": 571
+                }
+            ]
+        }
+    },
+    {
+        "id": 186,
+        "name": "Adobe Illustrator",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 186,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 219,
+        "name": "Joomla",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 219,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 220,
+        "name": "Landing Pages",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 220,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 220,
+                    "parent_id": 7
+                },
+                {
+                    "skill_id": 220,
+                    "parent_id": 402
+                },
+                {
+                    "skill_id": 220,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 225,
+        "name": "SEM",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 225,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 245,
+        "name": "QA",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 245,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 254,
+        "name": "Voice Over",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 254,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 264,
+        "name": "React Native",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 264,
+                    "parent_id": 164
+                }
+            ]
+        }
+    },
+    {
+        "id": 269,
+        "name": "Ruby",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 269,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 271,
+        "name": "Python",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 271,
+                    "parent_id": 149
+                },
+                {
+                    "skill_id": 271,
+                    "parent_id": 403
+                },
+                {
+                    "skill_id": 271,
+                    "parent_id": 406
+                },
+                {
+                    "skill_id": 271,
+                    "parent_id": 407
+                },
+                {
+                    "skill_id": 271,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 277,
+        "name": "Proofreading",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 277,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 285,
+        "name": "English",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 285,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 285,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 287,
+        "name": "Blog Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 287,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 288,
+        "name": "SEO Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 288,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 288,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 289,
+        "name": "English Grammar",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 289,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 289,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 290,
+        "name": "Blog Content",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 290,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 291,
+        "name": "Spelling",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 291,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 291,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 292,
+        "name": "Grammar",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 292,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 292,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 293,
+        "name": "Punctuation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 293,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 293,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 294,
+        "name": "Social Media Content Creation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 294,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 294,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 295,
+        "name": "Social Media Content",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 295,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 295,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 296,
+        "name": "Ghostwriting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 296,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 297,
+        "name": "English Proofreading",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 297,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 298,
+        "name": "Audio Editor",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 298,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 298,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 299,
+        "name": "English (US)",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 299,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 299,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 300,
+        "name": "Business Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 300,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 300,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 301,
+        "name": "Research Writing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 301,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 302,
+        "name": "Article Rewriter",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 302,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 302,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 303,
+        "name": "SEO Audit",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 303,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 303,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 304,
+        "name": "Content Marketing Strategy",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 304,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 305,
+        "name": "Web Content",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 305,
+                    "parent_id": 6
+                }
+            ]
+        }
+    },
+    {
+        "id": 306,
+        "name": "eBooks",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 306,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 306,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 307,
+        "name": "Microsoft Word",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 307,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 307,
+                    "parent_id": 7
+                },
+                {
+                    "skill_id": 307,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 308,
+        "name": "Chinese",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 308,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 308,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 309,
+        "name": "Spanish",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 309,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 309,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 310,
+        "name": "Hindi",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 310,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 310,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 311,
+        "name": "Arabic Translator",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 311,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 311,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 312,
+        "name": "Portuguese",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 312,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 312,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 313,
+        "name": "Russian",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 313,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 313,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 314,
+        "name": "Japanese",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 314,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 314,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 315,
+        "name": "French",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 315,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 315,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 316,
+        "name": "German",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 316,
+                    "parent_id": 6
+                },
+                {
+                    "skill_id": 316,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 317,
+        "name": "SQL",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 317,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 319,
+        "name": "Solidity",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 319,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 324,
+        "name": "English - North America",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 324,
+                    "parent_id": 7
+                }
+            ]
+        }
+    },
+    {
+        "id": 325,
+        "name": "Virtual Assistant",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 325,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 325,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 325,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 325,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 326,
+        "name": "Administrative Support Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 326,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 326,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 326,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 326,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 327,
+        "name": "Contact lists",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 327,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 327,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 327,
+                    "parent_id": 12
+                },
+                {
+                    "skill_id": 327,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 328,
+        "name": "Google Docs",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 328,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 328,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 328,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 329,
+        "name": "Appointment Setter",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 329,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 329,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 329,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 329,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 330,
+        "name": "User Authentication",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 330,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 330,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 330,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 331,
+        "name": "CRM",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 331,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 331,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 331,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 332,
+        "name": "User Profile Creation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 332,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 332,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 332,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 333,
+        "name": "Chat Support",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 333,
+                    "parent_id": 9
+                },
+                {
+                    "skill_id": 333,
+                    "parent_id": 10
+                }
+            ]
+        }
+    },
+    {
+        "id": 334,
+        "name": "Email Handling",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 334,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 334,
+                    "parent_id": 12
+                },
+                {
+                    "skill_id": 334,
+                    "parent_id": 111
+                }
+            ]
+        }
+    },
+    {
+        "id": 335,
+        "name": "Customer Support",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 335,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 335,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 336,
+        "name": "Telephone Handling",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 336,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 336,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 336,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 337,
+        "name": "Email Communication",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 337,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 337,
+                    "parent_id": 10
+                },
+                {
+                    "skill_id": 337,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 338,
+        "name": "C++",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 338,
+                    "parent_id": 149
+                },
+                {
+                    "skill_id": 338,
+                    "parent_id": 403
+                }
+            ]
+        }
+    },
+    {
+        "id": 339,
+        "name": "Java",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 339,
+                    "parent_id": 149
+                },
+                {
+                    "skill_id": 339,
+                    "parent_id": 403
+                },
+                {
+                    "skill_id": 339,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 340,
+        "name": "Smart Contract Development",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 340,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 341,
+        "name": "Dapps",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 341,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 342,
+        "name": "Stablecoin",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 342,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 343,
+        "name": "Cryptography",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 343,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 344,
+        "name": "Trading bot",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 344,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 345,
+        "name": "Exchange development",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 345,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 346,
+        "name": "Wallet",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 346,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 347,
+        "name": "Crypto Wallet",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 347,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 348,
+        "name": "Blockchain",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 348,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 349,
+        "name": "Hyperledger",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 349,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 350,
+        "name": "Ethereum",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 350,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 351,
+        "name": "web3.js",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 351,
+                    "parent_id": 149
+                }
+            ]
+        }
+    },
+    {
+        "id": 352,
+        "name": "Web & Mobile Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 352,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 353,
+        "name": "Logo & Brand Identity",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 353,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 354,
+        "name": "Art and Illustration Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 354,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 355,
+        "name": "Visual Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 355,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 356,
+        "name": "Packaging & Labels",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 356,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 357,
+        "name": "Game Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 357,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 358,
+        "name": "Print Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 358,
+                    "parent_id": 5
+                }
+            ]
+        }
+    },
+    {
+        "id": 359,
+        "name": "Social Media Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 359,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 360,
+        "name": "AR Filter Creator",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 360,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 361,
+        "name": "Banner Ads Designer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 361,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 362,
+        "name": "Architecture and Building Designer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 362,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 363,
+        "name": "Architecture and Interior Designer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 363,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 364,
+        "name": "Landscape Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 364,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 365,
+        "name": "Building Information Modeling",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 365,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 366,
+        "name": "Landing Pages Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 366,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 367,
+        "name": "Brand Style Guides",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 367,
+                    "parent_id": 353
+                }
+            ]
+        }
+    },
+    {
+        "id": 368,
+        "name": "Business Cards & Stationery",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 368,
+                    "parent_id": 353
+                }
+            ]
+        }
+    },
+    {
+        "id": 369,
+        "name": "Pattern Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 369,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 370,
+        "name": "Tattoo Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 370,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 371,
+        "name": "Portraits & Caricatures",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 371,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 372,
+        "name": "Cartoons & Comics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 372,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 373,
+        "name": "Storyboards",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 373,
+                    "parent_id": 354
+                }
+            ]
+        }
+    },
+    {
+        "id": 374,
+        "name": "Photoshop Editing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 374,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 375,
+        "name": "Presentation Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 375,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 376,
+        "name": "Infographic Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 376,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 377,
+        "name": "Resume Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 377,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 378,
+        "name": "Vector Tracing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 378,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 379,
+        "name": "3D Designer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 379,
+                    "parent_id": 355
+                },
+                {
+                    "skill_id": 379,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 380,
+        "name": "3D Rendering specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 380,
+                    "parent_id": 355
+                },
+                {
+                    "skill_id": 380,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 381,
+        "name": "Infographics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 381,
+                    "parent_id": 355
+                },
+                {
+                    "skill_id": 381,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 382,
+        "name": "Industrial & Product Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 382,
+                    "parent_id": 355
+                }
+            ]
+        }
+    },
+    {
+        "id": 383,
+        "name": "Book Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 383,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 384,
+        "name": "Album Cover Designer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 384,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 385,
+        "name": "Podcast Cover Art",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 385,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 386,
+        "name": "Packaging Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 386,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 387,
+        "name": "Car Wraps",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 387,
+                    "parent_id": 356
+                }
+            ]
+        }
+    },
+    {
+        "id": 388,
+        "name": "Character Modeling",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 388,
+                    "parent_id": 357
+                }
+            ]
+        }
+    },
+    {
+        "id": 389,
+        "name": "Graphics for Streamers",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 389,
+                    "parent_id": 357
+                }
+            ]
+        }
+    },
+    {
+        "id": 390,
+        "name": "Twitch Store",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 390,
+                    "parent_id": 357
+                }
+            ]
+        }
+    },
+    {
+        "id": 391,
+        "name": "Flyer Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 391,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 392,
+        "name": "Brochure Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 392,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 393,
+        "name": "Signage Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 393,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 394,
+        "name": "Poster Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 394,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 395,
+        "name": "Catalog Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 395,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 396,
+        "name": "Menu Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 396,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 397,
+        "name": "Postcard Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 397,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 398,
+        "name": "Invitation Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 398,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 399,
+        "name": "T-Shirts & Merchandise",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 399,
+                    "parent_id": 358
+                }
+            ]
+        }
+    },
+    {
+        "id": 400,
+        "name": "Trade Booth Design",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 400,
+                    "parent_id": 352
+                }
+            ]
+        }
+    },
+    {
+        "id": 402,
+        "name": "Front End",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 402,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 403,
+        "name": "Back End Developer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 403,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 404,
+        "name": "Web Programming",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 404,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 405,
+        "name": "Game Development",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 405,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 406,
+        "name": "E-Commerce Development",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 406,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 407,
+        "name": "Desktop Applications",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 407,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 408,
+        "name": "Databases",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 408,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 409,
+        "name": "Data Science & Analytics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 409,
+                    "parent_id": 1
+                }
+            ]
+        }
+    },
+    {
+        "id": 410,
+        "name": "jQuery",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 410,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 411,
+        "name": "On-Page Optimization",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 411,
+                    "parent_id": 402
+                },
+                {
+                    "skill_id": 411,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 412,
+        "name": "AngularJS",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 412,
+                    "parent_id": 402
+                }
+            ]
+        }
+    },
+    {
+        "id": 413,
+        "name": "Bootstrap",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 413,
+                    "parent_id": 402
+                },
+                {
+                    "skill_id": 413,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 414,
+        "name": "Chatbots",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 414,
+                    "parent_id": 402
+                },
+                {
+                    "skill_id": 414,
+                    "parent_id": 403
+                },
+                {
+                    "skill_id": 414,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 415,
+        "name": "API",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 415,
+                    "parent_id": 403
+                }
+            ]
+        }
+    },
+    {
+        "id": 416,
+        "name": "Web Application",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 416,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 417,
+        "name": "Custom Website",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 417,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 418,
+        "name": "Scripting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 418,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 419,
+        "name": "Email Template",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 419,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 420,
+        "name": "Browser Extensions",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 420,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 421,
+        "name": "Website Builders & CMS",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 421,
+                    "parent_id": 404
+                }
+            ]
+        }
+    },
+    {
+        "id": 422,
+        "name": "API Integration Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 422,
+                    "parent_id": 404
+                },
+                {
+                    "skill_id": 422,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 423,
+        "name": "Full Game Creation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 423,
+                    "parent_id": 405
+                }
+            ]
+        }
+    },
+    {
+        "id": 424,
+        "name": "Game Prototyping",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 424,
+                    "parent_id": 405
+                }
+            ]
+        }
+    },
+    {
+        "id": 425,
+        "name": "Unreal",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 425,
+                    "parent_id": 405
+                }
+            ]
+        }
+    },
+    {
+        "id": 426,
+        "name": "Unity",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 426,
+                    "parent_id": 405
+                }
+            ]
+        }
+    },
+    {
+        "id": 427,
+        "name": "Tilda",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 427,
+                    "parent_id": 406
+                }
+            ]
+        }
+    },
+    {
+        "id": 428,
+        "name": "Google Analytics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 428,
+                    "parent_id": 406
+                },
+                {
+                    "skill_id": 428,
+                    "parent_id": 409
+                },
+                {
+                    "skill_id": 428,
+                    "parent_id": 576
+                }
+            ]
+        }
+    },
+    {
+        "id": 429,
+        "name": "Android App Developer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 429,
+                    "parent_id": 164
+                }
+            ]
+        }
+    },
+    {
+        "id": 430,
+        "name": "C",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 430,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 431,
+        "name": "Operating Systems",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 431,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 432,
+        "name": "Data Structures and Algorithms",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 432,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 433,
+        "name": "Software Engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 433,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 434,
+        "name": "Data Mining",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 434,
+                    "parent_id": 407
+                },
+                {
+                    "skill_id": 434,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 435,
+        "name": "Data Bases",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 435,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 436,
+        "name": "VB.Net",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 436,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 437,
+        "name": "ASP.Net Developer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 437,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 438,
+        "name": "VBA",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 438,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 439,
+        "name": "Visual Basic",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 439,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 440,
+        "name": "Linux",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 440,
+                    "parent_id": 407
+                },
+                {
+                    "skill_id": 440,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 441,
+        "name": "Windows",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 441,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 442,
+        "name": "MacOS",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 442,
+                    "parent_id": 407
+                }
+            ]
+        }
+    },
+    {
+        "id": 443,
+        "name": "Excel",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 443,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 444,
+        "name": "csv",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 444,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 445,
+        "name": "ORACLE",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 445,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 446,
+        "name": "SQLite",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 446,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 447,
+        "name": "Microsoft Access",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 447,
+                    "parent_id": 408
+                }
+            ]
+        }
+    },
+    {
+        "id": 448,
+        "name": "User Testing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 448,
+                    "parent_id": 245
+                }
+            ]
+        }
+    },
+    {
+        "id": 449,
+        "name": "Functionality testing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 449,
+                    "parent_id": 245
+                }
+            ]
+        }
+    },
+    {
+        "id": 450,
+        "name": "Usability testing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 450,
+                    "parent_id": 245
+                }
+            ]
+        }
+    },
+    {
+        "id": 451,
+        "name": "UX testing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 451,
+                    "parent_id": 245
+                }
+            ]
+        }
+    },
+    {
+        "id": 452,
+        "name": "Compatibility testing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 452,
+                    "parent_id": 245
+                }
+            ]
+        }
+    },
+    {
+        "id": 453,
+        "name": "Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 453,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 454,
+        "name": "Microsoft Excel",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 454,
+                    "parent_id": 12
+                },
+                {
+                    "skill_id": 454,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 455,
+        "name": "Market Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 455,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 455,
+                    "parent_id": 12
+                },
+                {
+                    "skill_id": 455,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 456,
+        "name": "Data Scraping",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 456,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 457,
+        "name": "Data Processing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 457,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 458,
+        "name": "Amazon Web Services Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 458,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 459,
+        "name": "SEO Audit Report",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 459,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 460,
+        "name": "Data Analysis",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 460,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 461,
+        "name": "Internet Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 461,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 462,
+        "name": "R",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 462,
+                    "parent_id": 409
+                }
+            ]
+        }
+    },
+    {
+        "id": 463,
+        "name": "Engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 463,
+                    "parent_id": 4
+                }
+            ]
+        }
+    },
+    {
+        "id": 464,
+        "name": "AutoCAD",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 464,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 465,
+        "name": "Architecture",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 465,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 466,
+        "name": "Acoustical Engineer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 466,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 467,
+        "name": "Aerospace Engineer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 467,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 468,
+        "name": "Agricultural Engineer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 468,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 469,
+        "name": "Aquatic and Environmental Engineer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 469,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 470,
+        "name": "Architectural Engineer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 470,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 471,
+        "name": "Automotive Engineer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 471,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 472,
+        "name": "Biological engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 472,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 473,
+        "name": "Biomaterials engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 473,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 474,
+        "name": "Biomedical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 474,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 475,
+        "name": "Bioresource engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 475,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 476,
+        "name": "Building services engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 476,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 477,
+        "name": "Ceramic engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 477,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 478,
+        "name": "Chemical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 478,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 479,
+        "name": "Civil engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 479,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 480,
+        "name": "Coastal engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 480,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 481,
+        "name": "Combat engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 481,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 482,
+        "name": "Commercial engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 482,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 483,
+        "name": "Communication engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 483,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 484,
+        "name": "Computer engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 484,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 485,
+        "name": "Conservation engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 485,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 486,
+        "name": "Conversion engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 486,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 487,
+        "name": "Construction engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 487,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 488,
+        "name": "Control systems engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 488,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 489,
+        "name": "Demolition engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 489,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 490,
+        "name": "Electrical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 490,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 491,
+        "name": "Electromechanical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 491,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 492,
+        "name": "Electronic warfare (EW) engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 492,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 493,
+        "name": "Microelectronics engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 493,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 494,
+        "name": "Engineering physics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 494,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 495,
+        "name": "Environmental engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 495,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 496,
+        "name": "Fire protection engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 496,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 497,
+        "name": "Food process engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 497,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 498,
+        "name": "Forensic engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 498,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 499,
+        "name": "Forest engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 499,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 500,
+        "name": "Genetic engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 500,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 501,
+        "name": "Geomatics engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 501,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 502,
+        "name": "Geotechnical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 502,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 503,
+        "name": "Industrial engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 503,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 504,
+        "name": "Information technology",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 504,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 505,
+        "name": "Instrumentation engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 505,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 506,
+        "name": "Landscape engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 506,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 507,
+        "name": "Logistic engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 507,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 508,
+        "name": "Manufacturing engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 508,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 509,
+        "name": "Marine engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 509,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 510,
+        "name": "Materials engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 510,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 511,
+        "name": "Mechanical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 511,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 512,
+        "name": "Mechatronics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 512,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 513,
+        "name": "Microsystems engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 513,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 514,
+        "name": "Military engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 514,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 515,
+        "name": "Minerals process engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 515,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 516,
+        "name": "Mining engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 516,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 517,
+        "name": "Nanoengineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 517,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 518,
+        "name": "Naval architecture",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 518,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 519,
+        "name": "Nuclear engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 519,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 520,
+        "name": "Ocean engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 520,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 521,
+        "name": "Optical engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 521,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 522,
+        "name": "Paper engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 522,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 523,
+        "name": "Petroleum engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 523,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 524,
+        "name": "Plastics engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 524,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 525,
+        "name": "Preservation engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 525,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 526,
+        "name": "Quality assurance engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 526,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 527,
+        "name": "Reliability engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 527,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 528,
+        "name": "Renovation engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 528,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 529,
+        "name": "Residential engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 529,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 530,
+        "name": "Restoration engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 530,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 531,
+        "name": "Retro-engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 531,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 532,
+        "name": "Safety engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 532,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 533,
+        "name": "Security engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 533,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 534,
+        "name": "Sewage engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 534,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 535,
+        "name": "Structural engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 535,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 536,
+        "name": "Support engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 536,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 537,
+        "name": "Surveying",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 537,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 538,
+        "name": "Systems design engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 538,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 539,
+        "name": "Traffic engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 539,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 540,
+        "name": "Transportation engineering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 540,
+                    "parent_id": 463
+                }
+            ]
+        }
+    },
+    {
+        "id": 541,
+        "name": "Social Media Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 541,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 556,
+        "name": "Project Management",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 556,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 556,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 564,
+        "name": "Keyword Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 564,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 565,
+        "name": "Link Building",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 565,
+                    "parent_id": 72
+                },
+                {
+                    "skill_id": 565,
+                    "parent_id": 225
+                }
+            ]
+        }
+    },
+    {
+        "id": 567,
+        "name": "Lead Generation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 567,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 568,
+        "name": "Internet Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 568,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 569,
+        "name": "Social Media Advertising",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 569,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 570,
+        "name": "Public Relations",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 570,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 571,
+        "name": "Content Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 571,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 572,
+        "name": "Podcast Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 572,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 573,
+        "name": "Video Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 573,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 574,
+        "name": "Crowdfunding",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 574,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 575,
+        "name": "Marketing Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 575,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 576,
+        "name": "Web Analytics",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 576,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 577,
+        "name": "E-Commerce Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 577,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 578,
+        "name": "Mobile Marketing & Advertising",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 578,
+                    "parent_id": 11
+                }
+            ]
+        }
+    },
+    {
+        "id": 579,
+        "name": "Social Media Management",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 579,
+                    "parent_id": 541
+                }
+            ]
+        }
+    },
+    {
+        "id": 580,
+        "name": "Social Content",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 580,
+                    "parent_id": 541
+                }
+            ]
+        }
+    },
+    {
+        "id": 581,
+        "name": "Profile Setup & Integration",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 581,
+                    "parent_id": 541
+                }
+            ]
+        }
+    },
+    {
+        "id": 582,
+        "name": "Consultation & Audience Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 582,
+                    "parent_id": 541
+                }
+            ]
+        }
+    },
+    {
+        "id": 583,
+        "name": "Off-Page SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 583,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 584,
+        "name": "Page Optimization",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 584,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 585,
+        "name": "Technical SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 585,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 586,
+        "name": "Competitor Analysis",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 586,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 587,
+        "name": "Voice Search SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 587,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 588,
+        "name": "Video SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 588,
+                    "parent_id": 72
+                },
+                {
+                    "skill_id": 588,
+                    "parent_id": 573
+                }
+            ]
+        }
+    },
+    {
+        "id": 589,
+        "name": "Domain Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 589,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 590,
+        "name": "Local SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 590,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 591,
+        "name": "Product & Storefront SEO",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 591,
+                    "parent_id": 72
+                },
+                {
+                    "skill_id": 591,
+                    "parent_id": 577
+                }
+            ]
+        }
+    },
+    {
+        "id": 592,
+        "name": "SEO Backlinking",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 592,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 593,
+        "name": "SEO Report",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 593,
+                    "parent_id": 72
+                }
+            ]
+        }
+    },
+    {
+        "id": 594,
+        "name": "ADS Setup and Management Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 594,
+                    "parent_id": 569
+                }
+            ]
+        }
+    },
+    {
+        "id": 595,
+        "name": "Strategy & Planning",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 595,
+                    "parent_id": 569
+                },
+                {
+                    "skill_id": 595,
+                    "parent_id": 570
+                }
+            ]
+        }
+    },
+    {
+        "id": 596,
+        "name": "Analytics & Tracking",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 596,
+                    "parent_id": 569
+                }
+            ]
+        }
+    },
+    {
+        "id": 597,
+        "name": "Facebook Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 597,
+                    "parent_id": 569
+                }
+            ]
+        }
+    },
+    {
+        "id": 598,
+        "name": "Instagram Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 598,
+                    "parent_id": 569
+                }
+            ]
+        }
+    },
+    {
+        "id": 599,
+        "name": "Facebook Ad Campaign",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 599,
+                    "parent_id": 569
+                }
+            ]
+        }
+    },
+    {
+        "id": 600,
+        "name": "Twitter Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 600,
+                    "parent_id": 541
+                }
+            ]
+        }
+    },
+    {
+        "id": 601,
+        "name": "Press Release Pitching",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 601,
+                    "parent_id": 570
+                }
+            ]
+        }
+    },
+    {
+        "id": 602,
+        "name": "Consultation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 602,
+                    "parent_id": 570
+                }
+            ]
+        }
+    },
+    {
+        "id": 603,
+        "name": "Events, Conferences & Awards",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 603,
+                    "parent_id": 570
+                }
+            ]
+        }
+    },
+    {
+        "id": 604,
+        "name": "Communication",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 604,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 604,
+                    "parent_id": 12
+                },
+                {
+                    "skill_id": 604,
+                    "parent_id": 570
+                }
+            ]
+        }
+    },
+    {
+        "id": 605,
+        "name": "Guest Posting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 605,
+                    "parent_id": 571
+                }
+            ]
+        }
+    },
+    {
+        "id": 606,
+        "name": "Content Strategy & Research",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 606,
+                    "parent_id": 571
+                }
+            ]
+        }
+    },
+    {
+        "id": 607,
+        "name": "Podcast Promotion",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 607,
+                    "parent_id": 572
+                }
+            ]
+        }
+    },
+    {
+        "id": 608,
+        "name": "Advertising within Podcasts",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 608,
+                    "parent_id": 572
+                }
+            ]
+        }
+    },
+    {
+        "id": 609,
+        "name": "Video Promotion & Distribution",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 609,
+                    "parent_id": 573
+                }
+            ]
+        }
+    },
+    {
+        "id": 610,
+        "name": "Video Ad Campaigns",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 610,
+                    "parent_id": 573
+                }
+            ]
+        }
+    },
+    {
+        "id": 611,
+        "name": "Social Video Enhancements",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 611,
+                    "parent_id": 573
+                }
+            ]
+        }
+    },
+    {
+        "id": 612,
+        "name": "Email Platform Support",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 612,
+                    "parent_id": 111
+                }
+            ]
+        }
+    },
+    {
+        "id": 613,
+        "name": "Email Templates",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 613,
+                    "parent_id": 111
+                }
+            ]
+        }
+    },
+    {
+        "id": 614,
+        "name": "Digital Audience Development Manager",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 614,
+                    "parent_id": 111
+                }
+            ]
+        }
+    },
+    {
+        "id": 615,
+        "name": "Campaign Marketing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 615,
+                    "parent_id": 574
+                }
+            ]
+        }
+    },
+    {
+        "id": 616,
+        "name": "Campaign Creation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 616,
+                    "parent_id": 574
+                }
+            ]
+        }
+    },
+    {
+        "id": 617,
+        "name": "Search Engine Marketing Management",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 617,
+                    "parent_id": 225
+                }
+            ]
+        }
+    },
+    {
+        "id": 618,
+        "name": "Product Ad Campaigns",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 618,
+                    "parent_id": 225
+                }
+            ]
+        }
+    },
+    {
+        "id": 619,
+        "name": "Setup & Strategy Consultation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 619,
+                    "parent_id": 225
+                }
+            ]
+        }
+    },
+    {
+        "id": 620,
+        "name": "Advertising Review Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 620,
+                    "parent_id": 225
+                }
+            ]
+        }
+    },
+    {
+        "id": 621,
+        "name": "Display Marketing Campaigns",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 621,
+                    "parent_id": 225
+                }
+            ]
+        }
+    },
+    {
+        "id": 622,
+        "name": "Survey Creation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 622,
+                    "parent_id": 575
+                }
+            ]
+        }
+    },
+    {
+        "id": 623,
+        "name": "Analyst",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 623,
+                    "parent_id": 575
+                }
+            ]
+        }
+    },
+    {
+        "id": 624,
+        "name": "Web Analytics Setup",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 624,
+                    "parent_id": 576
+                }
+            ]
+        }
+    },
+    {
+        "id": 625,
+        "name": "Tracking & Reporting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 625,
+                    "parent_id": 576
+                }
+            ]
+        }
+    },
+    {
+        "id": 626,
+        "name": "Optimization",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 626,
+                    "parent_id": 576
+                }
+            ]
+        }
+    },
+    {
+        "id": 627,
+        "name": "Product Listings",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 627,
+                    "parent_id": 577
+                }
+            ]
+        }
+    },
+    {
+        "id": 628,
+        "name": "Web Traffic",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 628,
+                    "parent_id": 577
+                }
+            ]
+        }
+    },
+    {
+        "id": 629,
+        "name": "Mobile Ad Campaigns",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 629,
+                    "parent_id": 578
+                }
+            ]
+        }
+    },
+    {
+        "id": 630,
+        "name": "App Store Optimization",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 630,
+                    "parent_id": 578
+                }
+            ]
+        }
+    },
+    {
+        "id": 631,
+        "name": "E-Commerce Management",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 631,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 631,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 633,
+        "name": "Career Counseling",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 633,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 633,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 634,
+        "name": "HR Consulting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 634,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 634,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 635,
+        "name": "Business Plans",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 635,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 635,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 636,
+        "name": "Branding Services",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 636,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 636,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 637,
+        "name": "Legal Consulting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 637,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 637,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 638,
+        "name": "Financial Consulting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 638,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 638,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 639,
+        "name": "Business Consulting",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 639,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 639,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 640,
+        "name": "Business Strategy",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 640,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 640,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 641,
+        "name": "Accountant",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 641,
+                    "parent_id": 8
+                },
+                {
+                    "skill_id": 641,
+                    "parent_id": 12
+                }
+            ]
+        }
+    },
+    {
+        "id": 669,
+        "name": "Audio Video Production",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 670,
+        "name": "Video",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 670,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 671,
+        "name": "Short Video Ads",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 671,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 672,
+        "name": "Lyrics & Music Videos",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 672,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 673,
+        "name": "Logo Animation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 673,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 674,
+        "name": "Intros & Outros",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 674,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 675,
+        "name": "App and Website Preview Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 675,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 676,
+        "name": "Character Animation",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 676,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 677,
+        "name": "3D Product Animation Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 677,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 678,
+        "name": "Children's Animation Specialist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 678,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 679,
+        "name": "Animation for Streamers",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 679,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 680,
+        "name": "Spokespersons Videos",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 680,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 681,
+        "name": "Visual Effects",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 681,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 682,
+        "name": "Article to Video Expert",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 682,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 683,
+        "name": "Subtitles & Captions",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 683,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 684,
+        "name": "Slideshow Videos",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 684,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 685,
+        "name": "Trailers",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 685,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 686,
+        "name": "Real Estate Promos",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 686,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 687,
+        "name": "DaVinci",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 687,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 688,
+        "name": "Music & Audio",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 688,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 689,
+        "name": "Producer & Composer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 689,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 690,
+        "name": "Singer & Vocalist",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 690,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 691,
+        "name": "Mixing & Mastering",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 691,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 692,
+        "name": "Session Musician",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 692,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 693,
+        "name": "Podcast Editing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 693,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 694,
+        "name": "Audiobook Producer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 694,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 695,
+        "name": "Audio Advertising Producer",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 695,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 696,
+        "name": "Jingles & Intros",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 696,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 697,
+        "name": "DJ Drops & Tags",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 697,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 698,
+        "name": "Dialogue Editing",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 698,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 699,
+        "name": "Music Transcription",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 699,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 700,
+        "name": "Sound Effects",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 700,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 701,
+        "name": "Vocal Tuning",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 701,
+                    "parent_id": 669
+                }
+            ]
+        }
+    },
+    {
+        "id": 829,
+        "name": "Offline",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 920,
+        "name": "NFT",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 1226,
+        "name": "Influencers",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    },
+    {
+        "id": 1290,
+        "name": "Axie Infinity",
+        "relations": {
+            "Seo": [],
+            "Parent": [
+                {
+                    "skill_id": 1290,
+                    "parent_id": 67
+                }
+            ]
+        }
+    },
+    {
+        "id": 2335,
+        "name": "Article Writer",
+        "relations": {
+            "Seo": [],
+            "Parent": []
+        }
+    }
+]

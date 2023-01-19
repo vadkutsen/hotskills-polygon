@@ -27,7 +27,7 @@ export const ProfileProvider = ({ children }) => {
   const [formData, setformData] = useState({
     avatar: "",
     username: "",
-    skills: "",
+    skills: [],
     languages: [],
     rate: 0,
     availability: 0
@@ -36,7 +36,7 @@ export const ProfileProvider = ({ children }) => {
   const { notify, setIsLoading } = useContext(PlatformContext);
 
   const handleChange = (e, name) => {
-    if (name === "languages") {
+    if (name === "languages" || name === "skills") {
       setformData((prevState) => ({ ...prevState, [name]: e.map((item) => item.value) }));
     } else setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };

@@ -4,6 +4,7 @@ import AutoAvatar from "../AutoAvatar";
 import { TaskContext } from "../../context/TaskContext";
 import { shortenAddress } from "../../utils/shortenAddress";
 import languages from "../../utils/languages.json";
+import skills from "../../utils/skills.json";
 
 const Candidates = (candidates) => {
   const { composeCandidateProfiles } = useContext(TaskContext);
@@ -50,16 +51,22 @@ const Candidates = (candidates) => {
               </span>
               {p.rating.toFixed(1)}
             </div>
-            {p.profile.skills && <p>{p.profile.skills}</p>}
-            {p.profile.languages && (
-              <p>
-                {p.profile.languages.map((l, j) => (
-                  <span key={j} className="p-2 m-1 white-glassmorphism">
-                    {languages.find((entry) => entry.code === l).name}
-                  </span>
-                ))}
-              </p>
-            )}
+            <div className="flex items-center">
+              <span>Skills: </span>
+              {p.profile.skills && p.profile.skills.map((s, j) => (
+                <span key={j} className="p-2 m-1 white-glassmorphism">
+                  {skills.find((entry) => entry.id === s).name}
+                </span>
+              ))}
+            </div>
+            <div className="flex items-center">
+              <span>Languages: </span>
+              {p.profile.languages && p.profile.languages.map((l, e) => (
+                <span key={e} className="p-2 m-1 white-glassmorphism">
+                  {languages.find((entry) => entry.code === l).name}
+                </span>
+              ))}
+            </div>
             <div className="flex flex-row w-full justify-between">
               {p.profile.rate > 0 && <span>${p.profile.rate}/hr</span>}
               {p.profile.availability > 0 && (

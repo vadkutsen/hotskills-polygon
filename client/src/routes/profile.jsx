@@ -11,6 +11,7 @@ import "cropperjs/dist/cropper.css";
 import "./roundedCropper.css";
 import AutoAvatar from "../components/AutoAvatar";
 import languages from "../utils/languages.json";
+import skills from "../utils/skills.json";
 
 // this transforms file to base64
 const file2Base64 = (file) =>
@@ -24,6 +25,11 @@ const file2Base64 = (file) =>
 const languageOptions = languages.map((l) => ({
   value: l.code,
   label: l.name,
+}));
+
+const skillOptions = skills.map((s) => ({
+  value: s.id,
+  label: s.name,
 }));
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
@@ -54,12 +60,27 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
   }
   if (name === "skills") {
     return (
-      <textarea
-        placeholder={placeholder}
-        type={type}
+      <Select
+        options={skillOptions}
+        closeMenuOnSelect={false}
+        isMulti
+        className="basic-multi-select"
+        classNamePrefix="select"
+        defaultValue={value}
         value={value}
         onChange={(e) => handleChange(e, name)}
-        className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border white-glassmorphism"
+        styles={{
+          control: (styles) => ({
+            ...styles,
+            backgroundColor: "transparent",
+            outlineStyle: "none",
+          }),
+          input: (styles) => ({
+            ...styles,
+            color: "white",
+            outlineStyle: "none",
+          }),
+        }}
       />
     );
   }
@@ -71,7 +92,7 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
       min="0"
       value={value}
       onChange={(e) => handleChange(e, name)}
-      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border white-glassmorphism"
+      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border"
     />
   );
 };
@@ -137,7 +158,7 @@ export default function Profile() {
 
         <div className="flex flex-col flex-2 items-center justify-center w-full mf:mt-0 mt-10">
           <div className="p-5 w-full flex flex-col justify-center items-center blue-glassmorphism">
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm">
               {uploaded ? (
                 <div>
                   {cropped ? (
@@ -229,7 +250,7 @@ export default function Profile() {
                 </div>
               )}
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -238,27 +259,25 @@ export default function Profile() {
               </span>
               <div>
                 <FormField
-                  className="w-full bg-transparent white-glassmorphism"
+                  className="w-full bg-transparent"
                   name="username"
                   type="text"
-                  placeholder="e.g. Elon Mask"
+                  placeholder="e.g. Elon Musk"
                   handleChange={handleChange}
                 />
               </div>
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-0 bg-transparent text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block text-white tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Skills
               </span>
               <FormField
-                className="w-full bg-transparent white-glassmorphism"
-                placeholder="List your skills, comma separated..."
                 name="skills"
-                type="text"
                 handleChange={handleChange}
+                className="outline-0"
               />
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-0">
@@ -270,7 +289,7 @@ export default function Profile() {
               </span>
               <FormField name="languages" handleChange={handleChange} />
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -280,7 +299,7 @@ export default function Profile() {
               <div className="flex flex-row gap-2">
                 <span className="text-white self-center">$</span>
                 <FormField
-                  className="w-full bg-transparent white-glassmorphism"
+                  className="w-full bg-transparent"
                   placeholder="0"
                   name="rate"
                   type="number"
@@ -289,7 +308,7 @@ export default function Profile() {
                 <span className="text-white self-center">/hr</span>
               </div>
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -298,7 +317,7 @@ export default function Profile() {
               </span>
               <div className="flex flex-row gap-2">
                 <FormField
-                  className="w-full bg-transparent white-glassmorphism"
+                  className="w-full bg-transparent"
                   placeholder="0"
                   name="availability"
                   type="number"

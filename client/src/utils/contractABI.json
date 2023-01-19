@@ -78,9 +78,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "uint16[]",
 						"name": "skills",
-						"type": "string"
+						"type": "uint16[]"
 					},
 					{
 						"internalType": "string[]",
@@ -133,9 +133,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "uint16[]",
 						"name": "skills",
-						"type": "string"
+						"type": "uint16[]"
 					},
 					{
 						"internalType": "string[]",
@@ -188,9 +188,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "uint16[]",
 						"name": "skills",
-						"type": "string"
+						"type": "uint16[]"
 					},
 					{
 						"internalType": "string[]",
@@ -618,9 +618,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "uint16[]",
 						"name": "skills",
-						"type": "string"
+						"type": "uint16[]"
 					},
 					{
 						"internalType": "string[]",
@@ -1402,9 +1402,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "uint16[]",
 						"name": "skills",
-						"type": "string"
+						"type": "uint16[]"
 					},
 					{
 						"internalType": "string[]",
@@ -1746,11 +1746,6 @@
 			{
 				"internalType": "string",
 				"name": "username",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "skills",
 				"type": "string"
 			},
 			{
@@ -2173,9 +2168,9 @@
 						"type": "string"
 					},
 					{
-						"internalType": "string",
+						"internalType": "uint16[]",
 						"name": "skills",
-						"type": "string"
+						"type": "uint16[]"
 					},
 					{
 						"internalType": "string[]",
