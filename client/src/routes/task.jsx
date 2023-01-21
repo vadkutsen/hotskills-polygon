@@ -6,7 +6,7 @@ import { PlatformContext } from "../context/PlatformContext";
 import { TaskContext } from "../context/TaskContext";
 import { Loader, ActionControls, Candidates } from "../components";
 import { TaskStatuses, TaskTypes } from "../utils/constants";
-import { getTask } from "../services/TaskService";
+import { getTask, formatTask } from "../services/TaskService";
 import AutoAvatar from "../components/AutoAvatar";
 import { shortenAddress } from "../utils/shortenAddress";
 import { networks } from "../utils/networks";
@@ -14,7 +14,7 @@ import { networks } from "../utils/networks";
 export default function Task() {
   const params = useParams();
   const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
-  const { formatTask, composeAuthorProfile, contract } = useContext(TaskContext);
+  const { composeAuthorProfile, contract } = useContext(TaskContext);
   const taskId = params.id;
   const [authorProfile, setAuthorProfile] = useState(null);
   const [task, setTask] = useState(null);

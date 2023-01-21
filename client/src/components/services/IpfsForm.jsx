@@ -32,7 +32,7 @@ const IpfsForm = () => {
   return (
     <div>
       <p className="mt-5 text-white">
-        Upload images (up to {MAX_COUNT}) to your service gallery
+        <i>Upload images (up to {MAX_COUNT}) to your service gallery (we will store them on IPFS/Filecoin).</i>
       </p>
       <input
         id="fileUpload"

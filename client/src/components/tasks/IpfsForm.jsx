@@ -32,7 +32,7 @@ const IpfsForm = () => {
   return (
     <div>
       <p className="mt-5 text-2xl text-white">
-        Select result files (up to {MAX_COUNT} - we will store them on IPFS)
+        Select result files (up to {MAX_COUNT} - we will store them on IPFS/Filecoin)
       </p>
       <p className="text-2xl text-white">
         or paste a link to your results from any other hosting.

@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
+import { ImInfo } from "react-icons/im";
 import { PlatformContext } from "../context/PlatformContext";
 import { TaskContext } from "../context/TaskContext";
 // import { AuthContext } from "../context/AuthContext";
@@ -11,7 +12,6 @@ import { Categories, TaskTypes } from "../utils/constants";
 import { networks } from "../utils/networks";
 
 import "react-datepicker/dist/react-datepicker.css";
-import { ImWarning } from "react-icons/im";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   switch (name) {
@@ -64,18 +64,12 @@ export default function NewTask() {
   const { isLoading, fee, balance } = useContext(PlatformContext);
   const { handleChange, addTask, formData, calculateTotalAmount } = useContext(TaskContext);
 
-  const [dueDate, setDueDate] = useState(new Date());
-
   const handleSubmit = (e) => {
     const { title, description, reward } = formData;
     e.preventDefault();
     if (!title || !description || !reward) return;
     addTask();
   };
-
-  // const totalAmount = (
-  //   parseFloat(formData.reward) + parseFloat((formData.reward / 100) * fee) || 0
-  // );
 
   return (
     <div className="flex w-full justify-center items-start min-h-screen">
@@ -91,9 +85,9 @@ export default function NewTask() {
 
         <div className="flex flex-col flex-2 items-center justify-start w-full mf:mt-0 mt-10">
           <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-500 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-200 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Category
@@ -125,9 +119,9 @@ export default function NewTask() {
               type="text"
               handleChange={handleChange}
             />
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-500 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-200 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Type
@@ -147,9 +141,9 @@ export default function NewTask() {
                 </div>
               </div>
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-500 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-200 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Due Date
@@ -172,9 +166,9 @@ export default function NewTask() {
               <span className="text-white self-center">{networks.testnet.nativeCurrency.symbol}</span>
             </div>
             <div className="flex justify-centers items-center gap-2 text-white">
-              <ImWarning color="green" className="w-36" />
+              <ImInfo color="green" size="32" className="w-36" />
               <i className="text-sm">
-                Reward amount will be securely locked in the contract and will be paid after the task result is approved by you or will be returned if you delete the task.
+                Reward amount will be securely locked in the smart contract and will be released only after the task result is approved.
               </i>
             </div>
             <div className="h-[1px] w-full bg-gray-400 my-2" />

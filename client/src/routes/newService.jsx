@@ -12,16 +12,12 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
     return (
       <select
-        className="appearance-none w-full white-glassmorphism text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500 light:text-gray-800"
+        className="appearance-none w-full bg-transparent border text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:border-gray-500 light:text-gray-800"
         value={value}
         type={type}
         onChange={(e) => handleChange(e, name)}
       >
-        {Categories.map((c, i) => (
-          <option className="white-glassmorphism" key={i} value={c}>
-            {c}
-          </option>
-        ))}
+        {Categories.map((c, i) => <option className="white-glassmorphism" key={i} value={c}>{c}</option>)}
       </select>
     );
   }
@@ -32,7 +28,7 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
         type={type}
         value={value}
         onChange={(e) => handleChange(e, name)}
-        className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border white-glassmorphism"
+        className="my-2 w-full rounded-sm p-2 min-h-[12rem] outline-none bg-transparent text-white white-glassmorphism"
       />
     );
   }
@@ -42,7 +38,7 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
       type={type}
       value={value}
       onChange={(e) => handleChange(e, name)}
-      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border white-glassmorphism"
+      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white white-glassmorphism"
     />
   );
 };
@@ -71,9 +67,9 @@ export default function NewService() {
 
         <div className="flex flex-col flex-2 items-center justify-start w-full mf:mt-0 mt-10">
           <div className="p-5 w-full flex flex-col justify-start items-center blue-glassmorphism">
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-200 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Category
@@ -93,7 +89,7 @@ export default function NewService() {
                 </div>
               </div>
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -129,7 +125,7 @@ export default function NewService() {
                 </div> */}
               </div>
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -143,7 +139,7 @@ export default function NewService() {
                 handleChange={handleChange}
               />
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -157,7 +153,7 @@ export default function NewService() {
                 handleChange={handleChange}
               />
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
@@ -175,7 +171,7 @@ export default function NewService() {
                 <span className="text-white self-center">{networks.testnet.nativeCurrency.symbol}</span>
               </div>
             </div>
-            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism">
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
