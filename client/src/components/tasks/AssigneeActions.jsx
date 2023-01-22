@@ -1,38 +1,37 @@
 import { useContext, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { ImWarning } from "react-icons/im";
-import { TaskContext } from "../../context/TaskContext";
 import { PlatformContext } from "../../context/PlatformContext";
 import { TaskStatuses } from "../../utils/constants";
 import IpfsForm from "./IpfsForm";
+import { unassignTask, submitResult } from "../../services/TaskService";
 
 const AssigneeActions = (params) => {
   const { task } = params;
-  const { unassignTask, submitResult, selectedFiles } = useContext(TaskContext);
-  const { rateUser, openDispute, arbiterReward } = useContext(PlatformContext);
+  const { rateUser, openDispute, arbiterReward, setIsLoading } = useContext(PlatformContext);
   const [result, setResult] = useState("");
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-
-  // useEffect(() => {
-  //   setResult(ipfsUrl);
-  // }, [ipfsUrl]);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleSubmit = (e) => {
     if (result === "" && selectedFiles.length === 0) return;
     e.preventDefault();
-    submitResult(task.id, result);
+    setIsLoading(true);
+    submitResult(task.id, result, selectedFiles).then(() => setIsLoading(false));
   };
 
   const handleClick = (e) => {
     if (rating === 0) return;
     e.preventDefault();
-    rateUser(task.author, rating);
+    setIsLoading(true);
+    rateUser(task.author, rating).then(() => setIsLoading(false));
   };
 
   const handleOpenDispute = (e) => {
     e.preventDefault();
-    openDispute(task.id);
+    setIsLoading(true);
+    openDispute(task.id).then(() => setIsLoading(false));
   };
 
   const calculateDaysLeft = (date) => {
@@ -49,7 +48,7 @@ const AssigneeActions = (params) => {
   if (task.status === TaskStatuses[1]) {
     return (
       <div>
-        <IpfsForm />
+        <IpfsForm selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
         <input
           className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
           placeholder="Result Link"
@@ -71,7 +70,10 @@ const AssigneeActions = (params) => {
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-yellow-700 p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
-          onClick={() => unassignTask(task.id)}
+          onClick={() => {
+            setIsLoading(true);
+            unassignTask(task.id).then(() => setIsLoading(false));
+          }}
         >
           Unassign
         </button>
@@ -109,7 +111,7 @@ const AssigneeActions = (params) => {
         <div className="flex gap-2 justify-center items-center">
           <ImWarning size={32} color="yellow" />
           <p className="text-2xl">
-            Changes requested form the author! Please resubmit your result.
+            Changes requested form the author! Please re-submit your result.
           </p>
         </div>
         <button
@@ -119,7 +121,7 @@ const AssigneeActions = (params) => {
         >
           Unassign
         </button>
-        <IpfsForm />
+        <IpfsForm selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
         <input
           className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm white-glassmorphism"
           placeholder="Result Link"

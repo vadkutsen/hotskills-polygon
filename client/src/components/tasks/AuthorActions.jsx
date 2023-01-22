@@ -1,22 +1,15 @@
 import { useContext, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { ImWarning } from "react-icons/im";
-import { TaskContext } from "../../context/TaskContext";
+// import { TaskContext } from "../../context/TaskContext";
 import { PlatformContext } from "../../context/PlatformContext";
 import { TaskStatuses } from "../../utils/constants";
 import { shortenAddress } from "../../utils/shortenAddress";
+import { assignTask, unassignTask, completeTask, requestChange, openDispute, deleteTask } from "../../services/TaskService";
 
 const AuthorActions = (params) => {
   const { task } = params;
-  const { arbiterReward } = useContext(PlatformContext);
-  const {
-    deleteTask,
-    assignTask,
-    unassignTask,
-    requestChange,
-    completeTask,
-    openDispute
-  } = useContext(TaskContext);
+  const { setIsLoading, arbiterReward } = useContext(PlatformContext);
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const defaultSelectValue = "Select a candidate to assign";
@@ -26,23 +19,33 @@ const AuthorActions = (params) => {
   const handleAssign = (e) => {
     if (selected === "Select a candidate to assign") return;
     e.preventDefault();
-    assignTask(task.id, selected);
+    setIsLoading(true);
+    assignTask(task.id, selected).then(() => setIsLoading(false));
   };
 
   const handleComplete = (e) => {
     if (rating === 0) return;
     e.preventDefault();
-    completeTask(task.id, rating);
+    setIsLoading(true);
+    completeTask(task.id, rating).then(() => setIsLoading(false));
   };
 
   const handleRequestChange = (e) => {
     e.preventDefault();
-    requestChange(task.id, message);
+    setIsLoading(true);
+    requestChange(task.id, message).then(() => setIsLoading(false));
   };
 
   const handleOpenDispute = (e) => {
     e.preventDefault();
-    openDispute(task.id);
+    setIsLoading(true);
+    openDispute(task.id).then(() => setIsLoading(false));
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    deleteTask(task.id).then(() => setIsLoading(false));
   };
 
   // If the task is not assigned
@@ -79,19 +82,19 @@ const AuthorActions = (params) => {
             <button
               type="button"
               className="flex flex-row justify-center items-center my-5 bg-[#831843] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
-              onClick={() => deleteTask(task.id)}
+              onClick={handleDelete}
             >
               Delete Task
             </button>
+            <div className="flex justify-center items-center gap-2">
+              <ImWarning size={48} color="yellow" />
+              <p>
+                If you delete the task, only reward amount will be returned to
+                your wallet. Platform fee will not be returned in order to prevent spamming on the
+                platform.
+              </p>
+            </div>
           </div>
-          <p className="text-white">
-            * NOTE: If you delete the task, only reward amount will be returned
-            to your wallet.
-          </p>
-          <p className="text-white">
-            Platform fee will not be returned in order to prevent spamming on
-            the platform.
-          </p>
         </div>
       );
     }
@@ -100,12 +103,12 @@ const AuthorActions = (params) => {
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-[#831843] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
-          onClick={() => deleteTask(task.id)}
+          onClick={handleDelete}
         >
           Delete Task
         </button>
         <div className="flex justify-center items-center gap-2">
-          <ImWarning size={32} color="yellow" />
+          <ImWarning size={48} color="yellow" />
           <p>
             If you delete the task, only reward amount will be returned to
             your wallet. Platform fee will not be returned in order to prevent spamming on the
@@ -122,7 +125,10 @@ const AuthorActions = (params) => {
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"
-          onClick={() => unassignTask(task.id)}
+          onClick={() => {
+            setIsLoading(true);
+            unassignTask(task.id).then(() => setIsLoading(false));
+          }}
         >
           Unassign
         </button>

@@ -1,13 +1,16 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { HiSearch } from "react-icons/hi";
-import { useSearchParams } from "react-router-dom";
-import { TaskContext } from "../context/TaskContext";
+import { Link, useSearchParams } from "react-router-dom";
+import { PlatformContext } from "../context/PlatformContext";
 import { TaskCard } from "../components";
 import { Categories } from "../utils/constants";
+import { getAllTasks, formatTask, contract } from "../services/TaskService";
 
 const Tasks = () => {
   // const { currentAccount } = useContext(AuthContext);
-  const { tasks } = useContext(TaskContext);
+  const { setIsLoading, setNotifications } = useContext(PlatformContext);
+  const { ethereum } = window;
+  const [tasks, setTasks] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const filterByCategory = (filter) => {
@@ -17,6 +20,52 @@ const Tasks = () => {
       setSearchParams({});
     }
   };
+
+  useEffect(() => {
+    setIsLoading(true);
+    getAllTasks().then((t) => { setTasks(t); });
+    setIsLoading(false);
+    return () => {
+      // this now gets called when the component unmounts
+      setTasks([]);
+    };
+  }, []);
+
+  // Event listeners
+  useEffect(() => {
+    const onNewTask = (t) => {
+      setTasks((prevState) => [...prevState, formatTask(t)]);
+      setNotifications((prevState) => [
+        ...prevState,
+        <Link to={`/tasks/${t.id}`} onClick={setNotifications([])}>
+          New task added
+        </Link>,
+      ]);
+    };
+    if (ethereum) {
+      contract.on("TaskAdded", onNewTask);
+    }
+    return () => {
+      if (contract) {
+        contract.off("TaskAdded", onNewTask);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const onTaskDeleted = (id) => {
+      setTasks((current) => current.filter((p) => p.id !== id.toNumber()));
+    };
+    if (ethereum) {
+      contract.on("TaskDeleted", onTaskDeleted);
+    }
+    return () => {
+      if (contract) {
+        contract.off("TaskDeleted", onTaskDeleted);
+      }
+    };
+  }, []);
+
   return (
     <div className="min-h-screen">
       {tasks ? (

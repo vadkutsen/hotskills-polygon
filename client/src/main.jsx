@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import { PlatformProvider } from "./context/PlatformContext";
-import { TaskProvider } from "./context/TaskContext";
+// import { TaskProvider } from "./context/TaskContext";
 import { ServiceProvider } from "./context/ServiceContext";
 import { ProfileProvider } from "./context/ProfileContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -22,7 +22,7 @@ import Profile from "./routes/profile";
 ReactDOM.render(
   <AuthProvider>
     <PlatformProvider>
-      <TaskProvider>
+      {/* <TaskProvider> */}
         <ServiceProvider>
           <ProfileProvider>
             <Router>
@@ -51,7 +51,7 @@ ReactDOM.render(
             </Router>
           </ProfileProvider>
         </ServiceProvider>
-      </TaskProvider>
+      {/* </TaskProvider> */}
     </PlatformProvider>
   </AuthProvider>,
   document.getElementById("root")

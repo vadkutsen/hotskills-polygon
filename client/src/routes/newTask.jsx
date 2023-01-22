@@ -5,13 +5,18 @@ import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 import { ImInfo } from "react-icons/im";
 import { PlatformContext } from "../context/PlatformContext";
-import { TaskContext } from "../context/TaskContext";
+// import { TaskContext } from "../context/TaskContext";
 // import { AuthContext } from "../context/AuthContext";
 import { Loader } from "../components";
-import { Categories, TaskTypes } from "../utils/constants";
 import { networks } from "../utils/networks";
+import {
+  TaskTypes,
+  address0,
+  Categories,
+} from "../utils/constants";
 
 import "react-datepicker/dist/react-datepicker.css";
+import { addTask } from "../services/TaskService";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   switch (name) {
@@ -61,14 +66,42 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
 };
 
 export default function NewTask() {
-  const { isLoading, fee, balance } = useContext(PlatformContext);
-  const { handleChange, addTask, formData, calculateTotalAmount } = useContext(TaskContext);
+  const { isLoading, fee, balance, setIsLoading } = useContext(PlatformContext);
+
+  const [formData, setformData] = useState({
+    category: Categories[0],
+    title: "",
+    description: "",
+    taskType: 0,
+    reward: 0,
+    assignee: address0,
+    dueDate: new Date(),
+  });
+
+  console.log(formData);
+
+  const handleChange = (e, name) => {
+    if (name === "dueDate") {
+      setformData((prevState) => ({ ...prevState, [name]: e }));
+    } else {
+      setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+    }
+  };
+
+  const calculateTotalAmount = (amount, feePercent) => {
+    if (feePercent && amount) {
+      const feeAmount = parseFloat((amount / 100) * feePercent);
+      return parseFloat(amount) + feeAmount;
+    }
+    return 0;
+  };
 
   const handleSubmit = (e) => {
     const { title, description, reward } = formData;
     e.preventDefault();
     if (!title || !description || !reward) return;
-    addTask();
+    setIsLoading(true);
+    addTask(formData, fee).then(() => setIsLoading(false));
   };
 
   return (

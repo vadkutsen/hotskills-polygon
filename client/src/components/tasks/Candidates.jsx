@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import AutoAvatar from "../AutoAvatar";
-import { TaskContext } from "../../context/TaskContext";
+// import { TaskContext } from "../../context/TaskContext";
 import { shortenAddress } from "../../utils/shortenAddress";
 import languages from "../../utils/languages.json";
+import { composeCandidateProfiles } from "../../services/TaskService";
 
 const Candidates = (candidates) => {
-  const { composeCandidateProfiles } = useContext(TaskContext);
+  // const { composeCandidateProfiles } = useContext(TaskContext);
   const [candidateProfiles, setCandidateProfiles] = useState(null);
   useEffect(() => {
     const fetchData = async () => {

@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
-import { TaskContext } from "../../context/TaskContext";
+import { useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
+// import { TaskContext } from "../../context/TaskContext";
 
 const MAX_COUNT = 5;
 
-const IpfsForm = () => {
-  const { selectedFiles, setSelectedFiles } = useContext(TaskContext);
+const IpfsForm = ({ selectedFiles, setSelectedFiles }) => {
   const [fileLimit, setFileLimit] = useState(false);
   const handleUploadFiles = (files) => {
     const selected = [...selectedFiles];
@@ -57,7 +57,15 @@ const IpfsForm = () => {
       </label>
       <div className="uploaded-files-list">
         {selectedFiles.map((file, i) => (
-          <div key={i}>{file.name}</div>
+          <div key={i} className="flex items-center gap-2">
+            {file.name}
+            <button
+              type="button"
+              onClick={() => setSelectedFiles((current) => current.filter((f) => f !== file))}
+            >
+              <FaTrashAlt />
+            </button>
+          </div>
         ))}
       </div>
     </div>

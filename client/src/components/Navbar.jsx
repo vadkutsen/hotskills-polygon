@@ -34,9 +34,9 @@ const Navbar = () => {
           </div>
         </Link>
       </div>
-      <ul className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
+      <div className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
         {currentAccount && networkId === networks.testnet.chainId ? (
-          <div className="flex flex-row">
+          <div className="flex flex-row items-center">
             <Link to="/tasks">
               <NavBarItem title="Find Tasks" />
             </Link>
@@ -50,15 +50,12 @@ const Navbar = () => {
               <NavBarItem title="Add Task" />
             </Link>
             <Notifications />
+            <Wallet />
           </div>
         ) : (
-          <li />
+          <ConnectWalletButton />
         )}
-        <li>
-          {!currentAccount && <ConnectWalletButton />}
-          {currentAccount && renderAccountInfo()}
-        </li>
-      </ul>
+      </div>
       <div className="flex relative">
         {!toggleMenu && (
           <HiMenuAlt4

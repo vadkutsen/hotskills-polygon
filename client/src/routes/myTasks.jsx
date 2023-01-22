@@ -1,15 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { TaskCard } from "../components";
 import { AuthContext } from "../context/AuthContext";
-import { TaskContext } from "../context/TaskContext";
+// import { TaskContext } from "../context/TaskContext";
+import { getAllTasks } from "../services/TaskService";
 
 const MyTasks = () => {
   const { currentAccount } = useContext(AuthContext);
-  const { tasks, getAllTasks } = useContext(TaskContext);
-
+  // const { tasks, getAllTasks } = useContext(TaskContext);
+  const [tasks, setTasks] = useState([]);
   useEffect(() => {
-    getAllTasks();
+    getAllTasks().then((t) => setTasks(t));
   }, []);
 
   function checkTask(task) {

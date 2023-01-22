@@ -1,10 +1,10 @@
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
-import { TaskContext } from "../../context/TaskContext";
 import TaskCard from "./TaskCard";
 import usePreventBodyScroll from "../usePreventBodyScroll";
 import { LeftArrow, RightArrow } from "../Arrows";
 import { TaskStatuses } from "../../utils/constants";
+import { getAllTasks } from "../../services/TaskService";
 
 function onWheel(apiObj, ev) {
   const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
@@ -22,8 +22,17 @@ function onWheel(apiObj, ev) {
 }
 
 const Tasks = () => {
-  const { tasks } = useContext(TaskContext);
+  const [tasks, setTasks] = useState([]);
   const { disableScroll, enableScroll } = usePreventBodyScroll();
+
+  useEffect(() => {
+    getAllTasks().then((t) => { setTasks(t); });
+    return () => {
+      // this now gets called when the component unmounts
+      setTasks([]);
+    };
+  }, []);
+
   return (
     <>
       {tasks.length < 1 && (
