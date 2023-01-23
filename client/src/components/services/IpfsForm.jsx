@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
+import { FaTrash } from "react-icons/fa";
 import { ServiceContext } from "../../context/ServiceContext";
 
-const MAX_COUNT = 1;
+const MAX_COUNT = 5;
 
 const IpfsForm = () => {
   const { selectedFiles, setSelectedFiles } = useContext(ServiceContext);
@@ -55,7 +56,7 @@ const IpfsForm = () => {
       </label>
       <div className="uploaded-files-list">
         {selectedFiles.map((file, i) => (
-          <div key={i}>{file.name}</div>
+          <div key={i} className="flex gap-2">{file.name}</div>
         ))}
       </div>
     </div>

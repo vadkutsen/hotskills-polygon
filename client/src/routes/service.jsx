@@ -9,7 +9,7 @@ import { Loader } from "../components";
 import AutoAvatar from "../components/AutoAvatar";
 import { shortenAddress } from "../utils/shortenAddress";
 import { networks } from "../utils/networks";
-// import Gallery from "../components/services/Gallery";
+import Gallery from "../components/services/Gallery";
 
 const { ethereum } = window;
 
@@ -63,12 +63,12 @@ export default function Service() {
       <div className="min-h-screen text-white">
         <div className="container mx-auto flex flex-col self-center items-center white-glassmorphism p-3">
           <div className="flex flex-col w-full">
-            <img
+            {/* <img
               alt="Service"
               className="self-center rounded-md"
               src={service.image}
-            />
-            {/* <Gallery images={[service.image]} /> */}
+            /> */}
+            <Gallery images={service.images} />
             <div className="flex flex-col ">
               <div className="mt-2 text-center white-glassmorphism">
                 {service.category}

@@ -22,10 +22,10 @@ const Gallery = ({ images }) => {
 
   return (
     <div className="container">
-      {images.map((image, i) => (
+      {images?.map((image, i) => (
         <div
           key={i}
-          className="slide"
+          className="slide border"
           style={{
             backgroundImage: `url(${image})`,
           }}
