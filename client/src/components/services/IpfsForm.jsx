@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { FaTrash } from "react-icons/fa";
+import { FaTrashAlt } from "react-icons/fa";
 import { ServiceContext } from "../../context/ServiceContext";
 
 const MAX_COUNT = 5;
@@ -56,7 +56,15 @@ const IpfsForm = () => {
       </label>
       <div className="uploaded-files-list">
         {selectedFiles.map((file, i) => (
-          <div key={i} className="flex gap-2">{file.name}</div>
+          <div key={i} className="flex gap-2">
+            {file.name}
+            <button
+              type="button"
+              onClick={() => setSelectedFiles((current) => current.filter((f) => f !== file))}
+            >
+              <FaTrashAlt />
+            </button>
+          </div>
         ))}
       </div>
     </div>

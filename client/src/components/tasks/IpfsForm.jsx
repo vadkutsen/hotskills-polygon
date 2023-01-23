@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 import { TaskContext } from "../../context/TaskContext";
 
 const MAX_COUNT = 5;
@@ -32,7 +33,7 @@ const IpfsForm = () => {
   return (
     <div>
       <p className="mt-5 text-2xl text-white">
-        Select result files (up to {MAX_COUNT} - we will store them on IPFS)
+        Select result files (up to {MAX_COUNT} - we will store them on IPFS/Filecoin)
       </p>
       <p className="text-2xl text-white">
         or paste a link to your results from any other hosting.
@@ -57,7 +58,15 @@ const IpfsForm = () => {
       </label>
       <div className="uploaded-files-list">
         {selectedFiles.map((file, i) => (
-          <div key={i}>{file.name}</div>
+          <div key={i} className="flex gap-2">
+            {file.name}
+            <button
+              type="button"
+              onClick={() => setSelectedFiles((current) => current.filter((f) => f !== file))}
+            >
+              <FaTrashAlt />
+            </button>
+          </div>
         ))}
       </div>
     </div>
