@@ -5,8 +5,7 @@ contract PlatformStructs {
 
     enum TaskTypes {
         FCFS,
-        Casting,
-        Challenge
+        Casting
     }
 
     enum TaskStatuses {
@@ -55,7 +54,7 @@ contract PlatformStructs {
 
     struct Service {
         uint256 id;
-        string image;
+        string[] images;
         string category;
         string title;
         string description;
@@ -69,7 +68,7 @@ contract PlatformStructs {
     }
 
     struct ReceivedService {
-        string image;
+        string[] images;
         string category;
         string title;
         string description;
@@ -80,7 +79,7 @@ contract PlatformStructs {
     struct Profile {
         string avatar;
         string username;
-        string skills;
+        uint16[] skills;
         string[] languages;
         uint16 rate;
         uint8 availability;
@@ -91,7 +90,7 @@ contract PlatformStructs {
     struct ReceivedProfile {
         string avatar;
         string username;
-        string skills;
+        uint16[] skills;
         string[] languages;
         uint16 rate;
         uint8 availability;

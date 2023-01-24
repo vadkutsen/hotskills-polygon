@@ -57,9 +57,10 @@ export const ServiceProvider = ({ children }) => {
     const rootCid = await client.put(files);
     const info = await client.status(rootCid);
     // const res = await client.get(rootCid);
-    const url = `https://${info.cid}.ipfs.w3s.link/${files[0].name}`;
-    // notify("File successfully uploaded to IPFS.");
-    return url;
+    const urls = files.map((f) => `https://${info.cid}.ipfs.w3s.link/${f.name}`);
+    // const url = `https://${info.cid}.ipfs.w3s.link/${files[0].name}`;
+    console.log(urls);
+    return urls;
   };
 
   const handleChange = (e, name) => {
@@ -69,7 +70,7 @@ export const ServiceProvider = ({ children }) => {
   function formatService(t) {
     return {
       id: t.id.toNumber(),
-      image: t.image,
+      images: t.images,
       category: t.category,
       title: t.title,
       description: t.description,
@@ -127,15 +128,16 @@ export const ServiceProvider = ({ children }) => {
       try {
         setIsLoading(true);
         const { category, title, description, price, deliveryTime } = formData;
-        const image = await onUploadHandler(selectedFiles);
+        const images = await onUploadHandler(selectedFiles);
         const serviceToSend = [
-          image,
+          images,
           category,
           title,
           description,
           ethers.utils.parseEther(price),
           deliveryTime,
         ];
+        console.log(serviceToSend);
         const transaction = await contract.addService(serviceToSend);
         console.log(`Success - ${transaction.hash}`);
         setIsLoading(false);
@@ -155,9 +157,9 @@ export const ServiceProvider = ({ children }) => {
     if (ethereum) {
       try {
         const { category, title, description, price, deliveryTime } = formData;
-        const image = ipfsUrl || "";
+        const images = ipfsUrl || "";
         const serviceToSend = [
-          image,
+          images,
           category,
           title,
           description,

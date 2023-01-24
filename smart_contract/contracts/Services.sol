@@ -2,10 +2,9 @@
 pragma solidity 0.8.17;
 import "./PlatformStructs.sol";
 
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract Services is ReentrancyGuard {
+contract Services {
 
     using Counters for Counters.Counter;
     Counters.Counter private _mappingLength;
@@ -45,7 +44,8 @@ contract Services is ReentrancyGuard {
         require(_newService.deliveryTime > 0, "Delivery time is required.");
         uint256 _id = _mappingLength.current();
         services[_id].id = _mappingLength.current();
-        services[_id].image = _newService.image;
+        string[] memory img = _newService.images;
+        services[_id].images = img;
         services[_id].category = _newService.category;
         services[_id].title = _newService.title;
         services[_id].description = _newService.description;
@@ -71,7 +71,8 @@ contract Services is ReentrancyGuard {
         require(bytes(_newService.title).length > 0, "Title is required.");
         require(bytes(_newService.description).length > 0,"Description is required.");
         require(_newService.price > 0, "Price is required.");
-        services[_id].image = _newService.image;
+        string[] memory img = _newService.images;
+        services[_id].images = img;
         services[_id].category = _newService.category;
         services[_id].title = _newService.title;
         services[_id].description = _newService.description;
