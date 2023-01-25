@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -9,6 +9,7 @@ import { Loader } from "../components";
 import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
 import IpfsForm from "../components/services/IpfsForm";
+import { onGalleryUploadHandler } from "../services/IpfsUploadHandler";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -50,27 +51,37 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
 };
 
 export default function NewService() {
-  const { isLoading } = useContext(PlatformContext);
+  const { notify } = useContext(PlatformContext);
+  const [isLoading, setIsLoading] = useState(false);
   const { currentAccount } = useContext(AuthContext);
-  const { handleChange, formData, addService } = useContext(ServiceContext);
+  const { handleChange, formData, selectedFiles } = useContext(ServiceContext);
 
   const handleSubmit = async (e) => {
-    const { title, description, price } = formData;
     e.preventDefault();
+    const { category, title, description, price, deliveryTime } = formData;
+    const images = await onGalleryUploadHandler(selectedFiles);
     if (!title || !description || !price) return;
+    setIsLoading(true);
     try {
       const serviceData = {
+        category,
+        images,
         title,
+        description,
         author: currentAccount,
         price,
-        description,
+        deliveryTime
       };
       console.log(serviceData);
       // const dataHash = hash(serviceData);
       await axios.post("/api/services/new", serviceData);
+      window.location.replace("/services");
+      notify("Service added successfully.");
+      setF
     } catch (error) {
       console.log(error.message);
     }
+    setIsLoading(false);
   };
 
   return (

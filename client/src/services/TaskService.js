@@ -10,7 +10,7 @@ import {
 } from "../utils/constants";
 // import { PlatformContext } from "../context/PlatformContext";
 
-import { onUploadHandler } from "./IpfsUploadHandler";
+import { onResultUploadHandler } from "./IpfsUploadHandler";
 
 const { ethereum } = window;
 const createEthereumContract = () => {
@@ -189,7 +189,7 @@ export const submitResult = async (id, result, selectedFiles) => {
     try {
       let res;
       if (!result && selectedFiles.length > 0) {
-        res = await onUploadHandler(selectedFiles);
+        res = await onResultUploadHandler(selectedFiles);
       } else if (result && selectedFiles.length === 0) {
         res = result;
       } else {

@@ -7,6 +7,7 @@ import { contractAddress } from "../../utils/constants";
 import contractABI from "../../utils/contractABI.json";
 import { AuthContext } from "../../context/AuthContext";
 import { networks } from "../../utils/networks";
+import noImage from "../../../images/no-image.png";
 
 const { ethereum } = window;
 
@@ -45,17 +46,21 @@ const ServiceCard = ({
         alert(error.message);
       }
     } else {
-      console.log("Tron is not present");
+      console.log("Ethereum is not present");
     }
   };
   useEffect(() => {
     getProfile(author);
   }, []);
-
   return (
     <Link to={`/services/${id}`}>
       <div className="w-[20rem] h-[30rem] flex flex-col justify-between text-white white-glassmorphism p-3 m-2 cursor-pointer transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-104 duration-300">
+        {images.length > 0
+        ?
         <img alt="Service" className="max-h-[12rem] self-center rounded-md" src={images[0]} />
+        :
+        <img alt="Service" className="max-h-[12rem] self-center rounded-md opacity-25" src={noImage} />
+        }
         <div className="flex flex-col w-full">
           <div className="mt-2 flex flex-row justify-between">
             <p className="text-xl truncate ...">{title}</p>

@@ -72,6 +72,7 @@ router.get("/:id", async (req, res) => {
 router.post(
     "/new",
     [
+        check("category", "Category is required").notEmpty(),
         check("title", "Title is required").notEmpty(),
         check("author", "Author address is required").notEmpty(),
         check(
@@ -86,12 +87,15 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
         try {
-            const { title, author, price, description } = req.body;
+            const { category, images, title, author, price, description, deliveryTime } = req.body;
             const service = new Service({
+                category,
+                images,
                 title,
+                description,
                 author,
                 price,
-                description
+                deliveryTime
             });
 
             await service.save();

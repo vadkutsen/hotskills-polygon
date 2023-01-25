@@ -1,14 +1,32 @@
-import { useContext } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { HiSearch } from "react-icons/hi";
 import { useSearchParams } from "react-router-dom";
-import { ServiceContext } from "../context/ServiceContext";
-import { ServiceCard } from "../components";
+import { Loader, ServiceCard } from "../components";
 import { Categories } from "../utils/constants";
 
 const Services = () => {
-  // const { currentAccount } = useContext(AuthContext);
-  const { services } = useContext(ServiceContext);
+  const [services, setServices] = useState([]);
+  const [isLoading, setIsloading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const fetchServices = async () => {
+    setIsloading(true);
+    const res = await axios.get("/api/services");
+    setIsloading(false);
+    return res.data;
+  };
+
+  useEffect(() => {
+    fetchServices().then((s) => {
+      setServices(s);
+    });
+    return () => {
+      // this now gets called when the component unmounts
+      setServices([]);
+    };
+  }, []);
+
   const filterByCategory = (filter) => {
     if (filter) {
       setSearchParams({ filter });
@@ -16,6 +34,15 @@ const Services = () => {
       setSearchParams({});
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col w-full justify-start items-center min-h-screen">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col w-full justify-start items-center min-h-screen">
       {services ? (
@@ -64,8 +91,8 @@ const Services = () => {
       ) : (
         <p className="text-white text-3xl text-center my-2">No services yet</p>
       )}
-      <div className="flex justify-center items-center mt-10 w-9/12">
-        {services &&
+      <div className="flex flex-wrap justify-center items-center mt-10 w-9/12">
+        {services.length > 0 &&
           [...services]
             .reverse()
             .filter((p) => {

@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 
 const ServiceSchema = new mongoose.Schema({
+    category: {
+        type: String,
+        required: true,
+    },
+    images: {
+        type: Array,
+        required: false,
+    },
     title: {
         type: String,
         required: true,
@@ -10,12 +18,16 @@ const ServiceSchema = new mongoose.Schema({
         required: true,
     },
     price: {
-        type: String,
+        type: Number,
         required: true
     },
     description: {
         type: String,
         required: true
+    },
+    deliveryTime: {
+        type: Number,
+        required: true,
     },
 });
 
