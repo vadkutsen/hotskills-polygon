@@ -1,8 +1,10 @@
 import React, { useContext } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 import { PlatformContext } from "../context/PlatformContext";
 import { ServiceContext } from "../context/ServiceContext";
+import { AuthContext } from "../context/AuthContext";
 import { Loader } from "../components";
 import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
@@ -17,7 +19,11 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
         type={type}
         onChange={(e) => handleChange(e, name)}
       >
-        {Categories.map((c, i) => <option className="white-glassmorphism" key={i} value={c}>{c}</option>)}
+        {Categories.map((c, i) => (
+          <option className="white-glassmorphism" key={i} value={c}>
+            {c}
+          </option>
+        ))}
       </select>
     );
   }
@@ -45,14 +51,26 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
 
 export default function NewService() {
   const { isLoading } = useContext(PlatformContext);
+  const { currentAccount } = useContext(AuthContext);
+  const { handleChange, formData, addService } = useContext(ServiceContext);
 
-  const { handleChange, formData, addService, onUploadHandler, ipfsUrl } = useContext(ServiceContext);
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     const { title, description, price } = formData;
     e.preventDefault();
     if (!title || !description || !price) return;
-    addService();
+    try {
+      const serviceData = {
+        title,
+        author: currentAccount,
+        price,
+        description,
+      };
+      console.log(serviceData);
+      // const dataHash = hash(serviceData);
+      await axios.post("/api/services/new", serviceData);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -98,31 +116,6 @@ export default function NewService() {
               </span>
               <div className="relative">
                 <IpfsForm />
-                {/* <div>
-                  <p className=" text-l text-white text-basetext-white">
-                    Upload images for your service gallery to IPFS
-                  </p>
-                  {ipfsUrl && <img alt="Service" className="self-center" src={ipfsUrl} />}
-                  <form onSubmit={onUploadHandler}>
-                    <input
-                      className="mt-5 text-l text-white text-basetext-white"
-                      type="file"
-                      name="file"
-                      accept="image/png,image/jpeg,image/gif"
-                    />
-                    {isLoading ? (
-                      <Loader />
-                    ) : (
-                      <button
-                        className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
-                        id="upload-btn"
-                        type="submit"
-                      >
-                        Upload File
-                      </button>
-                    )}
-                  </form>
-                </div> */}
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
@@ -168,7 +161,9 @@ export default function NewService() {
                   type="number"
                   handleChange={handleChange}
                 />
-                <span className="text-white self-center">{networks.testnet.nativeCurrency.symbol}</span>
+                <span className="text-white self-center">
+                  {networks.testnet.nativeCurrency.symbol}
+                </span>
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">

@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
-import { TaskContext } from "../../context/TaskContext";
+// import { TaskContext } from "../../context/TaskContext";
 
 const MAX_COUNT = 5;
 
@@ -57,11 +57,7 @@ const IpfsForm = ({ selectedFiles, setSelectedFiles }) => {
       </label>
       <div className="uploaded-files-list">
         {selectedFiles.map((file, i) => (
-<<<<<<< HEAD
           <div key={i} className="flex items-center gap-2">
-=======
-          <div key={i} className="flex gap-2">
->>>>>>> 6760db3c09013c3396d9d31b57bcd6a34e7edca2
             {file.name}
             <button
               type="button"

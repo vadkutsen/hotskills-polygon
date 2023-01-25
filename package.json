@@ -1,0 +1,28 @@
+{
+  "name": "hs-mern",
+  "version": "1.0.0",
+  "description": "hotskills - crypto freelance marketplace",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "dev": "concurrently \"yarn run server\" \"cd client && yarn run vite\" "
+  },
+  "keywords": [
+    "mern",
+    "react"
+  ],
+  "author": "Vadym Kutsenko <vadkutsen@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@headlessui/react": "^1.7.7",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-validator": "^6.14.3",
+    "mongoose": "^6.8.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
+  }
+}

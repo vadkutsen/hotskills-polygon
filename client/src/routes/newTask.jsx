@@ -117,7 +117,7 @@ export default function NewTask() {
         </div>
 
         <div className="flex flex-col flex-2 items-center justify-start w-full mf:mt-0 mt-10">
-          <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
+          <div className="p-5 w-6/12 flex flex-col justify-start items-center blue-glassmorphism">
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
                 className="block tracking-wide text-gray-200 text-xs font-bold mb-2"

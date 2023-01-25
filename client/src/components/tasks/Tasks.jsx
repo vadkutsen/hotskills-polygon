@@ -35,7 +35,7 @@ const Tasks = () => {
 
   return (
     <>
-      {tasks.length < 1 && (
+      {tasks?.length < 1 && (
         <p className="text-white text-2xl text-center my-2">No tasks yet</p>
       )}
       <div className="text-white pt-10">
