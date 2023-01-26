@@ -95,7 +95,8 @@ router.post(
                 description,
                 author,
                 price,
-                deliveryTime
+                deliveryTime,
+                status: 0
             });
 
             await service.save();

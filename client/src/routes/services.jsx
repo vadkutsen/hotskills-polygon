@@ -26,7 +26,7 @@ const Services = () => {
       setServices([]);
     };
   }, []);
-
+  console.log(services);
   const filterByCategory = (filter) => {
     if (filter) {
       setSearchParams({ filter });

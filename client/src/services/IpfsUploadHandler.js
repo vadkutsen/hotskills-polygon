@@ -19,7 +19,8 @@ export const onGalleryUploadHandler = async (files) => {
     token: import.meta.env.VITE_WEB3_STORAGE_TOKEN,
   });
   if (!files || files.length === 0) {
-    return alert("No files selected");
+    // return alert("No files selected");
+    return;
   }
   const rootCid = await client.put(files);
   const info = await client.status(rootCid);

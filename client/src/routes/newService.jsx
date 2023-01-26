@@ -5,7 +5,7 @@ import axios from "axios";
 import { PlatformContext } from "../context/PlatformContext";
 import { ServiceContext } from "../context/ServiceContext";
 import { AuthContext } from "../context/AuthContext";
-import { Loader } from "../components";
+import { ConnectWalletButton, Loader } from "../components";
 import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
 import IpfsForm from "../components/services/IpfsForm";
@@ -39,6 +39,17 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
       />
     );
   }
+  if (name === "address") {
+    return (
+      <input
+        placeholder={placeholder}
+        type={type}
+        value={value}
+        onChange={(e) => handleChange(e, name)}
+        className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white white-glassmorphism"
+      />
+    );
+  }
   return (
     <input
       placeholder={placeholder}
@@ -54,13 +65,27 @@ export default function NewService() {
   const { notify } = useContext(PlatformContext);
   const [isLoading, setIsLoading] = useState(false);
   const { currentAccount } = useContext(AuthContext);
-  const { handleChange, formData, selectedFiles } = useContext(ServiceContext);
+  const { selectedFiles } = useContext(ServiceContext);
+
+  const [formData, setformData] = useState({
+    category: Categories[0],
+    image: "",
+    title: "",
+    description: "",
+    address: currentAccount,
+    price: 0,
+    deliveryTime: 0,
+  });
+
+  const handleChange = (e, name) => {
+    setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { category, title, description, price, deliveryTime } = formData;
+    const { category, title, description, price, address, deliveryTime } = formData;
     const images = await onGalleryUploadHandler(selectedFiles);
-    if (!title || !description || !price) return;
+    if (!title || !description || !price || !address) return;
     setIsLoading(true);
     try {
       const serviceData = {
@@ -68,7 +93,7 @@ export default function NewService() {
         images,
         title,
         description,
-        author: currentAccount,
+        author: address,
         price,
         deliveryTime
       };
@@ -77,20 +102,19 @@ export default function NewService() {
       await axios.post("/api/services/new", serviceData);
       window.location.replace("/services");
       notify("Service added successfully.");
-      setF
     } catch (error) {
       console.log(error.message);
     }
     setIsLoading(false);
   };
-
+  console.log(formData);
   return (
     <div className="flex w-full justify-center items-start min-h-screen">
       <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
         <div className="flex flex-1 justify-start items-start flex-col mf:mr-10">
           <h1 className="text-3xl sm:text-5xl text-white py-1">Add Service</h1>
           <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">
-            Let your customers know what your services are.
+            Tell the world what you&apos;re good at.
           </p>
         </div>
 
@@ -175,6 +199,24 @@ export default function NewService() {
                 <span className="text-white self-center">
                   {networks.testnet.nativeCurrency.symbol}
                 </span>
+              </div>
+            </div>
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
+              <span
+                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                htmlFor="grid-state"
+              >
+                Wallet Address
+              </span>
+              <div className="flex gap-2">
+                <FormField
+                  placeholder="address..."
+                  name="address"
+                  type="text"
+                  value={formData.address}
+                  handleChange={handleChange}
+                />
+                {!currentAccount && <ConnectWalletButton /> }
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">

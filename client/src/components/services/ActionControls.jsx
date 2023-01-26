@@ -4,9 +4,8 @@ import AuthorActions from "./AuthorActions";
 import { ServiceStatuses } from "../../utils/constants";
 import RequestService from "./RequestService";
 
-const ActionControls = (params) => {
+const ActionControls = ({ service }) => {
   const { currentAccount } = useContext(AuthContext);
-  const { service } = params;
   if (service.author && service.author.toLowerCase() === currentAccount.toLowerCase()) {
     return <AuthorActions service={service} />;
   }

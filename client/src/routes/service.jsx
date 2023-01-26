@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { ServiceContext } from "../context/ServiceContext";
@@ -10,13 +11,15 @@ import AutoAvatar from "../components/AutoAvatar";
 import { shortenAddress } from "../utils/shortenAddress";
 import { networks } from "../utils/networks";
 import Gallery from "../components/services/Gallery";
+import noImage from "../../images/no-image.png";
+import { ServiceStatuses } from "../utils/constants";
 
 const { ethereum } = window;
 
 export default function Service() {
   const params = useParams();
-  const { getService, formatService, contract } = useContext(ServiceContext);
-  const { isLoading, getRating } = useContext(PlatformContext);
+  const { formatService, contract } = useContext(ServiceContext);
+  const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
   const serviceId = params.id;
   const [service, setService] = useState([]);
   const [rating, setRating] = useState(0);
@@ -36,9 +39,21 @@ export default function Service() {
     }
   };
 
+  const getService = async (id) => {
+    setIsLoading(true);
+    try {
+      const res = await axios.get(`/api/services/${id}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      // alert(error.message);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     getService(serviceId).then((s) => {
-      setService(formatService(s));
+      setService(s);
       getRating(s.author).then((r) => setRating(r));
       getProfile(s.author);
     });
@@ -63,18 +78,22 @@ export default function Service() {
       <div className="min-h-screen text-white">
         <div className="container mx-auto flex flex-col self-center items-center white-glassmorphism p-3">
           <div className="flex flex-col w-full">
-            {/* <img
-              alt="Service"
-              className="self-center rounded-md"
-              src={service.image}
-            /> */}
-            <Gallery images={service.images} />
+            {service.images && service.images.length > 0 ? (
+              <Gallery images={service.images} />
+            ) : (
+              <img
+                alt="Service"
+                className="max-h-[12rem] self-center rounded-md opacity-25"
+                src={noImage}
+              />
+            )}
+
             <div className="flex flex-col ">
               <div className="mt-2 text-center white-glassmorphism">
                 {service.category}
               </div>
               <div className="mt-2 text-center white-glassmorphism">
-                {service.status}
+                {ServiceStatuses[service.status]}
               </div>
               <div className="flex flex-row justify-between w-full">
                 <p className="mt-2 text-4xl text-left">{service.title}</p>

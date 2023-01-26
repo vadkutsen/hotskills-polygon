@@ -29,6 +29,10 @@ const ServiceSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    status: {
+        type: Number,
+        required: true,
+    },
 });
 
 module.exports = Service = mongoose.model("service", ServiceSchema);

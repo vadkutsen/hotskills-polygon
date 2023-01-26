@@ -31,11 +31,13 @@ const createEthereumContract = () => {
 const contract = createEthereumContract();
 
 export const ServiceProvider = ({ children }) => {
+  const { currentAccount, networkId } = useContext(AuthContext);
   const [formData, setformData] = useState({
     category: Categories[0],
     image: "",
     title: "",
     description: "",
+    address: currentAccount,
     price: 0,
     deliveryTime: 0,
   });
@@ -45,7 +47,6 @@ export const ServiceProvider = ({ children }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const { notify, setIsLoading, setNotifications } =
     useContext(PlatformContext);
-  const { currentAccount, networkId } = useContext(AuthContext);
 
   const onUploadHandler = async (files) => {
     const client = new Web3Storage({
@@ -63,13 +64,13 @@ export const ServiceProvider = ({ children }) => {
     return urls;
   };
 
-  const handleChange = (e, name) => {
-    setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
-  };
+  // const handleChange = (e, name) => {
+  //   setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+  // };
 
   function formatService(t) {
     return {
-      id: t.id.toNumber(),
+      id: t._id,
       images: t.images,
       category: t.category,
       title: t.title,
@@ -373,7 +374,7 @@ export const ServiceProvider = ({ children }) => {
         pauseService,
         resumeService,
         requestService,
-        handleChange,
+        // handleChange,
         formData,
         onUploadHandler,
         ipfsUrl,
