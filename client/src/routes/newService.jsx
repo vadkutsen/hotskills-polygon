@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -66,6 +66,7 @@ export default function NewService() {
   const [isLoading, setIsLoading] = useState(false);
   const { currentAccount } = useContext(AuthContext);
   const { selectedFiles } = useContext(ServiceContext);
+  const [usdPrice, setUsdPrice] = useState(0);
 
   const [formData, setformData] = useState({
     category: Categories[0],
@@ -108,6 +109,25 @@ export default function NewService() {
     setIsLoading(false);
   };
   console.log(formData);
+
+  const getPriceData = async () => {
+    try {
+      const res = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/token_price/polygon-pos?contract_addresses=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&vs_currencies=usd"
+      );
+      setUsdPrice(res.data["0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"]?.usd);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getPriceData();
+  }, []);
+
+  const calculatePrice = (amount, priceInUsd) => amount * priceInUsd;
+
   return (
     <div className="flex w-full justify-center items-start min-h-screen">
       <div className="flex mf:flex-row flex-col items-start justify-between md:p-20 py-12 px-4">
@@ -122,7 +142,7 @@ export default function NewService() {
           <div className="p-5 w-full flex flex-col justify-start items-center blue-glassmorphism">
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-200 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-200 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Category
@@ -144,7 +164,7 @@ export default function NewService() {
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-20 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Gallery
@@ -155,7 +175,7 @@ export default function NewService() {
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-20 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Title
@@ -169,7 +189,7 @@ export default function NewService() {
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-20 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Description
@@ -183,7 +203,7 @@ export default function NewService() {
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-20 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Price
@@ -201,14 +221,18 @@ export default function NewService() {
                 </span>
               </div>
             </div>
+            <div className="text-white self-start">
+              ${calculatePrice(formData.price, usdPrice)}
+            </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-20 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Wallet Address
               </span>
-              <div className="flex gap-2">
+              <span className="italic">Rewards will be sent to this address</span>
+              <div className="flex gap-2 items-center">
                 <FormField
                   placeholder="address..."
                   name="address"
@@ -216,12 +240,13 @@ export default function NewService() {
                   value={formData.address}
                   handleChange={handleChange}
                 />
+                or
                 {!currentAccount && <ConnectWalletButton /> }
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
-                className="block tracking-wide text-gray-20 text-xs font-bold mb-2"
+                className="block tracking-wide text-gray-20 font-bold mb-2"
                 htmlFor="grid-state"
               >
                 Delivery Time

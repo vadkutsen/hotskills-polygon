@@ -1,0 +1,66 @@
+{
+    "data": {
+        "tokens": [
+            {
+                "id": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+                "name": "Wrapped Ether",
+                "symbol": "WETH",
+                "decimals": "18",
+                "derivedETH": "1.0000000000000000",
+                "tradeVolume": "8929478.3111387073880000",
+                "tradeVolumeUSD": "23446017065.0143924637360000",
+                "untrackedVolumeUSD": "23832717475.3021214087000000",
+                "totalLiquidity": "6583.2157706693960000",
+                "__typename": "Token"
+            },
+            {
+                "id": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+                "name": "USD Coin (PoS)",
+                "symbol": "USDC",
+                "decimals": "6",
+                "derivedETH": "0.0006169739232705",
+                "tradeVolume": "22638329433.8908740000000000",
+                "tradeVolumeUSD": "22648050175.9850125444120000",
+                "untrackedVolumeUSD": "40993516105168629.3551268428290000",
+                "totalLiquidity": "33322398.5302990000000000",
+                "__typename": "Token"
+            },
+            {
+                "id": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+                "name": "Wrapped Matic",
+                "symbol": "WMATIC",
+                "decimals": "18",
+                "derivedETH": "0.0006254450198529",
+                "tradeVolume": "15258454404.6943827929530000",
+                "tradeVolumeUSD": "18499529754.5120368531650000",
+                "untrackedVolumeUSD": "48979535199103698193.3049569102720000",
+                "totalLiquidity": "20247922.5543232764310000",
+                "__typename": "Token"
+            },
+            {
+                "id": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+                "name": "(PoS) Tether USD",
+                "symbol": "USDT",
+                "decimals": "6",
+                "derivedETH": "0.0006168259327902",
+                "tradeVolume": "6070490641.9089000000000000",
+                "tradeVolumeUSD": "6071615152.1937019874640000",
+                "untrackedVolumeUSD": "441261922596759.0388890724910000",
+                "totalLiquidity": "11163326.3295430000000000",
+                "__typename": "Token"
+            },
+            {
+                "id": "0x831753dd7087cac61ab5644b308642cc1c33dc13",
+                "name": "Quickswap",
+                "symbol": "QUICK",
+                "decimals": "18",
+                "derivedETH": "0.0357505699248813",
+                "tradeVolume": "13763041.7835415079780000",
+                "tradeVolumeUSD": "4684776008.0635091421160000",
+                "untrackedVolumeUSD": "1271629562945.3430845886470000",
+                "totalLiquidity": "19482.8294700988110000",
+                "__typename": "Token"
+            }
+        ]
+    }
+}
