@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import usePreventBodyScroll from "../usePreventBodyScroll";
 import { ServiceContext } from "../../context/ServiceContext";
 import ServiceCard from "./ServiceCard";
 import { LeftArrow, RightArrow } from "../Arrows";
 import { ServiceStatuses } from "../../utils/constants";
+import Loader from "../Loader";
+
 
 function onWheel(apiObj, ev) {
   const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
@@ -22,13 +25,32 @@ function onWheel(apiObj, ev) {
 }
 
 const Services = () => {
-  const { services } = useContext(ServiceContext);
+  const [services, setServices] = useState([]);
+  const [isLoading, setIsloading] = useState(false);
+  // const [searchParams, setSearchParams] = useSearchParams();
+
+  const fetchServices = async () => {
+    setIsloading(true);
+    const res = await axios.get("/api/services");
+    setIsloading(false);
+    return res.data;
+  };
+
+  useEffect(() => {
+    fetchServices().then((s) => {
+      setServices(s);
+    });
+    return () => {
+      // this now gets called when the component unmounts
+      setServices([]);
+    };
+  }, []);
 
   const { disableScroll, enableScroll } = usePreventBodyScroll();
 
   return (
     <>
-      {services.length < 1 && (
+      {isLoading ? <Loader /> : services.length < 1 && (
         <p className="text-white text-2xl text-center my-2">No services yet</p>
       )}
       <div className="text-white pt-10">
@@ -41,7 +63,7 @@ const Services = () => {
           >
             {services &&
               [...services]
-                .filter((p) => p.status === ServiceStatuses[0])
+                .filter((p) => p.status === 0)
                 .reverse()
                 .slice(0, 5)
                 .map((service, i) => (

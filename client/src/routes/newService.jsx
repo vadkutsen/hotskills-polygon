@@ -10,6 +10,7 @@ import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
 import IpfsForm from "../components/services/IpfsForm";
 import { onGalleryUploadHandler } from "../services/IpfsUploadHandler";
+import { OnboardingButton } from "../components/MetaMaskOnboarding";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -240,8 +241,8 @@ export default function NewService() {
                   value={formData.address}
                   handleChange={handleChange}
                 />
-                or
-                {!currentAccount && <ConnectWalletButton /> }
+                {/* {!currentAccount && <><span>or</span><ConnectWalletButton /></> } */}
+                <OnboardingButton />
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">

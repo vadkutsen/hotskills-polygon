@@ -24,6 +24,24 @@ export default function Service() {
   const [service, setService] = useState([]);
   const [rating, setRating] = useState(0);
   const [profile, setProfile] = useState(null);
+  const [usdPrice, setUsdPrice] = useState(0);
+  const getPriceData = async () => {
+    try {
+      const res = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/token_price/polygon-pos?contract_addresses=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&vs_currencies=usd"
+      );
+      setUsdPrice(res.data["0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"]?.usd);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getPriceData();
+  }, []);
+
+  const calculatePrice = (amount, priceInUsd) => amount * priceInUsd;
 
   const getProfile = async (address) => {
     if (ethereum && address) {
@@ -99,6 +117,8 @@ export default function Service() {
                 <p className="mt-2 text-4xl text-left">{service.title}</p>
                 <p className="mt-2 text-3xl text-right">
                   {service.price} {networks.testnet.nativeCurrency.symbol}
+                  {" "}
+                  (${calculatePrice(service.price, usdPrice)})
                 </p>
               </div>
               <p className="mt-1 text-2xl">{service.description}</p>
@@ -126,7 +146,7 @@ export default function Service() {
                 </div>
                 <div className="flex flex-row justify-center items-center">
                   <FaStar color="#ffc107" />
-                  {rating.toFixed(1)}
+                  {rating ? rating.toFixed(1) : 0} (0)
                 </div>
               </div>
               {service.createdAt}

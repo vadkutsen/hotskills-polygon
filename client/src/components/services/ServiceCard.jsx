@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ethers } from "ethers";
+import axios from "axios";
 import { shortenAddress } from "../../utils/shortenAddress";
 import AutoAvatar from "../AutoAvatar";
 import { contractAddress, ServiceStatuses } from "../../utils/constants";
@@ -34,7 +35,7 @@ const ServiceCard = ({
 }) => {
   const [profile, setProfile] = useState(null);
   // const { currentAccount, networkId } = useContext(AuthContext);
-
+  const [usdPrice, setUsdPrice] = useState(0);
   const getProfile = async (address) => {
     if (ethereum && address) {
       try {
@@ -52,6 +53,25 @@ const ServiceCard = ({
   useEffect(() => {
     getProfile(author);
   }, []);
+
+  const getPriceData = async () => {
+    try {
+      const res = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/token_price/polygon-pos?contract_addresses=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&vs_currencies=usd"
+      );
+      setUsdPrice(res.data["0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"]?.usd);
+      console.log(res.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getPriceData();
+  }, []);
+
+  const calculatePrice = (amount, priceInUsd) => amount * priceInUsd;
+
   return (
     <Link to={`/services/${_id}`}>
       <div className="w-[20rem] h-[30rem] flex flex-col justify-between text-white white-glassmorphism p-3 m-2 cursor-pointer transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-104 duration-300">
@@ -101,7 +121,7 @@ const ServiceCard = ({
           </div>
         </div>
         <p className="text-xl mt-20 self-end">
-          {price} {networks.testnet.nativeCurrency.symbol}
+          {price} {networks.testnet.nativeCurrency.symbol} (${calculatePrice(price, usdPrice)})
         </p>
       </div>
     </Link>

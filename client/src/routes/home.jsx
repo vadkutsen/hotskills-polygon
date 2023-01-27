@@ -15,9 +15,9 @@ export default function Home() {
 
   return (
     <div className="flex flex-col w-full justify-start items-center 2xl:px-20 gradient-bg-welcome min-h-screen">
-      {!currentAccount ? (
+      {/* {!currentAccount ? (
         <Connect />
-      ) : (
+      ) : ( */}
         <div className="flex flex-col items-center w-full">
           <Welcome />
           <div className="flex flex-col w-9/12 py-12 px-4">
@@ -43,7 +43,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 }

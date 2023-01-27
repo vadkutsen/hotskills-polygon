@@ -18,43 +18,36 @@ const Navbar = () => {
   const { currentAccount, networkId } = useContext(AuthContext);
   const [toggleMenu, setToggleMenu] = useState(false);
 
-  const renderAccountInfo = () => (
-    <div className="flex flex-row">
-      <Wallet />
-    </div>
-  );
-
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.9] flex-initial justify-center items-center">
         <Link to="/">
           <div className="flex gap-2 text-white text-2xl cursor-pointer font-bold">
-            <img alt="Brand logo" className="h-6 self-center" src={logo1} /><b><span className="text-pink-400">HOT</span>SKILLS</b>
+            <img alt="Brand logo" className="h-6 self-center" src={logo1} />
+            <b>
+              <span className="text-pink-400">HOT</span>SKILLS
+            </b>
             <img alt="Network logo" className="h-5 self-center" src={logo2} />
           </div>
         </Link>
       </div>
-      <div className="text-white md:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {currentAccount && networkId === networks.testnet.chainId ? (
-          <div className="flex flex-row items-center">
-            <Link to="/tasks">
-              <NavBarItem title="Find Tasks" />
-            </Link>
-            <Link to="/services">
-              <NavBarItem title="Find Freelancers" />
-            </Link>
-            <Link to="/services/new">
-              <NavBarItem title="Add Service" />
-            </Link>
-            <Link to="/tasks/new">
-              <NavBarItem title="Add Task" />
-            </Link>
-            <Notifications />
-            <Wallet />
-          </div>
-        ) : (
-          <ConnectWalletButton />
-        )}
+      <div className="text-white md:flex hidden list-none flex-row justify-between items-center">
+        <div className="flex flex-row items-center">
+          <Link to="/tasks">
+            <NavBarItem title="Find Tasks" />
+          </Link>
+          <Link to="/services">
+            <NavBarItem title="Find Freelancers" />
+          </Link>
+          <Link to="/services/new">
+            <NavBarItem title="Add Service" />
+          </Link>
+          <Link to="/tasks/new">
+            <NavBarItem title="Add Task" />
+          </Link>
+          <Notifications />
+          {currentAccount ? <Wallet /> : <ConnectWalletButton />}
+        </div>
       </div>
       <div className="flex relative">
         {!toggleMenu && (
@@ -79,28 +72,21 @@ const Navbar = () => {
             <li className="text-xl w-full my-2">
               <AiOutlineClose onClick={() => setToggleMenu(false)} />
             </li>
-            {currentAccount && networkId === networks.testnet.chainId ? (
-              <li>
-                <Link to="/tasks">
-                  <NavBarItem title="Find Tasks" />
-                </Link>
-                <Link to="/services">
-                  <NavBarItem title="Find Freelancers" />
-                </Link>
-                <Link to="/services/new">
-                  <NavBarItem title="Add Service" />
-                </Link>
-                <Link to="/tasks/new">
-                  <NavBarItem title="Add Task" />
-                </Link>
-                <Notifications />
-              </li>
-            ) : (
-              <li />
-            )}
+            <Link to="/tasks">
+              <NavBarItem title="Find Tasks" />
+            </Link>
+            <Link to="/services">
+              <NavBarItem title="Find Freelancers" />
+            </Link>
+            <Link to="/services/new">
+              <NavBarItem title="Add Service" />
+            </Link>
+            <Link to="/tasks/new">
+              <NavBarItem title="Add Task" />
+            </Link>
+            <Notifications />
             <li>
-              {!currentAccount && <ConnectWalletButton />}
-              {currentAccount && renderAccountInfo()}
+              {currentAccount ? <Wallet /> : <ConnectWalletButton />}
             </li>
           </ul>
         )}
