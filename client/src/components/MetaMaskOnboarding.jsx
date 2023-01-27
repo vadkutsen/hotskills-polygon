@@ -12,6 +12,7 @@ export function OnboardingButton() {
   const [accounts, setAccounts] = React.useState([]);
   const onboarding = React.useRef();
   const { setCurrentAccount } = React.useContext(AuthContext);
+
   React.useEffect(() => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding();
@@ -56,6 +57,7 @@ export function OnboardingButton() {
       onboarding.current.startOnboarding();
     }
   };
+
   return (
     <button
       type="button"
