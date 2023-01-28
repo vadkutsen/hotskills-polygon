@@ -46,11 +46,12 @@ router.post(
 );
 
 // @route   GET api/profiles/:id
-// @desc    get profile by id
+// @desc    get profile by address
 // @access  public
-router.get("/:id", async (req, res) => {
+router.get("/:address", async (req, res) => {
     try {
-        const profile = await Profile.findById(req.params.id);
+        const address = req.params.address;
+        const profile = await Profile.findOne({ address });
 
         if (!profile) {
             return res.status(404).json({ msg: "Profile not found" });
@@ -73,6 +74,7 @@ router.post(
     "/new",
     [
         check("username", "Udername is required").notEmpty(),
+        check("address", "Address is required").notEmpty(),
     ],
     async (req, res) => {
         const errors = validationResult(req);
@@ -81,6 +83,11 @@ router.post(
         }
         try {
             const { avatar, username, skills, languages, rate, availability, address } = req.body;
+            const candidate = await Profile.findOne({ address });
+            if (candidate) {
+                return res.status(400).json({ msg: "Profile aready exists" });
+            }
+
             const profile = new Profile({
                 avatar,
                 username,
@@ -90,6 +97,44 @@ router.post(
                 availability,
                 address
             });
+
+            await profile.save();
+            res.json(profile);
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).send("Server Error");
+        }
+    }
+);
+
+// @route   POST api/profiles/:id
+// @desc    update existing profile
+// @access  public
+router.post(
+    "/:id",
+    [
+        check("username", "Udername is required").notEmpty(),
+        check("address", "Address is required").notEmpty(),
+    ],
+    async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+        try {
+            const profile = await Profile.findById(req.params.id);
+
+            if (!profile) {
+                return res.status(404).json({ msg: "Profile not found" });
+            }
+            const { avatar, username, skills, languages, rate, availability } = req.body;
+
+            profile.avatar = avatar;
+            profile.username = username;
+            profile.skills = skills;
+            profile.languages = languages;
+            profile.rate = rate;
+            profile.availability = availability;
 
             await profile.save();
             res.json(profile);

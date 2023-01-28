@@ -137,8 +137,8 @@ export const PlatformProvider = ({ children }) => {
     if (ethereum && address) {
       try {
         const contract = createEthereumContract();
-        const r = await contract.getRating(address);
-        return r;
+        // const r = await contract.getRating(address);
+        // return r;
       } catch (error) {
         console.log(error);
         alert(error.message);

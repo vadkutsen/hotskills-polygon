@@ -85,10 +85,10 @@ export default function NewService() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const { category, title, description, price, address, deliveryTime } = formData;
     const images = await onGalleryUploadHandler(selectedFiles);
     if (!title || !description || !price || !address) return;
-    setIsLoading(true);
     try {
       const serviceData = {
         category,

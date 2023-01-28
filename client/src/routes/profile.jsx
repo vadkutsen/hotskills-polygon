@@ -1,150 +1,35 @@
-import React, { useContext, createRef, useState } from "react";
-import Select from "react-select";
+import React, { useState, useEffect } from "react";
+
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Cropper } from "react-cropper";
-import { PlatformContext } from "../context/PlatformContext";
-import { AuthContext } from "../context/AuthContext";
-import { ProfileContext } from "../context/ProfileContext";
+import { getProfile } from "../services/ProfileService";
 import { Loader } from "../components";
 import "cropperjs/dist/cropper.css";
 import "./roundedCropper.css";
 import AutoAvatar from "../components/AutoAvatar";
 import languages from "../utils/languages.json";
 import skills from "../utils/skills.json";
-
-// this transforms file to base64
-const file2Base64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result?.toString() || "");
-    reader.onerror = (error) => reject(error);
-  });
-
-const languageOptions = languages.map((l) => ({
-  value: l.code,
-  label: l.name,
-}));
-
-const skillOptions = skills.map((s) => ({
-  value: s.id,
-  label: s.name,
-}));
-
-const FormField = ({ placeholder, name, type, value, handleChange }) => {
-  if (name === "languages") {
-    return (
-      <Select
-        options={languageOptions}
-        closeMenuOnSelect={false}
-        isMulti
-        className="basic-multi-select"
-        classNamePrefix="select"
-        defaultValue={value}
-        value={value}
-        onChange={(e) => handleChange(e, name)}
-        styles={{
-          control: (styles) => ({
-            ...styles,
-            backgroundColor: "transparent",
-          }),
-          input: (styles) => ({
-            ...styles,
-            color: "white",
-            outlineStyle: "none",
-          }),
-        }}
-      />
-    );
-  }
-  if (name === "skills") {
-    return (
-      <Select
-        options={skillOptions}
-        closeMenuOnSelect={false}
-        isMulti
-        className="basic-multi-select"
-        classNamePrefix="select"
-        defaultValue={value}
-        value={value}
-        onChange={(e) => handleChange(e, name)}
-        styles={{
-          control: (styles) => ({
-            ...styles,
-            backgroundColor: "transparent",
-            outlineStyle: "none",
-          }),
-          input: (styles) => ({
-            ...styles,
-            color: "white",
-            outlineStyle: "none",
-          }),
-        }}
-      />
-    );
-  }
-  return (
-    <input
-      placeholder={placeholder}
-      type={type}
-      step="0.5"
-      min="0"
-      value={value}
-      onChange={(e) => handleChange(e, name)}
-      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border"
-    />
-  );
-};
+import { Link } from "react-router-dom";
 
 export default function Profile() {
-  const { isLoading } = useContext(PlatformContext);
-  const { currentAccount } = useContext(AuthContext);
-  const {
-    handleChange,
-    formData,
-    addProfile,
-    profile,
-    // onUploadHandler,
-    // ipfsUrl,
-  } = useContext(ProfileContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [profile, setProfile] = useState(null);
 
-  const [file, setFile] = useState(null);
-
-  const handleSubmit = (e) => {
-    const { username } = formData;
-    e.preventDefault();
-    if (!username) return;
-    addProfile(file);
+  const handleClick = () => {
+    window.location.replace("profile/edit");
   };
 
-  // ref of the file input
-  const fileRef = createRef();
-
-  // the selected image
-  const [uploaded, setUploaded] = useState(null);
-
-  // the resulting cropped image
-  const [cropped, setCropped] = useState(null);
-
-  // the reference of cropper element
-  const cropperRef = createRef();
-
-  const onFileInputChange = (e) => {
-    const f = e.target?.files?.[0];
-    if (f) {
-      setFile(e.target?.files);
-      file2Base64(f).then((base64) => {
-        setUploaded(base64);
-      });
-    }
-  };
-
-  // const onCrop = () => {
-  //   const imageElement = cropperRef?.current;
-  //   const cropper = imageElement?.cropper;
-  //   setCropped(cropper.getCroppedCanvas().toDataURL());
-  // };
+  useEffect(() => {
+    setIsLoading(true);
+    getProfile(window.ethereum.selectedAddress).then((p) => {
+      setProfile(p);
+    });
+    setIsLoading(false);
+    return () => {
+      // this now gets called when the component unmounts
+      setProfile(null);
+    };
+  }, []);
 
   return (
     <div className="flex w-full justify-center items-start  outline-none min-h-screen">
@@ -159,96 +44,17 @@ export default function Profile() {
         <div className="flex flex-col flex-2 items-center justify-center w-full mf:mt-0 mt-10">
           <div className="p-5 w-full flex flex-col justify-center items-center blue-glassmorphism">
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm">
-              {uploaded ? (
-                <div>
-                  {cropped ? (
-                    <div className="flex flex-col items-center">
-                      <img
-                        src={cropped}
-                        alt="Cropped!"
-                        // style={{ borderRadius: "50%" }}
-                        className="rounded-full border"
-                      />
-                      {isLoading ? (
-                        <Loader />
-                      ) : (
-                        <>
-                          <button
-                            type="button"
-                            className="text-white w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
-                            onClick={() => setCropped(false)}
-                          >
-                            Cancel
-                          </button>
-                          {/* <button
-                            type="button"
-                            className="text-white w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
-                            onClick={() => onUploadHandler(file)}
-                          >
-                            Upload to IPFS
-                          </button> */}
-                        </>
-                      )}
-                    </div>
-                  ) : (
-                    <div className="flex flex-col items-center">
-                      <Cropper
-                        src={uploaded}
-                        style={{ height: 400, width: 400 }}
-                        autoCropArea={1}
-                        aspectRatio={1}
-                        viewMode={3}
-                        guides={false}
-                        ref={cropperRef}
-                      />
-                      <button
-                        type="button"
-                        className="text-white w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
-                        onClick={() => setUploaded(false)}
-                      >
-                        Cancel
-                      </button>
-                      {/* <button
-                        type="button"
-                        className="text-white w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
-                        onClick={onCrop}
-                      >
-                        Crop
-                      </button> */}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center">
-                  {profile.avatar && profile.avatar.length > 0 ? (
-                    <img
-                      alt="Avatar"
-                      src={profile.avatar}
-                      className="w-[36rem] mr-1 rounded-full box-border border-4"
-                    />
-                  ) : (
-                    <AutoAvatar userId={currentAccount} size={370} />
-                  )}
-                  {/* {ipfsUrl && (
-                    <img alt="Profile" className="self-center" src={ipfsUrl} />
-                  )} */}
-                  <input
-                    type="file"
-                    name="file"
-                    style={{ display: "none" }}
-                    ref={fileRef}
-                    onChange={onFileInputChange}
-                    accept="image/png,image/jpeg,image/gif"
+              <div className="flex flex-col items-center">
+                {profile?.avatar && profile.avatar.length > 0 ? (
+                  <img
+                    alt="Avatar"
+                    src={profile.avatar}
+                    className="w-[36rem] mr-1 rounded-full box-border border-4"
                   />
-                  <button
-                    type="button"
-                    className="text-white w-full mt-4 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
-                    onClick={() => fileRef.current?.click()}
-                  >
-                    Upload an Avatar
-                  </button>
-                </div>
-              )}
+                ) : (
+                  <AutoAvatar userId={profile?.address} size={370} />
+                )}
+              </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
@@ -257,37 +63,37 @@ export default function Profile() {
               >
                 Username*
               </span>
-              <div>
-                <FormField
-                  className="w-full bg-transparent"
-                  name="username"
-                  type="text"
-                  placeholder="e.g. Elon Musk"
-                  handleChange={handleChange}
-                />
-              </div>
+              <div>{profile?.username}</div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-0 bg-transparent text-sm">
               <span
                 className="block text-white tracking-wide text-gray-20 text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
-                Skills
+                Skills ({profile?.skills?.length})
               </span>
-              <FormField
-                name="skills"
-                handleChange={handleChange}
-                className="outline-0"
-              />
+              <div className="flex gap-2">
+                {profile?.skills?.map((s, i) => (
+                  <span key={i} className="text-white p-2 white-glassmorphism">
+                    {skills.find((entry) => entry.id === s).name}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-0">
               <span
                 className="block tracking-wide text-white text-xs font-bold mb-2"
                 htmlFor="grid-state"
               >
-                Languages
+                Languages ({profile?.languages?.length})
               </span>
-              <FormField name="languages" handleChange={handleChange} />
+              <div className="flex gap-2">
+                {profile?.languages?.map((l, i) => (
+                  <span key={i} className="text-white p-2 white-glassmorphism">
+                    {languages.find((entry) => entry.code === l).name}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
@@ -298,13 +104,7 @@ export default function Profile() {
               </span>
               <div className="flex flex-row gap-2">
                 <span className="text-white self-center">$</span>
-                <FormField
-                  className="w-full bg-transparent"
-                  placeholder="0"
-                  name="rate"
-                  type="number"
-                  handleChange={handleChange}
-                />
+                {profile?.rate}
                 <span className="text-white self-center">/hr</span>
               </div>
             </div>
@@ -316,28 +116,29 @@ export default function Profile() {
                 Availability
               </span>
               <div className="flex flex-row gap-2">
-                <FormField
-                  className="w-full bg-transparent"
-                  placeholder="0"
-                  name="availability"
-                  type="number"
-                  min="0"
-                  handleChange={handleChange}
-                />
+                {profile?.availability}
                 <span className="text-white self-center">hours per week</span>
               </div>
+            </div>
+            <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
+              <span
+                className="block tracking-wide text-gray-20 font-bold mb-2"
+                htmlFor="grid-state"
+              >
+                Wallet Address
+              </span>
+              <div className="flex gap-2 items-center">{profile?.address}</div>
             </div>
             <div className="h-[1px] w-full bg-gray-400 my-2" />
             {isLoading ? (
               <Loader />
             ) : (
-              <button
-                type="button"
-                onClick={handleSubmit}
-                className="text-white w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
+              <Link
+                to="/profile/edit"
+                className="text-white text-center w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
               >
-                Save Profile
-              </button>
+                Edit Profile
+              </Link>
             )}
           </div>
         </div>

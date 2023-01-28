@@ -46,8 +46,8 @@ export default function Service() {
   const getProfile = async (address) => {
     if (ethereum && address) {
       try {
-        const r = await contract.getProfile(address);
-        setProfile(r);
+        // const r = await contract.getProfile(address);
+        // setProfile(r);
       } catch (error) {
         console.log(error);
         alert(error.message);

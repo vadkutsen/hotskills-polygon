@@ -18,6 +18,7 @@ import Services from "./routes/services";
 import Tasks from "./routes/tasks";
 import Home from "./routes/home";
 import Profile from "./routes/profile";
+import EditProfile from "./routes/editProfile";
 
 ReactDOM.render(
   <AuthProvider>
@@ -38,6 +39,8 @@ ReactDOM.render(
                   <Route path="mytasks" element={<MyTasks />} />
                   <Route path="myservices" element={<MyServices />} />
                   <Route path="profile" element={<Profile />} />
+                  {/* <Route path="profile/new" element={<NewProfile />} /> */}
+                  <Route path="profile/edit" element={<EditProfile />} />
                   <Route
                     path="*"
                     element={(

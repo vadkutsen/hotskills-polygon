@@ -40,7 +40,7 @@ const ServiceCard = ({
     if (ethereum && address) {
       try {
         const contract = createEthereumContract();
-        const r = await contract.getProfile(address);
+        // const r = await contract.getProfile(address);
         setProfile(r);
       } catch (error) {
         console.log(error);

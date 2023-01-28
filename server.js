@@ -11,6 +11,8 @@ app.use(express.json({ extended: false }));
 
 app.use("/api/tasks", require("./routes/api/tasks"));
 app.use("/api/services", require("./routes/api/services"));
+app.use("/api/profiles", require("./routes/api/profiles"));
+
 
 app.use(
     express.static("frontend/build/")
