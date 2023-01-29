@@ -1,7 +1,7 @@
-import { reset } from "nodemon";
 
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+
 // register
 export const register = async (req, res) => {
     try {
@@ -14,7 +14,20 @@ export const register = async (req, res) => {
             address
         });
         await newUser.save();
-        res.json(newUser);
+        const token = jwt.sign(
+            {
+                id: newUser._id,
+                address: newUser.address
+            },
+            process.env.JWT_SECRET,
+            { expiresIn: '30d' }
+        );
+
+        res.json({
+            token,
+            newUser,
+            message: "Signed up successfully"
+        });
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Server Error");

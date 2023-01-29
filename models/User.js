@@ -1,24 +1,24 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     address: {
         type: String,
         required: true,
         unique: true,
     },
     profile: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: "Profile",
     },
     services: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "Service",
         }
     ],
     tasks: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "Task",
         }
     ],
@@ -26,4 +26,4 @@ const UserSchema = new mongoose.Schema({
 { timestamps: true },
 );
 
-module.exports = User = mongoose.model("user", UserSchema);
+export default model("User", UserSchema);

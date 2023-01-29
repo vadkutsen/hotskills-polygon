@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import App from "./App";
 import "./index.css";
 import { PlatformProvider } from "./context/PlatformContext";
@@ -19,14 +20,16 @@ import Tasks from "./routes/tasks";
 import Home from "./routes/home";
 import Profile from "./routes/profile";
 import EditProfile from "./routes/editProfile";
+import { store } from "./redux/store";
 
 ReactDOM.render(
   <AuthProvider>
     <PlatformProvider>
       {/* <TaskProvider> */}
-        <ServiceProvider>
-          <ProfileProvider>
-            <Router>
+      <ServiceProvider>
+        <ProfileProvider>
+          <Router>
+            <Provider store={store}>
               <Routes>
                 <Route path="/" element={<App />}>
                   <Route index element={<Home />} />
@@ -51,9 +54,10 @@ ReactDOM.render(
                   />
                 </Route>
               </Routes>
-            </Router>
-          </ProfileProvider>
-        </ServiceProvider>
+            </Provider>
+          </Router>
+        </ProfileProvider>
+      </ServiceProvider>
       {/* </TaskProvider> */}
     </PlatformProvider>
   </AuthProvider>,

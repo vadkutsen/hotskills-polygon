@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ScrollMenu } from "react-horizontal-scrolling-menu";
 import usePreventBodyScroll from "../usePreventBodyScroll";
-import { ServiceContext } from "../../context/ServiceContext";
+// import { ServiceContext } from "../../context/ServiceContext";
 import ServiceCard from "./ServiceCard";
 import { LeftArrow, RightArrow } from "../Arrows";
-import { ServiceStatuses } from "../../utils/constants";
+// import { ServiceStatuses } from "../../utils/constants";
 import Loader from "../Loader";
-
 
 function onWheel(apiObj, ev) {
   const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { NavLink } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getProfile } from "../services/ProfileService";
@@ -9,7 +9,6 @@ import "./roundedCropper.css";
 import AutoAvatar from "../components/AutoAvatar";
 import languages from "../utils/languages.json";
 import skills from "../utils/skills.json";
-import { Link } from "react-router-dom";
 
 export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -133,12 +132,12 @@ export default function Profile() {
             {isLoading ? (
               <Loader />
             ) : (
-              <Link
+              <NavLink
                 to="/profile/edit"
                 className="text-white text-center w-full mt-2 border p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-full cursor-pointer"
               >
                 Edit Profile
-              </Link>
+              </NavLink>
             )}
           </div>
         </div>

@@ -2,15 +2,17 @@ import React, { useContext, useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { PlatformContext } from "../context/PlatformContext";
 import { ServiceContext } from "../context/ServiceContext";
 import { AuthContext } from "../context/AuthContext";
-import { ConnectWalletButton, Loader } from "../components";
+import { Loader } from "../components";
 import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
 import IpfsForm from "../components/services/IpfsForm";
 import { onGalleryUploadHandler } from "../services/IpfsUploadHandler";
 import { OnboardingButton } from "../components/MetaMaskOnboarding";
+import { registerUser } from "../redux/features/auth/authSlice";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -68,7 +70,7 @@ export default function NewService() {
   const { currentAccount } = useContext(AuthContext);
   const { selectedFiles } = useContext(ServiceContext);
   const [usdPrice, setUsdPrice] = useState(0);
-
+  const dispatch = useDispatch();
   const [formData, setformData] = useState({
     category: Categories[0],
     image: "",
@@ -78,6 +80,14 @@ export default function NewService() {
     price: 0,
     deliveryTime: 0,
   });
+
+  const handleRegister = () => {
+    try {
+      dispatch(registerUser({ currentAccount }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -247,6 +257,11 @@ export default function NewService() {
                 />
                 {/* {!currentAccount && <><span>or</span><ConnectWalletButton /></> } */}
                 <OnboardingButton />
+                <button
+                  type="button"
+                  onClick={handleRegister}
+                >Register
+                </button>
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
