@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import { AuthContext } from "../context/AuthContext";
@@ -33,18 +33,18 @@ const Navbar = () => {
       </div>
       <div className="text-white md:flex hidden list-none flex-row justify-between items-center">
         <div className="flex flex-row items-center">
-          <Link to="/tasks">
+          <NavLink end to="/tasks" className={({ isActive }) => (isActive && "text-blue-300")}>
             <NavBarItem title="Find Tasks" />
-          </Link>
-          <Link to="/services">
+          </NavLink>
+          <NavLink end to="/services" className={({ isActive }) => (isActive && "text-blue-300")}>
             <NavBarItem title="Find Freelancers" />
-          </Link>
-          <Link to="/services/new">
+          </NavLink>
+          <NavLink end to="/services/new" className={({ isActive }) => (isActive && "text-blue-300")}>
             <NavBarItem title="Add Service" />
-          </Link>
-          <Link to="/tasks/new">
+          </NavLink>
+          <NavLink end to="/tasks/new" className={({ isActive }) => (isActive && "text-blue-300")}>
             <NavBarItem title="Add Task" />
-          </Link>
+          </NavLink>
           <Notifications />
           {currentAccount ? <Wallet /> : <ConnectWalletButton />}
         </div>
@@ -72,18 +72,18 @@ const Navbar = () => {
             <li className="text-xl w-full my-2">
               <AiOutlineClose onClick={() => setToggleMenu(false)} />
             </li>
-            <Link to="/tasks">
+            <NavLink end to="/tasks" className={({ isActive }) => (isActive && "text-blue-300")}>
               <NavBarItem title="Find Tasks" />
-            </Link>
-            <Link to="/services">
+            </NavLink>
+            <NavLink end to="/services" className={({ isActive }) => (isActive && "text-blue-300")}>
               <NavBarItem title="Find Freelancers" />
-            </Link>
-            <Link to="/services/new">
+            </NavLink>
+            <NavLink end to="/services/new" className={({ isActive }) => (isActive && "text-blue-300")}>
               <NavBarItem title="Add Service" />
-            </Link>
-            <Link to="/tasks/new">
+            </NavLink>
+            <NavLink end to="/tasks/new" className={({ isActive }) => (isActive && "text-blue-300")}>
               <NavBarItem title="Add Task" />
-            </Link>
+            </NavLink>
             <Notifications />
             <li>
               {currentAccount ? <Wallet /> : <ConnectWalletButton />}

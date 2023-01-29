@@ -41,7 +41,7 @@ const ServiceCard = ({
       try {
         const contract = createEthereumContract();
         // const r = await contract.getProfile(address);
-        setProfile(r);
+        // setProfile(r);
       } catch (error) {
         console.log(error);
         alert(error.message);

@@ -1,6 +1,7 @@
 import { Fragment, useContext } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FaStar } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { PlatformContext } from "../context/PlatformContext";
 import { ProfileContext } from "../context/ProfileContext";
@@ -13,21 +14,21 @@ function classNames(...classes) {
 }
 
 export default function Wallet() {
-  const { ethereum } = window;
+  // const { ethereum } = window;
   const { currentAccount, setCurrentAccount } = useContext(AuthContext);
   // const [profile, setProfile] = useState(null);
   const { balance, fetchedRating } = useContext(PlatformContext);
   const { profile } = useContext(ProfileContext);
 
-  const handleDisconnect = async () => {
-    setCurrentAccount(null);
-    try {
-      await ethereum.request({ method: "disconnect" });
-    } catch (error) {
-      console.log(error);
-    }
-    window.location.replace("/");
-  };
+  // const handleDisconnect = async () => {
+  //   setCurrentAccount(null);
+  //   try {
+  //     await ethereum.request({ method: "disconnect" });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   window.location.replace("/");
+  // };
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -106,8 +107,8 @@ export default function Wallet() {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="/profile"
+                <NavLink
+                  to="/profile"
                   className={classNames(
                     active
                       ? "bg-blue-700 text-white cursor-pointer"
@@ -116,13 +117,13 @@ export default function Wallet() {
                   )}
                 >
                   My Profile
-                </a>
+                </NavLink>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="/mytasks"
+                <NavLink
+                  to="/mytasks"
                   className={classNames(
                     active
                       ? "bg-blue-700 text-white cursor-pointer"
@@ -131,13 +132,13 @@ export default function Wallet() {
                   )}
                 >
                   My Tasks
-                </a>
+                </NavLink>
               )}
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="/myservices"
+                <NavLink
+                  to="/myservices"
                   className={classNames(
                     active
                       ? "bg-blue-700 text-white cursor-pointer"
@@ -146,7 +147,7 @@ export default function Wallet() {
                   )}
                 >
                   My Services
-                </a>
+                </NavLink>
               )}
             </Menu.Item>
             {/* <Menu.Item>

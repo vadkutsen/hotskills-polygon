@@ -30,17 +30,17 @@ ReactDOM.render(
               <Routes>
                 <Route path="/" element={<App />}>
                   <Route index element={<Home />} />
-                  <Route path="services" element={<Services />} />
-                  <Route path="services/new" element={<NewService />} />
-                  <Route path="services/:id" element={<Service />} />
-                  <Route path="tasks" element={<Tasks />} />
-                  <Route path="tasks/new" element={<NewTask />} />
-                  <Route path="tasks/:id" element={<Task />} />
-                  <Route path="mytasks" element={<MyTasks />} />
-                  <Route path="myservices" element={<MyServices />} />
-                  <Route path="profile" element={<Profile />} />
+                  <Route exact path="services" element={<Services />} />
+                  <Route exact path="services/new" element={<NewService />} />
+                  <Route exact path="services/:id" element={<Service />} />
+                  <Route exact path="tasks" element={<Tasks />} />
+                  <Route exact path="tasks/new" element={<NewTask />} />
+                  <Route exact path="tasks/:id" element={<Task />} />
+                  <Route exact path="mytasks" element={<MyTasks />} />
+                  <Route exact path="myservices" element={<MyServices />} />
+                  <Route exact path="profile" element={<Profile />} />
                   {/* <Route path="profile/new" element={<NewProfile />} /> */}
-                  <Route path="profile/edit" element={<EditProfile />} />
+                  <Route exact path="profile/edit" element={<EditProfile />} />
                   <Route
                     path="*"
                     element={(

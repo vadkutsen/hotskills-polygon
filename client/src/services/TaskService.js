@@ -113,18 +113,18 @@ export const composeAuthorProfile = async (address) => {
 
 export const getAllTasks = async () => {
   if (ethereum) {
-    try {
-      const availableTasks = await contract.getAllTasks();
-      const structuredTasks = availableTasks
-        .filter((item) => item.title && item.title !== "")
-        .map((item) => formatTask(item));
-      return structuredTasks;
-    } catch (error) {
-      console.log(error);
-      alert(error.message);
-    }
-  } else {
-    console.log("Ehtereum is not present");
+  //   try {
+  //     const availableTasks = await contract.getAllTasks();
+  //     const structuredTasks = availableTasks
+  //       .filter((item) => item.title && item.title !== "")
+  //       .map((item) => formatTask(item));
+  //     return structuredTasks;
+  //   } catch (error) {
+  //     console.log(error);
+  //     alert(error.message);
+  //   }
+  // } else {
+  //   console.log("Ehtereum is not present");
   }
 };
 

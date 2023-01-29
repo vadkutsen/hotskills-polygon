@@ -127,7 +127,7 @@ export default function NewService() {
     getPriceData();
   }, []);
 
-  const calculatePrice = (amount, priceInUsd) => amount * priceInUsd;
+  const calculatePrice = (amount, tokenPrice) => amount / tokenPrice;
 
   return (
     <div className="flex w-full justify-center items-start min-h-screen">
@@ -209,7 +209,11 @@ export default function NewService() {
               >
                 Price
               </span>
+              <p>Please enter the proce in $. We will calculate the price in crypro tokens when someone request your service to compensate the token price volatility.</p>
               <div className="flex flex-row gap-2">
+                <span className="text-white self-center">
+                  $
+                </span>
                 <FormField
                   placeholder="0"
                   name="price"
@@ -218,12 +222,12 @@ export default function NewService() {
                   handleChange={handleChange}
                 />
                 <span className="text-white self-center">
-                  {networks.testnet.nativeCurrency.symbol}
+                  {/* {networks.testnet.nativeCurrency.symbol} */}
                 </span>
               </div>
             </div>
             <div className="text-white self-start">
-              ${calculatePrice(formData.price, usdPrice)}
+              {calculatePrice(formData.price, usdPrice)} {networks.testnet.nativeCurrency.symbol}
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
