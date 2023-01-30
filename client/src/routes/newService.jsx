@@ -1,8 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "../utils/axios";
 import { PlatformContext } from "../context/PlatformContext";
 import { ServiceContext } from "../context/ServiceContext";
 import { AuthContext } from "../context/AuthContext";
@@ -12,7 +10,9 @@ import { networks } from "../utils/networks";
 import IpfsForm from "../components/services/IpfsForm";
 import { onGalleryUploadHandler } from "../services/IpfsUploadHandler";
 import { OnboardingButton } from "../components/MetaMaskOnboarding";
-import { registerUser } from "../redux/features/auth/authSlice";
+import { loginUser } from "../redux/features/auth/authSlice";
+import { notify } from "../services/ToastService";
+import { useNavigate } from "react-router-dom";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -65,7 +65,6 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
 };
 
 export default function NewService() {
-  const { notify } = useContext(PlatformContext);
   const [isLoading, setIsLoading] = useState(false);
   const { currentAccount } = useContext(AuthContext);
   const { selectedFiles } = useContext(ServiceContext);
@@ -80,14 +79,28 @@ export default function NewService() {
     price: 0,
     deliveryTime: 0,
   });
+  const navigate = useNavigate();
 
-  const handleRegister = () => {
+  const { status } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (status) notify(status, null, null);
     try {
-      dispatch(registerUser({ currentAccount }));
+      dispatch(loginUser({ address: currentAccount }));
+      // notify("Logged in", null, "success");
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
+      notify(error.message, null, "error");
     }
-  };
+  }, [currentAccount]);
+  // console.log("status: ", status);
+  // const handleRegister = () => {
+  //   try {
+  //     dispatch(loginUser({ address: currentAccount }));
+  //   } catch (error) {
+  //     console.log(error.message);
+  //     notify(error.message, null, "error");
+  //   }
+  // };
 
   const handleChange = (e, name) => {
     setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -112,14 +125,13 @@ export default function NewService() {
       console.log(serviceData);
       // const dataHash = hash(serviceData);
       await axios.post("/api/services/new", serviceData);
-      window.location.replace("/services");
-      notify("Service added successfully.");
+      notify("Service added successfully.", null, "success");
+      navigate("/services");
     } catch (error) {
       console.log(error.message);
     }
     setIsLoading(false);
   };
-  console.log(formData);
 
   const getPriceData = async () => {
     try {
@@ -127,7 +139,6 @@ export default function NewService() {
         "https://api.coingecko.com/api/v3/simple/token_price/polygon-pos?contract_addresses=0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270&vs_currencies=usd"
       );
       setUsdPrice(res.data["0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"]?.usd);
-      console.log(res.data);
     } catch (error) {
       console.error(error);
     }
@@ -219,7 +230,7 @@ export default function NewService() {
               >
                 Price
               </span>
-              <p>Please enter the proce in $. We will calculate the price in crypro tokens when someone request your service to compensate the token price volatility.</p>
+              <p>Please enter the price in $. We will calculate the price in crypro tokens when someone request your service to compensate the token price volatility.</p>
               <div className="flex flex-row gap-2">
                 <span className="text-white self-center">
                   $
@@ -247,21 +258,9 @@ export default function NewService() {
                 Wallet Address
               </span>
               <span className="italic">Rewards will be sent to this address</span>
-              <div className="flex gap-2 items-center">
-                <FormField
-                  placeholder="address..."
-                  name="address"
-                  type="text"
-                  value={formData.address}
-                  handleChange={handleChange}
-                />
-                {/* {!currentAccount && <><span>or</span><ConnectWalletButton /></> } */}
+              <div className="flex gap-2 justify-between items-center">
+                {formData.address}
                 <OnboardingButton />
-                <button
-                  type="button"
-                  onClick={handleRegister}
-                >Register
-                </button>
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
@@ -298,7 +297,6 @@ export default function NewService() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { PlatformContext } from "../context/PlatformContext";
@@ -137,7 +136,6 @@ export default function Task() {
           <div>
             <p className="mt-2 text-2xl">{task.reward} {networks.testnet.nativeCurrency.symbol}</p>
           </div>
-          <ToastContainer />
         </div>
       </div>
     );

@@ -1,16 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const { check, validationResult } = require("express-validator");
-var ObjectId = require("mongoose").Types.ObjectId;
+import { Router } from "express";
+const router = Router();
+import { check, validationResult } from "express-validator";
+import mongoose from "mongoose";
 
-const Task = require("../../models/Task");
+import Task from "../../models/Task.js";
 
 // @route   GET api/tasks
 // @desc    get all tasks
 // @access  public
 router.get("/", async (req, res) => {
     try {
-        const tasks = await Task.find().select("-about");
+        const tasks = await find().select("-about");
         res.json(tasks);
     } catch (error) {
         console.log(error.message);
@@ -31,8 +31,8 @@ router.post(
         }
 
         try {
-            const ids = req.body.ids.filter((id) => ObjectId.isValid(id));
-            const tasks = await Task.find()
+            const ids = req.body.ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
+            const tasks = await find()
                 .select("-about")
                 .where("_id")
                 .in(ids)
@@ -50,7 +50,7 @@ router.post(
 // @access  public
 router.get("/:id", async (req, res) => {
     try {
-        const task = await Task.findById(req.params.id);
+        const task = await findById(req.params.id);
 
         if (!task) {
             return res.status(404).json({ msg: "Task not found" });
@@ -103,4 +103,4 @@ router.post(
     }
 );
 
-module.exports = router;
+export default router;

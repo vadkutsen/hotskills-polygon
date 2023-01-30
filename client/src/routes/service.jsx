@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
 import { FaStar } from "react-icons/fa";
 import { ServiceContext } from "../context/ServiceContext";
 import { PlatformContext } from "../context/PlatformContext";
@@ -154,8 +153,6 @@ export default function Service() {
             {isLoading ? <Loader /> : <ActionControls service={service} />}
           </div>
         </div>
-
-        <ToastContainer />
       </div>
     );
   }

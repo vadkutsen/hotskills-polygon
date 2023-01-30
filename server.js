@@ -3,6 +3,9 @@ import { connectDB } from "./config/db.js";
 import { resolve } from "path";
 import dotenv from "dotenv";
 import authRoute from "./routes/api/auth.js"
+import tasksRoute from "./routes/api/tasks.js"
+import servicesRoute from "./routes/api/services.js"
+import profilesRoute from "./routes/api/profiles.js"
 
 dotenv.config()
 
@@ -13,9 +16,9 @@ connectDB();
 app.use(json({ extended: false }));
 
 app.use("/api/auth", authRoute);
-// app.use("/api/tasks", "./routes/api/tasks");
-// app.use("/api/services", "./routes/api/services");
-// app.use("/api/profiles", "./routes/api/profiles");
+app.use("/api/tasks", tasksRoute);
+app.use("/api/services", servicesRoute);
+app.use("/api/profiles", profilesRoute);
 
 
 // app.use("frontend/build/");

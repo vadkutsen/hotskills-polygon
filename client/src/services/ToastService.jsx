@@ -19,8 +19,9 @@ const MessageDisplay = ({ message, hash }) => (
 
 export const notify = (message, hash, type) => {
   if (type === "success") {
+    console.log("notify called");
     toast.success(<MessageDisplay message={message} hash={hash} />, {
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,

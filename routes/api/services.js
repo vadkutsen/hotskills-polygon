@@ -1,16 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const { check, validationResult } = require("express-validator");
-var ObjectId = require("mongoose").Types.ObjectId;
+import { Router } from "express";
+const router = Router();
+import { check, validationResult } from "express-validator";
+import mongoose from "mongoose";
 
-const Service = require("../../models/Service");
+import Service from "../../models/Service.js";
 
 // @route   GET api/services
 // @desc    get all services
 // @access  public
 router.get("/", async (req, res) => {
     try {
-        const services = await Service.find().select("-about");
+        const services = await find().select("-about");
         res.json(services);
     } catch (error) {
         console.log(error.message);
@@ -31,8 +31,8 @@ router.post(
         }
 
         try {
-            const ids = req.body.ids.filter((id) => ObjectId.isValid(id));
-            const services = await Service.find()
+            const ids = req.body.ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
+            const services = await find()
                 .select("-about")
                 .where("_id")
                 .in(ids)
@@ -50,7 +50,7 @@ router.post(
 // @access  public
 router.get("/:id", async (req, res) => {
     try {
-        const service = await Service.findById(req.params.id);
+        const service = await findById(req.params.id);
 
         if (!service) {
             return res.status(404).json({ msg: "Service not found" });
@@ -108,4 +108,4 @@ router.post(
     }
 );
 
-module.exports = router;
+export default router;

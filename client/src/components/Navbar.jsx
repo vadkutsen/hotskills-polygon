@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
@@ -9,6 +9,9 @@ import Wallet from "./Wallet";
 import ConnectWalletButton from "./ConnectWalletButton";
 import Notifications from "./Notifications";
 import { networks } from "../utils/networks";
+import { checkIsAuth, logout } from "../redux/features/auth/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { notify } from "../services/ToastService";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
@@ -17,6 +20,22 @@ const NavBarItem = ({ title, classprops }) => (
 const Navbar = () => {
   const { currentAccount, networkId } = useContext(AuthContext);
   const [toggleMenu, setToggleMenu] = useState(false);
+  const isAuth = useSelector(checkIsAuth);
+  const dispatch = useDispatch();
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    window.localStorage.removeItem("token");
+    notify("Logged out", null, "success");
+  }
+
+  useEffect(() => {
+    if (isAuth) {
+      notify("Logged In");
+    } else {
+      logoutHandler();
+    }
+  }, []);
 
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
@@ -33,16 +52,16 @@ const Navbar = () => {
       </div>
       <div className="text-white md:flex hidden list-none flex-row justify-between items-center">
         <div className="flex flex-row items-center">
-          <NavLink end to="/tasks" className={({ isActive }) => (isActive && "text-blue-300")}>
+          <NavLink end to="/tasks" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
             <NavBarItem title="Find Tasks" />
           </NavLink>
-          <NavLink end to="/services" className={({ isActive }) => (isActive && "text-blue-300")}>
+          <NavLink end to="/services" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
             <NavBarItem title="Find Freelancers" />
           </NavLink>
-          <NavLink end to="/services/new" className={({ isActive }) => (isActive && "text-blue-300")}>
+          <NavLink end to="/services/new" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
             <NavBarItem title="Add Service" />
           </NavLink>
-          <NavLink end to="/tasks/new" className={({ isActive }) => (isActive && "text-blue-300")}>
+          <NavLink end to="/tasks/new" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
             <NavBarItem title="Add Task" />
           </NavLink>
           <Notifications />
@@ -72,21 +91,21 @@ const Navbar = () => {
             <li className="text-xl w-full my-2">
               <AiOutlineClose onClick={() => setToggleMenu(false)} />
             </li>
-            <NavLink end to="/tasks" className={({ isActive }) => (isActive && "text-blue-300")}>
+            <NavLink end to="/tasks" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
               <NavBarItem title="Find Tasks" />
             </NavLink>
-            <NavLink end to="/services" className={({ isActive }) => (isActive && "text-blue-300")}>
+            <NavLink end to="/services" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
               <NavBarItem title="Find Freelancers" />
             </NavLink>
-            <NavLink end to="/services/new" className={({ isActive }) => (isActive && "text-blue-300")}>
+            <NavLink end to="/services/new" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
               <NavBarItem title="Add Service" />
             </NavLink>
-            <NavLink end to="/tasks/new" className={({ isActive }) => (isActive && "text-blue-300")}>
+            <NavLink end to="/tasks/new" className={({ isActive }) => (isActive ? "text-blue-300" : undefined)}>
               <NavBarItem title="Add Task" />
             </NavLink>
             <Notifications />
             <li>
-              {currentAccount ? <Wallet /> : <ConnectWalletButton />}
+              {isAuth ? <Wallet /> : <ConnectWalletButton />}
             </li>
           </ul>
         )}

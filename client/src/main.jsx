@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import App from "./App";
@@ -21,8 +21,11 @@ import Home from "./routes/home";
 import Profile from "./routes/profile";
 import EditProfile from "./routes/editProfile";
 import { store } from "./redux/store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <AuthProvider>
     <PlatformProvider>
       {/* <TaskProvider> */}
@@ -54,6 +57,7 @@ ReactDOM.render(
                   />
                 </Route>
               </Routes>
+              <ToastContainer />
             </Provider>
           </Router>
         </ProfileProvider>
@@ -61,5 +65,4 @@ ReactDOM.render(
       {/* </TaskProvider> */}
     </PlatformProvider>
   </AuthProvider>,
-  document.getElementById("root")
 );

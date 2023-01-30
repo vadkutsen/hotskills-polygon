@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 // import { ethers } from "ethers";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import DatePicker from "react-datepicker";
 import { ImInfo } from "react-icons/im";
 import { PlatformContext } from "../context/PlatformContext";
@@ -223,7 +221,6 @@ export default function NewTask() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

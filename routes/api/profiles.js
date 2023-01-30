@@ -1,16 +1,16 @@
-const express = require("express");
-const router = express.Router();
-const { check, validationResult } = require("express-validator");
-var ObjectId = require("mongoose").Types.ObjectId;
+import { Router } from "express";
+const router = Router();
+import { check, validationResult } from "express-validator";
+import mongoose from "mongoose";
 
-const Profile = require("../../models/Profile");
+import Profile from "../../models/Profile.js";
 
 // @route   GET api/profiles
 // @desc    get all profiles
 // @access  public
 router.get("/", async (req, res) => {
     try {
-        const profiles = await Profile.find().select("-about");
+        const profiles = await find().select("-about");
         res.json(profiles);
     } catch (error) {
         console.log(error.message);
@@ -31,8 +31,8 @@ router.post(
         }
 
         try {
-            const ids = req.body.ids.filter((id) => ObjectId.isValid(id));
-            const profiles = await Profile.find()
+            const ids = req.body.ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
+            const profiles = await find()
                 .select("-about")
                 .where("_id")
                 .in(ids)
@@ -51,7 +51,7 @@ router.post(
 router.get("/:address", async (req, res) => {
     try {
         const address = req.params.address;
-        const profile = await Profile.findOne({ address });
+        const profile = await findOne({ address });
 
         if (!profile) {
             return res.status(404).json({ msg: "Profile not found" });
@@ -83,7 +83,7 @@ router.post(
         }
         try {
             const { avatar, username, skills, languages, rate, availability, address } = req.body;
-            const candidate = await Profile.findOne({ address });
+            const candidate = await findOne({ address });
             if (candidate) {
                 return res.status(400).json({ msg: "Profile aready exists" });
             }
@@ -122,7 +122,7 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
         try {
-            const profile = await Profile.findById(req.params.id);
+            const profile = await findById(req.params.id);
 
             if (!profile) {
                 return res.status(404).json({ msg: "Profile not found" });
@@ -145,4 +145,4 @@ router.post(
     }
 );
 
-module.exports = router;
+export default router;
