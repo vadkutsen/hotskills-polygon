@@ -44,9 +44,9 @@ const Navbar = () => {
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.9] flex-initial justify-center items-center">
         <Link to="/">
-          <div className="flex gap-2 text-white text-xl cursor-pointer font-bold">
-            <img alt="Brand logo" className="h-6 self-center" src={logo1} />
-            <b><span className="text-pink-400">HOT</span>SKILLS</b>
+          <div className="flex gap-2 text-white text-sm items-center cursor-pointer font-bold">
+            <img alt="Brand logo" className="h-8 self-center" src={logo1} />
+            <b>HOTSKILLS</b>
             <img alt="Network logo" className="h-5 self-center" src={logo2} />
           </div>
         </Link>

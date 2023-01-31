@@ -8,8 +8,8 @@ const Footer = () => (
   <div className="w-full flex md:justify-center justify-between items-center flex-col p-4 gradient-bg-footer">
     <div className="sm:w-[90%] w-full h-[0.25px] bg-gray-400 mt-5 " />
     <div className="sm:w-[90%] w-full flex flex-row justify-between mt-3">
-      <div className="flex text-white text-left text-l items-center gap-2 font-bold">
-        <img alt="Brand logo" className="h-5" src={logo1} /><b><span className="text-pink-400">HOT</span>SKILLS</b>
+      <div className="flex text-white text-left text-xs items-center gap-2 font-bold">
+        <img alt="Brand logo" className="h-5" src={logo1} /><b>HOTSKILLS</b>
         <AiOutlineCopyright className="w-4 self-center" />
         <span>2023</span>
       </div>
