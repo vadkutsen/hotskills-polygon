@@ -194,6 +194,7 @@ export default function NewService() {
               </span>
               <div className="relative">
                 <IpfsForm selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
+                {/* {selectedFiles?.length > 0 && <img src={URL.createObjectURL(selectedFiles[0])} />} */}
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">

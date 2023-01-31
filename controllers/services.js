@@ -29,11 +29,11 @@ export const createService = async (req, res) => {
 
 export const getServices = async (req, res) => {
     try {
-        const services = await Service.find().select("-about");
+        const services = await Service.find().sort("-createdAt");
         res.json(services);
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Server Error");
+        res.status(500).send(error.message);
     }
 };
 

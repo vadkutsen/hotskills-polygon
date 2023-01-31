@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import GlobalPolyFill from "@esbuild-plugins/node-globals-polyfill";
 import react from "@vitejs/plugin-react";
+import { esbuildCommonjs } from "@originjs/vite-plugin-commonjs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
         GlobalPolyFill({
           buffer: true,
         }),
+        esbuildCommonjs(["react-moment"])
       ],
     },
   },

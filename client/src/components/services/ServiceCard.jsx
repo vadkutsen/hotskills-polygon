@@ -1,12 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ethers } from "ethers";
 import axios from "axios";
+import Moment from "react-moment";
 import { shortenAddress } from "../../utils/shortenAddress";
 import AutoAvatar from "../AutoAvatar";
-import { contractAddress, ServiceStatuses } from "../../utils/constants";
-import contractABI from "../../utils/contractABI.json";
-// import { AuthContext } from "../../context/AuthContext";
+import { ServiceStatuses } from "../../utils/constants";
 import { networks } from "../../utils/networks";
 import noImage from "../../../images/no-image.png";
 
@@ -16,6 +14,7 @@ const ServiceCard = ({
   title,
   createdAt,
   author,
+  authorAddress,
   price,
   status,
   category,
@@ -62,7 +61,7 @@ const ServiceCard = ({
   return (
     <Link to={`/services/${_id}`}>
       <div className="w-[20rem] h-[30rem] flex flex-col justify-between text-white white-glassmorphism p-3 m-2 cursor-pointer transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-104 duration-300">
-        {images.length > 0 ? (
+        {images?.length > 0 ? (
           <img
             alt="Service"
             className="max-h-[12rem] self-center rounded-md"
@@ -91,13 +90,12 @@ const ServiceCard = ({
             )}
             {profile?.username ? (
               <span>
-                {profile.username} ({shortenAddress(author)})
+                {profile.username} ({shortenAddress(authorAddress)})
               </span>
             ) : (
-              shortenAddress(author)
+              shortenAddress(authorAddress)
             )}
           </div>
-          {createdAt}
           <div className="flex flex-row gap-2 items-center">
             <div className="mt-2 pl-2 pr-2 text-center white-glassmorphism">
               {category}
@@ -106,6 +104,7 @@ const ServiceCard = ({
               {ServiceStatuses[status]}
             </div>
           </div>
+          <p className="text-xs italic pt-2"><Moment fromNow>{createdAt}</Moment></p>
         </div>
         <p className="text-xl mt-20 self-end">
           {price} {networks.testnet.nativeCurrency.symbol} (${calculatePrice(price, usdPrice)})

@@ -15,6 +15,15 @@ export const createService = createAsyncThunk("service/createService", async (pa
   }
 });
 
+export const getServices = createAsyncThunk("service/getService", async () => {
+  try {
+    const { data } = await axios.get("api/services");
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
 export const serviceSlice = createSlice({
   name: "service",
   initialState,
@@ -29,6 +38,17 @@ export const serviceSlice = createSlice({
       state.services.push(action.payload);
     },
     [createService.rejected]: (state) => {
+      state.loading = false;
+    },
+    // get services
+    [getServices.pending]: (state) => {
+      state.loading = true;
+    },
+    [getServices.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.services = action.payload;
+    },
+    [getServices.rejected]: (state) => {
       state.loading = false;
     }
   }
