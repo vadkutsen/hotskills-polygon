@@ -1,9 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import axios from "../utils/axios";
-import { PlatformContext } from "../context/PlatformContext";
-import { ServiceContext } from "../context/ServiceContext";
-import { AuthContext } from "../context/AuthContext";
 import { Loader } from "../components";
 import { Categories } from "../utils/constants";
 import { networks } from "../utils/networks";
@@ -12,7 +10,7 @@ import { onGalleryUploadHandler } from "../services/IpfsUploadHandler";
 import { OnboardingButton } from "../components/MetaMaskOnboarding";
 import { loginUser } from "../redux/features/auth/authSlice";
 import { notify } from "../services/ToastService";
-import { useNavigate } from "react-router-dom";
+import { createService } from "../redux/features/service/serviceSlice";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -66,8 +64,10 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
 
 export default function NewService() {
   const [isLoading, setIsLoading] = useState(false);
-  const { currentAccount } = useContext(AuthContext);
-  const { selectedFiles } = useContext(ServiceContext);
+  // const { currentAccount } = useContext(AuthContext);
+  const [address, setAddress] = useState(null);
+  // const { selectedFiles } = useContext(ServiceContext);
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [usdPrice, setUsdPrice] = useState(0);
   const dispatch = useDispatch();
   const [formData, setformData] = useState({
@@ -75,7 +75,6 @@ export default function NewService() {
     image: "",
     title: "",
     description: "",
-    address: currentAccount,
     price: 0,
     deliveryTime: 0,
   });
@@ -85,13 +84,13 @@ export default function NewService() {
   useEffect(() => {
     if (status) notify(status, null, null);
     try {
-      dispatch(loginUser({ address: currentAccount }));
-      // notify("Logged in", null, "success");
+      dispatch(loginUser({ address }));
+      notify("Logged in", null, "success");
     } catch (error) {
       console.log(error.message);
       notify(error.message, null, "error");
     }
-  }, [currentAccount]);
+  }, [address]);
   // console.log("status: ", status);
   // const handleRegister = () => {
   //   try {
@@ -109,7 +108,7 @@ export default function NewService() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const { category, title, description, price, address, deliveryTime } = formData;
+    const { category, title, description, price, deliveryTime } = formData;
     const images = await onGalleryUploadHandler(selectedFiles);
     if (!title || !description || !price || !address) return;
     try {
@@ -118,17 +117,19 @@ export default function NewService() {
         images,
         title,
         description,
-        author: address,
+        authorAddress: address,
         price,
         deliveryTime
       };
       console.log(serviceData);
       // const dataHash = hash(serviceData);
-      await axios.post("/api/services/new", serviceData);
-      notify("Service added successfully.", null, "success");
-      navigate("/services");
+      dispatch(createService(serviceData));
+      // await axios.post("/api/services/new", serviceData);
+      // notify("Service added successfully.", null, "success");
+      // navigate("/services");
     } catch (error) {
       console.log(error.message);
+      notify(error.message, null, "error");
     }
     setIsLoading(false);
   };
@@ -192,7 +193,7 @@ export default function NewService() {
                 Gallery
               </span>
               <div className="relative">
-                <IpfsForm />
+                <IpfsForm selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
@@ -259,8 +260,8 @@ export default function NewService() {
               </span>
               <span className="italic">Rewards will be sent to this address</span>
               <div className="flex gap-2 justify-between items-center">
-                {formData.address}
-                <OnboardingButton />
+                {address}
+                <OnboardingButton setAddress={setAddress} />
               </div>
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">

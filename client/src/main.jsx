@@ -2,13 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import App from "./App";
 import "./index.css";
-import { PlatformProvider } from "./context/PlatformContext";
+// import { PlatformProvider } from "./context/PlatformContext";
 // import { TaskProvider } from "./context/TaskContext";
-import { ServiceProvider } from "./context/ServiceContext";
-import { ProfileProvider } from "./context/ProfileContext";
-import { AuthProvider } from "./context/AuthContext";
+// import { ServiceProvider } from "./context/ServiceContext";
+// import { ProfileProvider } from "./context/ProfileContext";
+// import { AuthProvider } from "./context/AuthContext";
 import MyTasks from "./routes/myTasks";
 import MyServices from "./routes/myServices";
 import Task from "./routes/task";
@@ -21,16 +22,15 @@ import Home from "./routes/home";
 import Profile from "./routes/profile";
 import EditProfile from "./routes/editProfile";
 import { store } from "./redux/store";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AuthProvider>
-    <PlatformProvider>
-      {/* <TaskProvider> */}
-      <ServiceProvider>
-        <ProfileProvider>
+  // <AuthProvider>
+    // <PlatformProvider>
+      // {/* <TaskProvider> */}
+      // <ServiceProvider>
+        // <ProfileProvider>
           <Router>
             <Provider store={store}>
               <Routes>
@@ -59,10 +59,10 @@ root.render(
               </Routes>
               <ToastContainer />
             </Provider>
-          </Router>
-        </ProfileProvider>
-      </ServiceProvider>
-      {/* </TaskProvider> */}
-    </PlatformProvider>
-  </AuthProvider>,
+          </Router>,
+        // </ProfileProvider>
+      // </ServiceProvider>
+      // {/* </TaskProvider> */}
+    // </PlatformProvider>
+  // </AuthProvider>,
 );

@@ -4,7 +4,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { PlatformContext } from "../context/PlatformContext";
 import { TaskCard } from "../components";
 import { Categories } from "../utils/constants";
-import { getAllTasks, formatTask, contract } from "../services/TaskService";
+import { getAllTasks, formatTask } from "../services/TaskService";
+import { contract } from "../services/Web3Service";
 
 const Tasks = () => {
   // const { currentAccount } = useContext(AuthContext);

@@ -4,23 +4,23 @@ import logo from "../../images/polygonlogo.png";
 import { networks } from "../utils/networks";
 
 const ConnectWalletButton = () => {
-  const { connectWallet, switchNetwork, networkId } = useContext(AuthContext);
+  // const { connectWallet, switchNetwork, networkId } = useContext(AuthContext);
   const { ethereum } = window;
 
   if (!ethereum) return <span>Wallet not found</span>;
-  if (networkId !== networks.testnet.chainId) {
-    return (
-      <div className="flex flex-col w-full text-white justify-center items-center">
-        <button
-          type="button"
-          onClick={switchNetwork}
-          className="flex flex-row justify-center items-center gap-1 bg-[#2952e3] pt-1 pb-1 pl-2 pr-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-        >
-          <p className="text-white text-base font-semibold">Switch Network</p>
-        </button>
-      </div>
-    );
-  }
+  // if (networkId !== networks.testnet.chainId) {
+  //   return (
+  //     <div className="flex flex-col w-full text-white justify-center items-center">
+  //       <button
+  //         type="button"
+  //         onClick={switchNetwork}
+  //         className="flex flex-row justify-center items-center gap-1 bg-[#2952e3] pt-1 pb-1 pl-2 pr-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
+  //       >
+  //         <p className="text-white text-base font-semibold">Switch Network</p>
+  //       </button>
+  //     </div>
+  //   );
+  // }
   return (
     <button
       type="button"

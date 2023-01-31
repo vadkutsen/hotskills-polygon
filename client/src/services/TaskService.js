@@ -1,32 +1,17 @@
 // import { createContext, useEffect, useState, useContext } from "react";
 import { ethers } from "ethers";
-import contractABI from "../utils/contractABI.json";
 import {
   TaskTypes,
   address0,
   TaskStatuses,
   // Categories,
-  contractAddress,
 } from "../utils/constants";
 // import { PlatformContext } from "../context/PlatformContext";
+import { contract } from "./Web3Service";
 
 import { onResultUploadHandler } from "./IpfsUploadHandler";
 
 const { ethereum } = window;
-const createEthereumContract = () => {
-  if (ethereum) {
-    const provider = new ethers.providers.Web3Provider(ethereum);
-    const signer = provider.getSigner();
-    const platformContract = new ethers.Contract(
-      contractAddress,
-      contractABI,
-      signer
-    );
-    return platformContract;
-  }
-};
-
-export const contract = createEthereumContract();
 
 const formatUser = async (address) => {
   if (ethereum && address) {

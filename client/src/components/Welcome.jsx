@@ -4,12 +4,13 @@ import { AuthContext } from "../context/AuthContext";
 import { ProfileContext } from "../context/ProfileContext";
 
 export default function Welcome() {
-  const { currentAccount } = useContext(AuthContext);
-  const { profile } = useContext(ProfileContext);
+  // const { currentAccount } = useContext(AuthContext);
+  const currentAccount = window.ethereum?.selectedAccount;
+  const profile = null;
   return (
     <div className="mt-10 text-white text-center items-center">
-      <p className="text-2xl">Welcome {profile.username ? profile.username : currentAccount}!</p>
-      {!profile.username && (
+      <p className="text-2xl">Welcome {profile?.username ? profile.username : currentAccount}!</p>
+      {!profile?.username && (
         <>
           <p className="text-l">Please create your profile so the customers can know you better</p>
           <Link to="/profile">

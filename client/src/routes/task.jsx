@@ -1,18 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import { PlatformContext } from "../context/PlatformContext";
+// import { PlatformContext } from "../context/PlatformContext";
 // import { TaskContext } from "../context/TaskContext";
 import { Loader, ActionControls, Candidates } from "../components";
 import { TaskStatuses, TaskTypes } from "../utils/constants";
-import { contract, getTask, formatTask } from "../services/TaskService";
+import { getTask, formatTask } from "../services/TaskService";
+import { contract } from "../services/Web3Service";
 import AutoAvatar from "../components/AutoAvatar";
 import { shortenAddress } from "../utils/shortenAddress";
 import { networks } from "../utils/networks";
 
 export default function Task() {
   const params = useParams();
-  const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
+  // const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
   // const { composeAuthorProfile, contract } = useContext(TaskContext);
   const taskId = params.id;
   const [authorProfile, setAuthorProfile] = useState(null);
@@ -20,12 +21,12 @@ export default function Task() {
   const [rating, setRating] = useState(0);
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     getTask(taskId).then((t) => {
       setTask(formatTask(t));
-      getRating(t.author).then((r) => setRating(r));
+      // getRating(t.author).then((r) => setRating(r));
     });
-    setIsLoading(false);
+    // setIsLoading(false);
     // composeAuthorProfile(task.author).then((a) => setAuthorProfile(a));
     return () => {
       // this now gets called when the component unmounts

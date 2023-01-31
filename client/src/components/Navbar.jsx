@@ -1,33 +1,36 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
-import { AuthContext } from "../context/AuthContext";
+// import { AuthContext } from "../context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
 import logo1 from "../../images/logo-white.svg";
 import logo2 from "../../images/polygonlogo.png";
 import Wallet from "./Wallet";
-import ConnectWalletButton from "./ConnectWalletButton";
+// import ConnectWalletButton from "./ConnectWalletButton";
 import Notifications from "./Notifications";
-import { networks } from "../utils/networks";
+// import { networks } from "../utils/networks";
 import { checkIsAuth, logout } from "../redux/features/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+
 import { notify } from "../services/ToastService";
+import { OnboardingButton } from "./MetaMaskOnboarding";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
 );
 
 const Navbar = () => {
-  const { currentAccount, networkId } = useContext(AuthContext);
+  // const { currentAccount, networkId } = useContext(AuthContext);
   const [toggleMenu, setToggleMenu] = useState(false);
   const isAuth = useSelector(checkIsAuth);
+  const [address, setAddress] = useState(null);
   const dispatch = useDispatch();
 
   const logoutHandler = () => {
     dispatch(logout());
     window.localStorage.removeItem("token");
     notify("Logged out", null, "success");
-  }
+  };
 
   useEffect(() => {
     if (isAuth) {
@@ -41,11 +44,9 @@ const Navbar = () => {
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="md:flex-[0.9] flex-initial justify-center items-center">
         <Link to="/">
-          <div className="flex gap-2 text-white text-2xl cursor-pointer font-bold">
+          <div className="flex gap-2 text-white text-xl cursor-pointer font-bold">
             <img alt="Brand logo" className="h-6 self-center" src={logo1} />
-            <b>
-              <span className="text-pink-400">HOT</span>SKILLS
-            </b>
+            <b><span className="text-pink-400">HOT</span>SKILLS</b>
             <img alt="Network logo" className="h-5 self-center" src={logo2} />
           </div>
         </Link>
@@ -65,7 +66,7 @@ const Navbar = () => {
             <NavBarItem title="Add Task" />
           </NavLink>
           <Notifications />
-          {currentAccount ? <Wallet /> : <ConnectWalletButton />}
+          {address ? <Wallet address={address} setAddress={setAddress} /> : <OnboardingButton address={address} setAddress={setAddress} />}
         </div>
       </div>
       <div className="flex relative">
@@ -105,7 +106,7 @@ const Navbar = () => {
             </NavLink>
             <Notifications />
             <li>
-              {isAuth ? <Wallet /> : <ConnectWalletButton />}
+              {isAuth ? <Wallet /> : <OnboardingButton address={address} setAddress={setAddress} />}
             </li>
           </ul>
         )}

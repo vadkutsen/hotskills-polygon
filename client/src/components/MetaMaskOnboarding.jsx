@@ -1,18 +1,19 @@
 import MetaMaskOnboarding from "@metamask/onboarding";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { AuthContext } from "../context/AuthContext";
 
-const ONBOARD_TEXT = "Click here to install MetaMask!";
+const ONBOARD_TEXT = "Install MetaMask";
 const CONNECT_TEXT = "Connect Wallet";
 const CONNECTED_TEXT = "Connected";
 
-export function OnboardingButton() {
+export function OnboardingButton({ setAddress }) {
   const [buttonText, setButtonText] = React.useState(ONBOARD_TEXT);
   const [isDisabled, setDisabled] = React.useState(false);
   const [accounts, setAccounts] = React.useState([]);
   const onboarding = React.useRef();
-  const { setCurrentAccount } = React.useContext(AuthContext);
-
+  // const { setCurrentAccount } = React.useContext(AuthContext);
+  // const dispatch = useDispatch();
   React.useEffect(() => {
     if (!onboarding.current) {
       onboarding.current = new MetaMaskOnboarding();
@@ -24,7 +25,9 @@ export function OnboardingButton() {
       if (accounts.length > 0) {
         setButtonText(CONNECTED_TEXT);
         setDisabled(true);
-        setCurrentAccount(accounts[0]);
+        // setCurrentAccount(accounts[0]);
+        // dispatch({ type: "connected", account: accounts[0] });
+        setAddress(accounts[0]);
         onboarding.current.stopOnboarding();
       } else {
         setButtonText(CONNECT_TEXT);

@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const instance = axios.create();
+const instance = axios.create({
+  // validateStatus: () => true,
+});
 
 instance.interceptors.request.use((config) => {
   // eslint-disable-next-line no-param-reassign

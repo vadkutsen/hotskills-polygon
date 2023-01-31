@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { AiFillBell } from "react-icons/ai";
 import { PlatformContext } from "../context/PlatformContext";
@@ -8,13 +8,13 @@ function classNames(...classes) {
 }
 
 export default function Notifications() {
-  const { notifications, setNotifications } = useContext(PlatformContext);
+  const { notifications, setNotifications } = useState([]);
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center w-full font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none">
           <AiFillBell size={24} />
-          {notifications.length > 0 && <span className="text-xs absolute -top-2 -right-2 p-0.5 border rounded-full bg-red-500">{notifications.length}</span>}
+          {notifications?.length > 0 && <span className="text-xs absolute -top-2 -right-2 p-0.5 border rounded-full bg-red-500">{notifications.length}</span>}
         </Menu.Button>
       </div>
 

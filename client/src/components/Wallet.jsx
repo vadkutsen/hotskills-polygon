@@ -1,4 +1,4 @@
-import { Fragment, useContext } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FaStar } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -8,18 +8,21 @@ import { ProfileContext } from "../context/ProfileContext";
 import { shortenAddress } from "../utils/shortenAddress";
 import AutoAvatar from "./AutoAvatar";
 import { networks } from "../utils/networks";
+import { getBalance } from "../services/PlatformService";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Wallet() {
+export default function Wallet({ address }) {
   // const { ethereum } = window;
-  const { currentAccount, setCurrentAccount } = useContext(AuthContext);
+  // const { currentAccount, setCurrentAccount } = useContext(AuthContext);
   // const [profile, setProfile] = useState(null);
-  const { balance, fetchedRating } = useContext(PlatformContext);
-  const { profile } = useContext(ProfileContext);
-
+  // const { balance, fetchedRating } = useContext(PlatformContext);
+  // const { profile } = useContext(ProfileContext);
+  const profile = null;
+  const fetchedRating = null;
+  const [balance, setBalance] = useState(0);
   // const handleDisconnect = async () => {
   //   setCurrentAccount(null);
   //   try {
@@ -29,17 +32,20 @@ export default function Wallet() {
   //   }
   //   window.location.replace("/");
   // };
+  useEffect(() => {
+    getBalance(address).then((b) => setBalance(b));
+  }, []);
 
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex justify-center items-center w-full px-4 py-2 font-medium text-white bg-transparent rounded-md shadow-sm focus:outline-none">
-          {profile.avatar
+          {profile?.avatar
             ?
-              <img alt="Avatar" className="w-[2.5rem] mr-1 rounded-full border" src={profile.avatar} />
+              <img alt="Avatar" className="w-[2.5rem] mr-1 rounded-full border" src={profile?.avatar} />
             :
-              <AutoAvatar userId={currentAccount} size={36} />}
-          {profile.username ? <span>{profile.username} ({shortenAddress(currentAccount)})</span> : shortenAddress(currentAccount)}
+              <AutoAvatar userId={address} size={36} />}
+          {profile?.username ? <span>{profile.username} ({shortenAddress(address)})</span> : shortenAddress(address)}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-5 h-5 ml-2 -mr-1"

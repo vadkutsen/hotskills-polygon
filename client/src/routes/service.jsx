@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { FaStar } from "react-icons/fa";
-import { ServiceContext } from "../context/ServiceContext";
-import { PlatformContext } from "../context/PlatformContext";
+// import { ServiceContext } from "../context/ServiceContext";
+// import { PlatformContext } from "../context/PlatformContext";
 import ActionControls from "../components/services/ActionControls";
 import { Loader } from "../components";
 import AutoAvatar from "../components/AutoAvatar";
@@ -17,13 +17,15 @@ const { ethereum } = window;
 
 export default function Service() {
   const params = useParams();
-  const { formatService, contract } = useContext(ServiceContext);
-  const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
+  const [isLoading, setIsLoading] = useState(false);
+  // const { formatService, contract } = useContext(ServiceContext);
+  // const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
   const serviceId = params.id;
   const [service, setService] = useState([]);
   const [rating, setRating] = useState(0);
   const [profile, setProfile] = useState(null);
   const [usdPrice, setUsdPrice] = useState(0);
+
   const getPriceData = async () => {
     try {
       const res = await axios.get(
@@ -43,7 +45,7 @@ export default function Service() {
   const calculatePrice = (amount, priceInUsd) => amount * priceInUsd;
 
   const getProfile = async (address) => {
-    if (ethereum && address) {
+    if (address) {
       try {
         // const r = await contract.getProfile(address);
         // setProfile(r);
@@ -71,31 +73,31 @@ export default function Service() {
   useEffect(() => {
     getService(serviceId).then((s) => {
       setService(s);
-      getRating(s.author).then((r) => setRating(r));
-      getProfile(s.author);
+      // getRating(s.author).then((r) => setRating(r));
+      // getProfile(s.author);
     });
   }, []);
 
-  useEffect(() => {
-    const onServiceUpdated = (s) => {
-      setService(formatService(s));
-    };
-    if (ethereum) {
-      contract.on("ServiceUpdated", onServiceUpdated);
-    }
-    return () => {
-      if (contract) {
-        contract.off("ServiceUpdated", onServiceUpdated);
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   const onServiceUpdated = (s) => {
+  //     setService(formatService(s));
+  //   };
+  //   if (ethereum) {
+  //     contract.on("ServiceUpdated", onServiceUpdated);
+  //   }
+  //   return () => {
+  //     if (contract) {
+  //       contract.off("ServiceUpdated", onServiceUpdated);
+  //     }
+  //   };
+  // }, []);
 
   if (service) {
     return (
       <div className="min-h-screen text-white">
         <div className="container mx-auto flex flex-col self-center items-center white-glassmorphism p-3">
           <div className="flex flex-col w-full">
-            {service.images && service.images.length > 0 ? (
+            {service.images?.length > 0 ? (
               <Gallery images={service.images} />
             ) : (
               <img
@@ -126,7 +128,7 @@ export default function Service() {
               </p>
               <div className="pt-4 flex flex-row gap-2 items-center italic">
                 <div className="flex flex-row items-center">
-                  {profile && profile.avatar ? (
+                  {/* {profile && profile.avatar ? (
                     <img
                       alt="Avatar"
                       className="w-[2.5rem] mr-1 rounded-full border"
@@ -141,7 +143,7 @@ export default function Service() {
                     </span>
                   ) : (
                     service.author && shortenAddress(service.author)
-                  )}
+                  )} */}
                 </div>
                 <div className="flex flex-row justify-center items-center">
                   <FaStar color="#ffc107" />

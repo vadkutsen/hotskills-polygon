@@ -14,10 +14,6 @@ export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(null);
 
-  const handleClick = () => {
-    window.location.replace("profile/edit");
-  };
-
   useEffect(() => {
     setIsLoading(true);
     getProfile(window.ethereum.selectedAddress).then((p) => {

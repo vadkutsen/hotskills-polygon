@@ -6,6 +6,7 @@ import authRoute from "./routes/api/auth.js"
 import tasksRoute from "./routes/api/tasks.js"
 import servicesRoute from "./routes/api/services.js"
 import profilesRoute from "./routes/api/profiles.js"
+import cors from "cors";
 
 dotenv.config()
 
@@ -28,5 +29,7 @@ app.get("*", (req, res) => {
 });
 
 const PORT = process.env.PORT || 5001;
+
+app.use(cors());
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -1,12 +1,13 @@
 import { useContext } from "react";
 
-import { ServiceContext } from "../../context/ServiceContext";
+// import { ServiceContext } from "../../context/ServiceContext";
 import { ServiceStatuses } from "../../utils/constants";
+import { deleteService, pauseService, resumeService } from "../../services/ServiceService";
 
 const AuthorActions = (params) => {
   const { service } = params;
-  const { deleteService, pauseService, resumeService } =
-    useContext(ServiceContext);
+  // const { deleteService, pauseService, resumeService } =
+  //   useContext(ServiceContext);
 
   return (
     <div className="flex flex-row gap-2">

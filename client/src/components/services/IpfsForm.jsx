@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 import { ServiceContext } from "../../context/ServiceContext";
 
 const MAX_COUNT = 5;
 
-const IpfsForm = () => {
-  const { selectedFiles, setSelectedFiles } = useContext(ServiceContext);
+const IpfsForm = ({ selectedFiles, setSelectedFiles }) => {
+  // const { selectedFiles, setSelectedFiles } = useContext(ServiceContext);
   const [fileLimit, setFileLimit] = useState(false);
   const handleUploadFiles = (files) => {
     const selected = [...selectedFiles];

@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const ServiceSchema = new Schema({
     category: {
@@ -14,6 +14,9 @@ const ServiceSchema = new Schema({
         required: true,
     },
     author: {
+        type: mongoose.Schema.Types.ObjectId, ref: "User",
+    },
+    authorAddress: {
         type: String,
         required: true,
     },
@@ -33,6 +36,8 @@ const ServiceSchema = new Schema({
         type: Number,
         required: true,
     },
-});
+},
+{ timestamps: true }
+);
 
 export default model("service", ServiceSchema);

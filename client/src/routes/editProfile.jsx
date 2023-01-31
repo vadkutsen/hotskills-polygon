@@ -2,6 +2,7 @@ import React, { createRef, useState, useEffect } from "react";
 import Select from "react-select";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import { Cropper } from "react-cropper";
 import { getProfile, updateProfile } from "../services/ProfileService";
 import { Loader } from "../components";
@@ -11,16 +12,14 @@ import AutoAvatar from "../components/AutoAvatar";
 import languages from "../utils/languages.json";
 import skills from "../utils/skills.json";
 import { OnboardingButton } from "../components/MetaMaskOnboarding";
-import { Link } from "react-router-dom";
 
 // this transforms file to base64
-const file2Base64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result?.toString() || "");
-    reader.onerror = (error) => reject(error);
-  });
+const file2Base64 = (file) => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result?.toString() || "");
+  reader.onerror = (error) => reject(error);
+});
 
 const languageOptions = languages.map((l) => ({
   value: l.code,
@@ -126,8 +125,7 @@ export default function Profile() {
         ...prevState,
         [name]: e.map((item) => item.value),
       }));
-    } else
-      setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
+    } else setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
   const [file, setFile] = useState(null);

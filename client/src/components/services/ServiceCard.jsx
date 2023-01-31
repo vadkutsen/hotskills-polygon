@@ -6,22 +6,9 @@ import { shortenAddress } from "../../utils/shortenAddress";
 import AutoAvatar from "../AutoAvatar";
 import { contractAddress, ServiceStatuses } from "../../utils/constants";
 import contractABI from "../../utils/contractABI.json";
-import { AuthContext } from "../../context/AuthContext";
+// import { AuthContext } from "../../context/AuthContext";
 import { networks } from "../../utils/networks";
 import noImage from "../../../images/no-image.png";
-
-const { ethereum } = window;
-
-const createEthereumContract = () => {
-  const provider = new ethers.providers.Web3Provider(ethereum);
-  const signer = provider.getSigner();
-  const platformContract = new ethers.Contract(
-    contractAddress,
-    contractABI,
-    signer
-  );
-  return platformContract;
-};
 
 const ServiceCard = ({
   _id,
@@ -36,23 +23,23 @@ const ServiceCard = ({
   const [profile, setProfile] = useState(null);
   // const { currentAccount, networkId } = useContext(AuthContext);
   const [usdPrice, setUsdPrice] = useState(0);
-  const getProfile = async (address) => {
-    if (ethereum && address) {
-      try {
-        const contract = createEthereumContract();
-        // const r = await contract.getProfile(address);
-        // setProfile(r);
-      } catch (error) {
-        console.log(error);
-        alert(error.message);
-      }
-    } else {
-      console.log("Ethereum is not present");
-    }
-  };
-  useEffect(() => {
-    getProfile(author);
-  }, []);
+  // const getProfile = async (address) => {
+  //   if (address) {
+  //     try {
+  //       // const contract = createEthereumContract();
+  //       // const r = await contract.getProfile(address);
+  //       // setProfile(r);
+  //     } catch (error) {
+  //       console.log(error);
+  //       alert(error.message);
+  //     }
+  //   } else {
+  //     console.log("Ethereum is not present");
+  //   }
+  // };
+  // useEffect(() => {
+  //   getProfile(author);
+  // }, []);
 
   const getPriceData = async () => {
     try {
@@ -93,7 +80,7 @@ const ServiceCard = ({
             <p className="text-xl truncate ...">{title}</p>
           </div>
           <div className="flex flex-row mt-2 mb-2 items-center">
-            {profile && profile.avatar ? (
+            {profile?.avatar ? (
               <img
                 alt="Avatar"
                 className="w-[2.5rem] mr-1 rounded-full border"
@@ -102,7 +89,7 @@ const ServiceCard = ({
             ) : (
               <AutoAvatar userId={author} size={36} />
             )}
-            {profile && profile.username ? (
+            {profile?.username ? (
               <span>
                 {profile.username} ({shortenAddress(author)})
               </span>
