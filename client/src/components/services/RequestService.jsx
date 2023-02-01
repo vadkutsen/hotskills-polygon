@@ -1,12 +1,12 @@
-import { useContext, useState } from "react";
-import { PlatformContext } from "../../context/PlatformContext";
-import { ServiceContext } from "../../context/ServiceContext";
+import { useState } from "react";
+// import { PlatformContext } from "../../context/PlatformContext";
+// import { ServiceContext } from "../../context/ServiceContext";
 import { networks } from "../../utils/networks";
 
 const RequestService = (params) => {
   const { service } = params;
-  const { requestService, calculateTotalAmount } = useContext(ServiceContext);
-  const { fee } = useContext(PlatformContext);
+  // const { requestService, calculateTotalAmount } = useContext(ServiceContext);
+  // const { fee } = useContext(PlatformContext);
 
   const date = new Date();
   const [formData, setformData] = useState({
@@ -17,11 +17,11 @@ const RequestService = (params) => {
     assignee: service.author,
     dueDate: date.setDate(date.getDate() + service.deliveryTime),
     reward: service.price,
-    fee
+    // fee
   });
 
   const handleSubmit = () => {
-    requestService(formData);
+    // requestService(formData);
   };
 
   const handleChange = (e, name) => {
@@ -43,7 +43,7 @@ const RequestService = (params) => {
         />
         <div className="h-[1px] w-full bg-gray-400 my-2" />
         <p className="text-white text-center">
-          Total amount to pay (including {fee}% portal fee): {calculateTotalAmount(formData.reward, fee)} {networks.testnet.nativeCurrency.symbol}
+          {/* Total amount to pay (including {fee}% portal fee): {calculateTotalAmount(formData.reward, fee)} {networks.testnet.nativeCurrency.symbol} */}
         </p>
         <button
           type="button"

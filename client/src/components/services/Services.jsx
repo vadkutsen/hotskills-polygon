@@ -63,7 +63,6 @@ const Services = () => {
             {services &&
               [...services]
                 .filter((p) => p.status === 0)
-                .reverse()
                 .slice(0, 5)
                 .map((service, i) => (
                   <ServiceCard key={i} itemId={i} {...service} />

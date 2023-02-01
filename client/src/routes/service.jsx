@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { FaStar } from "react-icons/fa";
-// import { ServiceContext } from "../context/ServiceContext";
-// import { PlatformContext } from "../context/PlatformContext";
+import { FaStar, FaArrowLeft } from "react-icons/fa";
 import ActionControls from "../components/services/ActionControls";
 import { Loader } from "../components";
 import AutoAvatar from "../components/AutoAvatar";
@@ -58,25 +56,30 @@ export default function Service() {
     }
   };
 
-  const getService = async (id) => {
+  const fetchService = useCallback(async () => {
     setIsLoading(true);
-    try {
-      const res = await axios.get(`/api/services/${id}`);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-      // alert(error.message);
-    }
+    const { data } = await axios.get(`/api/services/${params.id}`);
+    setService(data);
     setIsLoading(false);
-  };
+  }, [params.id]);
+
+  // const getService = async (id) => {
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await axios.get(`/api/services/${id}`);
+  //     setService(res.data);
+  //   } catch (error) {
+  //     console.log(error);
+  //     // alert(error.message);
+  //   }
+  //   setIsLoading(false);
+  // };
 
   useEffect(() => {
-    getService(serviceId).then((s) => {
-      setService(s);
-      // getRating(s.author).then((r) => setRating(r));
-      // getProfile(s.author);
-    });
-  }, []);
+    fetchService();
+    // getRating(s.author).then((r) => setRating(r));
+    // getProfile(s.author);
+  }, [fetchService]);
 
   // useEffect(() => {
   //   const onServiceUpdated = (s) => {
@@ -95,7 +98,7 @@ export default function Service() {
   if (service) {
     return (
       <div className="min-h-screen text-white">
-        <div className="container mx-auto flex flex-col self-center items-center white-glassmorphism p-3">
+        <div className="container mx-auto flex flex-col self-center items-center white-glassmorphism py-2">
           <div className="flex flex-col w-full">
             {service.images?.length > 0 ? (
               <Gallery images={service.images} />
@@ -107,19 +110,20 @@ export default function Service() {
               />
             )}
 
-            <div className="flex flex-col ">
-              <div className="mt-2 text-center white-glassmorphism">
-                {service.category}
-              </div>
-              <div className="mt-2 text-center white-glassmorphism">
-                {ServiceStatuses[service.status]}
+            <div className="flex flex-col">
+              <div className="flex w-full justify-center gap-5">
+                <div className="mt-2 text-center w-full px-2 py-1 white-glassmorphism">
+                  {service.category}
+                </div>
+                <div className="mt-2 text-center w-full px-2 py-1 white-glassmorphism">
+                  {ServiceStatuses[service.status]}
+                </div>
               </div>
               <div className="flex flex-row justify-between w-full">
                 <p className="mt-2 text-4xl text-left">{service.title}</p>
                 <p className="mt-2 text-3xl text-right">
-                  {service.price} {networks.testnet.nativeCurrency.symbol}
-                  {" "}
-                  (${calculatePrice(service.price, usdPrice)})
+                  {service.price} {networks.testnet.nativeCurrency.symbol} ($
+                  {calculatePrice(service.price, usdPrice)})
                 </p>
               </div>
               <p className="mt-1 text-2xl">{service.description}</p>
@@ -128,31 +132,39 @@ export default function Service() {
               </p>
               <div className="pt-4 flex flex-row gap-2 items-center italic">
                 <div className="flex flex-row items-center">
-                  {/* {profile && profile.avatar ? (
+                  {profile && profile?.avatar ? (
                     <img
                       alt="Avatar"
                       className="w-[2.5rem] mr-1 rounded-full border"
-                      src={profile.avatar}
+                      src={profile?.avatar}
                     />
                   ) : (
-                    <AutoAvatar userId={service.author} size={36} />
+                    <AutoAvatar userId={service.authorAddress} size={36} />
                   )}
-                  {profile && profile.username ? (
+                  {profile && profile?.username ? (
                     <span>
-                      {profile.username} ({shortenAddress(service.author)}){" "}
+                      {profile.username} ({shortenAddress(service?.authoraddress)}){" "}
                     </span>
                   ) : (
-                    service.author && shortenAddress(service.author)
-                  )} */}
+                    service?.authoraddress && shortenAddress(service?.authorAddress)
+                  )}
                 </div>
                 <div className="flex flex-row justify-center items-center">
                   <FaStar color="#ffc107" />
-                  {rating ? rating.toFixed(1) : 0} (0)
+                  {rating ? rating?.toFixed(1) : 0} (0)
                 </div>
               </div>
-              {service.createdAt}
+              {service?.createdAt}
             </div>
             {isLoading ? <Loader /> : <ActionControls service={service} />}
+          </div>
+          <div className="flex justify-items-start w-full">
+            <Link to="/services">
+              <div className="flex gap-2 justify-center items-center">
+                <FaArrowLeft />
+                <span>Back</span>
+              </div>
+            </Link>
           </div>
         </div>
       </div>

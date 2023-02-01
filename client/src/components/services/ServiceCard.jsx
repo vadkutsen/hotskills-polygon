@@ -64,17 +64,25 @@ const ServiceCard = ({
         {images?.length > 0 ? (
           <img
             alt="Service"
-            className="max-h-[12rem] self-center rounded-md"
+            className="max-h-[10rem] self-center rounded-md white-glassmorphism"
             src={images[0]}
           />
         ) : (
           <img
             alt="Service"
-            className="max-h-[12rem] self-center rounded-md opacity-25"
+            className="max-h-[10rem] self-center rounded-md opacity-25"
             src={noImage}
           />
         )}
         <div className="flex flex-col w-full">
+          <div className="flex flex-row gap-2 items-center">
+            <div className="mt-2 pl-2 pr-2 text-center w-2/3 white-glassmorphism">
+              {category}
+            </div>
+            <div className="mt-2 pl-2 pr-2 text-center w-1/3 white-glassmorphism">
+              {ServiceStatuses[status]}
+            </div>
+          </div>
           <div className="mt-2 flex flex-row justify-between">
             <p className="text-xl truncate ...">{title}</p>
           </div>
@@ -96,18 +104,13 @@ const ServiceCard = ({
               shortenAddress(authorAddress)
             )}
           </div>
-          <div className="flex flex-row gap-2 items-center">
-            <div className="mt-2 pl-2 pr-2 text-center white-glassmorphism">
-              {category}
-            </div>
-            <div className="mt-2 pl-2 pr-2 text-center white-glassmorphism">
-              {ServiceStatuses[status]}
-            </div>
-          </div>
-          <p className="text-xs italic pt-2"><Moment fromNow>{createdAt}</Moment></p>
+          <p className="text-xs italic pt-2">
+            <Moment fromNow>{createdAt}</Moment>
+          </p>
         </div>
         <p className="text-xl mt-20 self-end">
-          {price} {networks.testnet.nativeCurrency.symbol} (${calculatePrice(price, usdPrice)})
+          {price} {networks.testnet.nativeCurrency.symbol} ($
+          {calculatePrice(price, usdPrice)})
         </p>
       </div>
     </Link>

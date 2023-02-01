@@ -25,7 +25,7 @@ const Gallery = ({ images }) => {
       {images?.map((image, i) => (
         <div
           key={i}
-          className="slide border"
+          className="slide white-glassmorphism"
           style={{
             backgroundImage: `url(${image})`,
           }}

@@ -15,7 +15,6 @@ export const createService = async (req, res) => {
             deliveryTime,
             status: 0
         });
-
         await service.save();
         await User.findByIdAndUpdate(req.userId, {
             $push: {services: service}
@@ -33,18 +32,16 @@ export const getServices = async (req, res) => {
         res.json(services);
     } catch (error) {
         console.log(error.message);
-        res.status(500).send(error.message);
+        res.status(500).send("Server Error");
     }
 };
 
 export const getService = async (req, res) => {
     try {
         const service = await Service.findById(req.params.id);
-
         if (!service) {
             return res.status(404).json({ msg: "Service not found" });
         }
-
         res.json(service);
     } catch (err) {
         console.log(err.message);
