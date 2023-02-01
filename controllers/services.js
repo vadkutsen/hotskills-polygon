@@ -51,3 +51,18 @@ export const getService = async (req, res) => {
         res.status(500).send("Server Error");
     }
 };
+
+export const getMyServices = async (req, res) => {
+    try {
+        const user = await User.findById(req.userId);
+        const list = await Promise.all(
+            user.services.map((s) => {
+                return Service.findById(s._id);
+            })
+        )
+        res.json(list);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).send("Server Error");
+    }
+}
