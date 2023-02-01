@@ -8,7 +8,7 @@ import { notify } from "../services/ToastService";
 
 const MyServices = () => {
   const [services, setServices] = useState([]);
-  const address = window.ethereum.selectedAddress;
+  const address = window.ethereum?.selectedAddress;
   const dispatch = useDispatch();
 
   const fetchtMyServices = async () => {

@@ -93,12 +93,12 @@ export const authSlice = createSlice({
     },
     [loginUser.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.status = action.message;
-      state.user = action.user;
-      state.token = action.token;
+      state.status = action.payload.message;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
     },
     [loginUser.rejected]: (state, action) => {
-      state.status = action.message;
+      state.status = action.payload.message;
       state.isLoading = false;
     },
 
@@ -110,11 +110,11 @@ export const authSlice = createSlice({
     [getMe.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.status = null;
-      state.user = action?.user;
-      state.token = action?.token;
+      state.user = action?.payload.user;
+      state.token = action?.payload.token;
     },
     [getMe.rejected]: (state, action) => {
-      state.status = action.message;
+      state.status = action.payload.message;
       state.isLoading = false;
     },
   },

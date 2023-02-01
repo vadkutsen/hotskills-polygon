@@ -6,23 +6,38 @@ const initialState = {
   loading: false,
 };
 
-export const createService = createAsyncThunk("service/createService", async (params) => {
-  try {
-    const data = await axios.post("/api/services/new", params);
-    return data;
-  } catch (error) {
-    console.log(error.message);
+export const createService = createAsyncThunk(
+  "service/createService",
+  async (params) => {
+    try {
+      const data = await axios.post("/api/services/new", params);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
+);
 
 export const getServices = createAsyncThunk("service/getService", async () => {
   try {
-    const { data } = await axios.get("api/services");
+    const { data } = await axios.get("/api/services");
     return data;
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 });
+
+export const deleteService = createAsyncThunk(
+  "service/deleteService",
+  async (id) => {
+    try {
+      const { data } = await axios.delete(`/api/services/${id}`, id);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 export const serviceSlice = createSlice({
   name: "service",
@@ -50,8 +65,19 @@ export const serviceSlice = createSlice({
     },
     [getServices.rejected]: (state) => {
       state.loading = false;
-    }
-  }
+    },
+    // delete service
+    [deleteService.pending]: (state) => {
+      state.loading = true;
+    },
+    [deleteService.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.services = state.services.filter((service) => service._id !== action.payload._id);
+    },
+    [deleteService.rejected]: (state) => {
+      state.loading = false;
+    },
+  },
 });
 
 export default serviceSlice.reducer;

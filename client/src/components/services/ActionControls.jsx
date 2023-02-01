@@ -1,13 +1,24 @@
-import { useContext } from "react";
-// import { AuthContext } from "../../context/AuthContext";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import AuthorActions from "./AuthorActions";
-import { ServiceStatuses } from "../../utils/constants";
 import RequestService from "./RequestService";
+import { loginUser } from "../../redux/features/auth/authSlice";
 
 const ActionControls = ({ service }) => {
-  // const { currentAccount } = useContext(AuthContext);
-  const currentAccount = window.ethereum?.selectedAccount;
-  if (service.author?.toLowerCase() === currentAccount?.toLowerCase()) {
+  const { user } = useSelector((s) => s.auth);
+  const address = window.ethereum?.selectedAddress;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (address) {
+      try {
+        dispatch(loginUser({ address }));
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  }, [address]);
+  if (user?._id === service.author) {
     return <AuthorActions service={service} />;
   }
   if (service.status === 0) {

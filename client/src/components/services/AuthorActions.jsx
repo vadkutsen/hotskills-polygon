@@ -1,13 +1,30 @@
-import { useContext } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaPause, FaTrashAlt, FaPlay, FaEdit } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+// import { ServiceStatuses } from "../../utils/constants";
+import {
+  // deleteService,
+  pauseService,
+  resumeService,
+  editService,
+} from "../../services/ServiceService";
+import { notify } from "../../services/ToastService";
+import { deleteService } from "../../redux/features/service/serviceSlice";
 
-// import { ServiceContext } from "../../context/ServiceContext";
-import { ServiceStatuses } from "../../utils/constants";
-import { deleteService, pauseService, resumeService } from "../../services/ServiceService";
-
-const AuthorActions = (params) => {
-  const { service } = params;
-  // const { deleteService, pauseService, resumeService } =
-  //   useContext(ServiceContext);
+const AuthorActions = ({ service }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleDelete = () => {
+    try {
+      dispatch(deleteService(service._id));
+      notify("Service deleted.", null, "success");
+      navigate("/services");
+    } catch (error) {
+      console.log(error);
+      notify(error.message, null, "error");
+    }
+  };
 
   return (
     <div className="flex flex-row gap-2">
@@ -17,7 +34,7 @@ const AuthorActions = (params) => {
           className="flex flex-row justify-center items-center my-5 bg-yellow-700 p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
           onClick={() => pauseService(service._id)}
         >
-          Pause Service
+          <FaPause />
         </button>
       ) : (
         <button
@@ -25,15 +42,22 @@ const AuthorActions = (params) => {
           className="flex flex-row justify-center items-center my-5 bg-green-700 p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
           onClick={() => resumeService(service._id)}
         >
-          Resume Service
+          <FaPlay />
         </button>
       )}
       <button
         type="button"
-        className="flex flex-row justify-center items-center my-5 bg-[#831843] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
-        onClick={() => deleteService(service._id)}
+        className="flex flex-row justify-center items-center my-5 bg-[#1fe4ca52] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+        onClick={() => editService(service._id)}
       >
-        Delete Service
+        <FaEdit />
+      </button>
+      <button
+        type="button"
+        className="flex flex-row justify-center items-center my-5 bg-[#831843] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
+        onClick={handleDelete}
+      >
+        <FaTrashAlt />
       </button>
     </div>
   );

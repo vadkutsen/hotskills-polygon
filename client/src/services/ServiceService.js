@@ -1,4 +1,5 @@
-import { useEffect, useState, useContext } from "react";
+// import { useEffect, useState, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ethers } from "ethers";
 import { Link } from "react-router-dom";
 import { ServiceStatuses, Categories } from "../utils/constants";
@@ -190,24 +191,19 @@ export const resumeService = async (id) => {
 };
 
 export const deleteService = async (id) => {
-  if (ethereum) {
-    try {
-      //   setIsLoading(true);
-      const transaction = await contract.deleteService(
-        ethers.BigNumber.from(id)
-      );
-      console.log(`Success - ${transaction}`);
-      //   setIsLoading(false);
-      //   await getAllServices();
-      //   notify("service deleted successfully.");
-      window.location.replace("/services");
-    } catch (error) {
-      console.log(error);
-      alert(error.message);
-      //   setIsLoading(false);
-    }
-  } else {
-    console.log("No Ethereum object");
+  // const dispatch = useDispatch();
+  // try {
+  //   dispatch(deleteService(id));
+  // } catch (error) {
+  //   console.log(error);
+  // }
+};
+
+export const editService = async (id) => {
+  try {
+    
+  } catch (error) {
+    console.log(error);
   }
 };
 

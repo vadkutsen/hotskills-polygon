@@ -143,10 +143,10 @@ export default function Service() {
                   )}
                   {profile && profile?.username ? (
                     <span>
-                      {profile.username} ({shortenAddress(service?.authoraddress)}){" "}
+                      {profile.username} ({shortenAddress(service?.authorAddress)}){" "}
                     </span>
                   ) : (
-                    service?.authoraddress && shortenAddress(service?.authorAddress)
+                    service?.authorAddress && shortenAddress(service?.authorAddress)
                   )}
                 </div>
                 <div className="flex flex-row justify-center items-center">
