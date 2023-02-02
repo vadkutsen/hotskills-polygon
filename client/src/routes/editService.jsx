@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 import axios from "../utils/axios";
 import { Loader } from "../components";
 import { Categories } from "../utils/constants";
@@ -12,7 +13,6 @@ import { loginUser } from "../redux/features/auth/authSlice";
 import { notify } from "../services/ToastService";
 import { updateService } from "../redux/features/service/serviceSlice";
 import Gallery from "../components/services/Gallery";
-import { FaArrowLeft } from "react-icons/fa";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {

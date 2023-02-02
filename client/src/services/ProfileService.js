@@ -9,7 +9,7 @@ export const getProfile = async (address) => {
       return res.data;
     } catch (error) {
       console.log(error.message);
-      notify(`${error.message}. ${error.response.data.msg}`, null, "error");
+      // notify(`${error.message}. ${error.response.data.msg}`, null, "error");
     }
   }
 };

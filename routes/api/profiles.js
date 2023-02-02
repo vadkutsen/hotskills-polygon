@@ -10,7 +10,7 @@ import Profile from "../../models/Profile.js";
 // @access  public
 router.get("/", async (req, res) => {
     try {
-        const profiles = await find().select("-about");
+        const profiles = await Profile.find().select("-about");
         res.json(profiles);
     } catch (error) {
         console.log(error.message);
@@ -32,7 +32,7 @@ router.post(
 
         try {
             const ids = req.body.ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
-            const profiles = await find()
+            const profiles = await Profile.find()
                 .select("-about")
                 .where("_id")
                 .in(ids)
@@ -51,7 +51,7 @@ router.post(
 router.get("/:address", async (req, res) => {
     try {
         const address = req.params.address;
-        const profile = await findOne({ address });
+        const profile = await Profile.findOne({ address });
 
         if (!profile) {
             return res.status(404).json({ msg: "Profile not found" });
@@ -83,7 +83,7 @@ router.post(
         }
         try {
             const { avatar, username, skills, languages, rate, availability, address } = req.body;
-            const candidate = await findOne({ address });
+            const candidate = await Profile.findOne({ address });
             if (candidate) {
                 return res.status(400).json({ msg: "Profile aready exists" });
             }
@@ -110,7 +110,7 @@ router.post(
 // @route   POST api/profiles/:id
 // @desc    update existing profile
 // @access  public
-router.post(
+router.put(
     "/:id",
     [
         check("username", "Udername is required").notEmpty(),
@@ -122,7 +122,7 @@ router.post(
             return res.status(400).json({ errors: errors.array() });
         }
         try {
-            const profile = await findById(req.params.id);
+            const profile = await Profile.findById(req.params.id);
 
             if (!profile) {
                 return res.status(404).json({ msg: "Profile not found" });

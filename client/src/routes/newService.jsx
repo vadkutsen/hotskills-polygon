@@ -85,10 +85,10 @@ export default function NewService() {
     if (status) notify(status, null, null);
     try {
       dispatch(loginUser({ address }));
-      notify("Logged in", null, "success");
+      // notify("Logged in", null, "success");
     } catch (error) {
       console.log(error.message);
-      notify(error.message, null, "error");
+      // notify(error.message, null, "error");
     }
   }, [address]);
   // console.log("status: ", status);

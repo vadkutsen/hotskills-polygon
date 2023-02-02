@@ -1,10 +1,8 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FaStar } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext";
-import { PlatformContext } from "../context/PlatformContext";
-import { ProfileContext } from "../context/ProfileContext";
+import axios from "../utils/axios";
 import { shortenAddress } from "../utils/shortenAddress";
 import AutoAvatar from "./AutoAvatar";
 import { networks } from "../utils/networks";
@@ -15,12 +13,7 @@ function classNames(...classes) {
 }
 
 export default function Wallet({ address }) {
-  // const { ethereum } = window;
-  // const { currentAccount, setCurrentAccount } = useContext(AuthContext);
-  // const [profile, setProfile] = useState(null);
-  // const { balance, fetchedRating } = useContext(PlatformContext);
-  // const { profile } = useContext(ProfileContext);
-  const profile = null;
+  const [profile, setProfile] = useState(null);
   const fetchedRating = null;
   const [balance, setBalance] = useState(0);
   // const handleDisconnect = async () => {
@@ -35,6 +28,15 @@ export default function Wallet({ address }) {
   useEffect(() => {
     getBalance(address).then((b) => setBalance(b));
   }, []);
+
+  const fetchProfile = useCallback(async () => {
+    const { data } = await axios.get(`/api/profiles/${address}`);
+    setProfile(data);
+  }, [address]);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [fetchProfile]);
 
   return (
     <Menu as="div" className="relative inline-block text-left">

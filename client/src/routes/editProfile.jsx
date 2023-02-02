@@ -1,10 +1,12 @@
-import React, { createRef, useState, useEffect } from "react";
+import React, { createRef, useState, useEffect, useCallback } from "react";
 import Select from "react-select";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import { Cropper } from "react-cropper";
-import { getProfile, updateProfile } from "../services/ProfileService";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 import { Loader } from "../components";
 import "cropperjs/dist/cropper.css";
 import "./roundedCropper.css";
@@ -12,14 +14,18 @@ import AutoAvatar from "../components/AutoAvatar";
 import languages from "../utils/languages.json";
 import skills from "../utils/skills.json";
 import { OnboardingButton } from "../components/MetaMaskOnboarding";
+import { onAvatarUploadHandler } from "../services/IpfsUploadHandler";
+import { updateProfile } from "../redux/features/profile/profileSlice";
+import { notify } from "../services/ToastService";
 
 // this transforms file to base64
-const file2Base64 = (file) => new Promise((resolve, reject) => {
-  const reader = new FileReader();
-  reader.readAsDataURL(file);
-  reader.onload = () => resolve(reader.result?.toString() || "");
-  reader.onerror = (error) => reject(error);
-});
+const file2Base64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result?.toString() || "");
+    reader.onerror = (error) => reject(error);
+  });
 
 const languageOptions = languages.map((l) => ({
   value: l.code,
@@ -31,133 +37,59 @@ const skillOptions = skills.map((s) => ({
   label: s.name,
 }));
 
-const FormField = ({ placeholder, name, type, value, handleChange }) => {
-  if (name === "languages") {
-    return (
-      <Select
-        options={languageOptions}
-        closeMenuOnSelect={false}
-        isMulti
-        className="basic-multi-select"
-        classNamePrefix="select"
-        defaultValue={value}
-        value={value}
-        onChange={(e) => handleChange(e, name)}
-        styles={{
-          control: (styles) => ({
-            ...styles,
-            backgroundColor: "transparent",
-          }),
-          input: (styles) => ({
-            ...styles,
-            color: "white",
-            outlineStyle: "none",
-          }),
-        }}
-      />
-    );
-  }
-  if (name === "skills") {
-    return (
-      <Select
-        options={skillOptions}
-        closeMenuOnSelect={false}
-        isMulti
-        className="basic-multi-select"
-        classNamePrefix="select"
-        defaultValue={value}
-        value={value}
-        onChange={(e) => handleChange(e, name)}
-        styles={{
-          control: (styles) => ({
-            ...styles,
-            backgroundColor: "transparent",
-            outlineStyle: "none",
-          }),
-          input: (styles) => ({
-            ...styles,
-            color: "white",
-            outlineStyle: "none",
-          }),
-        }}
-      />
-    );
-  }
-  if (name === "address") {
-    return (
-      <input
-        placeholder={placeholder}
-        type={type}
-        value={value}
-        onChange={(e) => handleChange(e, name)}
-        className="my-2 w-9/12 rounded-sm p-2 outline-none bg-transparent text-white white-glassmorphism"
-      />
-    );
-  }
-  return (
-    <input
-      placeholder={placeholder}
-      type={type}
-      step="0.5"
-      min="0"
-      value={value}
-      onChange={(e) => handleChange(e, name)}
-      className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border"
-    />
-  );
-};
-
 export default function Profile() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [profile, setProfile] = useState(null);
-  const [formData, setformData] = useState({
-    avatar: "",
-    username: "",
-    skills: [],
-    languages: [],
-    rate: 0,
-    availability: 0,
-    address: window.ethereum.selectedAddress,
-  });
-  const handleChange = (e, name) => {
-    if (name === "languages" || name === "skills") {
-      setformData((prevState) => ({
-        ...prevState,
-        [name]: e.map((item) => item.value),
-      }));
-    } else setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
-  };
-
+  const [loading, setLoading] = useState(false);
+  const [address, setAddress] = useState(window.ethereum?.selectedAddress);
+  const [languageList, setLanguageList] = useState([]);
+  const [username, setUsername] = useState("");
+  const [skillList, setSkillList] = useState([]);
+  const [rate, setRate] = useState(0);
+  const [availability, setAvailability] = useState(0);
+  const [oldImage, setOldImage] = useState(null);
+  const [id, setId] = useState(null);
   const [file, setFile] = useState(null);
+  const dispatch = useDispatch();
+  // const { loading } = useSelector((state) => state.profile);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.address) return;
+    if (!username || !address) return;
+    setLoading(true);
+    let avatar;
+    if (file) {
+      avatar = await onAvatarUploadHandler(file);
+    } else {
+      avatar = oldImage;
+    }
     const profileData = {
-      avatar: formData.avatar,
-      username: formData.username,
-      skills: formData.skills,
-      languages: formData.languages,
-      rate: formData.rate,
-      availability: formData.availability,
-      address: formData.address,
+      avatar,
+      username,
+      skills: skillList,
+      languages: languageList,
+      rate,
+      availability,
+      address,
+      id
     };
-    setIsLoading(true);
-    updateProfile(file, profileData, profile._id);
-    setIsLoading(false);
+    try {
+      dispatch(updateProfile(profileData));
+      notify("Profile updated.", null, "success");
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+      notify(error.message, null, "error");
+    }
+    setLoading(false);
   };
   // ref of the file input
   const fileRef = createRef();
-
   // the selected image
   const [uploaded, setUploaded] = useState(null);
-
   // the resulting cropped image
   const [cropped, setCropped] = useState(null);
-
   // the reference of cropper element
   const cropperRef = createRef();
-
   const onFileInputChange = (e) => {
     const f = e.target?.files?.[0];
     if (f) {
@@ -174,16 +106,20 @@ export default function Profile() {
   //   setCropped(cropper.getCroppedCanvas().toDataURL());
   // };
 
+  const fetchProfile = useCallback(async () => {
+    const { data } = await axios.get(`/api/profiles/${address}`);
+    setOldImage(data.avatar);
+    setUsername(data.username);
+    setSkillList(data.skills);
+    setLanguageList(data.languages);
+    setRate(data.rate);
+    setAvailability(data.availability);
+    setId(data._id);
+  }, [address]);
+
   useEffect(() => {
-    getProfile(window.ethereum.selectedAddress).then((p) => {
-      setProfile(p);
-    });
-    return () => {
-      // this now gets called when the component unmounts
-      setProfile(null);
-    };
-  }, []);
-  console.log(profile);
+    fetchProfile();
+  }, [address]);
 
   return (
     <div className="flex w-full justify-center items-start  outline-none min-h-screen">
@@ -208,7 +144,7 @@ export default function Profile() {
                         // style={{ borderRadius: "50%" }}
                         className="rounded-full border"
                       />
-                      {isLoading ? (
+                      {loading ? (
                         <Loader />
                       ) : (
                         <button
@@ -250,18 +186,15 @@ export default function Profile() {
                 </div>
               ) : (
                 <div className="flex flex-col items-center">
-                  {profile?.avatar && profile.avatar.length > 0 ? (
+                  {oldImage ? (
                     <img
                       alt="Avatar"
-                      src={profile.avatar}
+                      src={oldImage}
                       className="w-[36rem] mr-1 rounded-full box-border border-4"
                     />
                   ) : (
-                    <AutoAvatar userId={formData.address} size={370} />
+                    <AutoAvatar userId={address} size={370} />
                   )}
-                  {/* {ipfsUrl && (
-                    <img alt="Profile" className="self-center" src={ipfsUrl} />
-                  )} */}
                   <input
                     type="file"
                     name="file"
@@ -288,12 +221,12 @@ export default function Profile() {
                 Username*
               </span>
               <div>
-                <FormField
-                  className="w-full bg-transparent"
-                  name="username"
-                  type="text"
+                <input
                   placeholder="e.g. Elon Musk"
-                  handleChange={handleChange}
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border"
                 />
               </div>
             </div>
@@ -304,10 +237,27 @@ export default function Profile() {
               >
                 Skills
               </span>
-              <FormField
+              <Select
                 name="skills"
-                handleChange={handleChange}
-                className="outline-0"
+                options={skillOptions}
+                closeMenuOnSelect={false}
+                isMulti
+                className="basic-multi-select"
+                classNamePrefix="select"
+                value={skillList.map((s) => skillOptions.find((option) => option.value === s))}
+                onChange={(e) => setSkillList(() => e.map((item) => item.value))}
+                styles={{
+                  control: (styles) => ({
+                    ...styles,
+                    backgroundColor: "transparent",
+                    outlineStyle: "none",
+                  }),
+                  input: (styles) => ({
+                    ...styles,
+                    color: "white",
+                    outlineStyle: "none",
+                  }),
+                }}
               />
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-0">
@@ -317,7 +267,28 @@ export default function Profile() {
               >
                 Languages
               </span>
-              <FormField name="languages" handleChange={handleChange} />
+              <Select
+                name="languages"
+                options={languageOptions}
+                closeMenuOnSelect={false}
+                isMulti
+                className="basic-multi-select"
+                classNamePrefix="select"
+                // defaultValue={languageList}
+                value={languageList.map((s) => languageOptions.find((option) => option.value === s))}
+                onChange={(e) => setLanguageList(e.map((item) => item.value))}
+                styles={{
+                  control: (styles) => ({
+                    ...styles,
+                    backgroundColor: "transparent",
+                  }),
+                  input: (styles) => ({
+                    ...styles,
+                    color: "white",
+                    outlineStyle: "none",
+                  }),
+                }}
+              />
             </div>
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white text-sm">
               <span
@@ -328,12 +299,14 @@ export default function Profile() {
               </span>
               <div className="flex flex-row gap-2">
                 <span className="text-white self-center">$</span>
-                <FormField
-                  className="w-full bg-transparent"
+                <input
                   placeholder="0"
-                  name="rate"
                   type="number"
-                  handleChange={handleChange}
+                  step="0.5"
+                  min="0"
+                  value={rate}
+                  onChange={(e) => setRate(e.target.value)}
+                  className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border"
                 />
                 <span className="text-white self-center">/hr</span>
               </div>
@@ -346,13 +319,14 @@ export default function Profile() {
                 Availability
               </span>
               <div className="flex flex-row gap-2">
-                <FormField
-                  className="w-full bg-transparent"
-                  placeholder="0"
-                  name="availability"
+                <input
+                  placeholder="o"
                   type="number"
+                  step="0.5"
                   min="0"
-                  handleChange={handleChange}
+                  value={availability}
+                  onChange={(e) => setAvailability(e.target.value)}
+                  className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border"
                 />
                 <span className="text-white self-center">hours per week</span>
               </div>
@@ -369,20 +343,12 @@ export default function Profile() {
                 address
               </span>
               <div className="flex gap-2 items-center">
-                {/* <FormField
-                  placeholder="address..."
-                  name="address"
-                  type="text"
-                  value={currentAccount}
-                  handleChange={handleChange}
-                /> */}
-                {formData.address}
-                {/* {!currentAccount && <><span>or</span><ConnectWalletButton /></> } */}
-                <OnboardingButton />
+                {address}
+                <OnboardingButton setAddress={setAddress} />
               </div>
             </div>
             <div className="h-[1px] w-full bg-gray-400 my-2" />
-            {isLoading ? (
+            {loading ? (
               <Loader />
             ) : (
               <div className="flex w-full gap-2">

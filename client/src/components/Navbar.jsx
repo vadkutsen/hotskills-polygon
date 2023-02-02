@@ -106,7 +106,7 @@ const Navbar = () => {
             </NavLink>
             <Notifications />
             <li>
-              {isAuth ? <Wallet /> : <OnboardingButton address={address} setAddress={setAddress} />}
+              {address ? <Wallet address={address} setAddress={setAddress} /> : <OnboardingButton address={address} setAddress={setAddress} />}
             </li>
           </ul>
         )}

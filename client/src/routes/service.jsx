@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
 import { FaStar, FaArrowLeft } from "react-icons/fa";
+import axios from "../utils/axios";
 import ActionControls from "../components/services/ActionControls";
 import { Loader } from "../components";
 import AutoAvatar from "../components/AutoAvatar";

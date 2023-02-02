@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { getProfile } from "../services/ProfileService";
+import axios from "../utils/axios";
 import { Loader } from "../components";
 import "cropperjs/dist/cropper.css";
 import "./roundedCropper.css";
@@ -13,18 +11,18 @@ import skills from "../utils/skills.json";
 export default function Profile() {
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(null);
+  const address = window.ethereum?.selectedAddress;
+
+  const fetchProfile = useCallback(async () => {
+    setIsLoading(true);
+    const { data } = await axios.get(`/api/profiles/${address}`);
+    setProfile(data);
+    setIsLoading(false);
+  }, [address]);
 
   useEffect(() => {
-    setIsLoading(true);
-    getProfile(window.ethereum.selectedAddress).then((p) => {
-      setProfile(p);
-    });
-    setIsLoading(false);
-    return () => {
-      // this now gets called when the component unmounts
-      setProfile(null);
-    };
-  }, []);
+    fetchProfile();
+  }, [fetchProfile]);
 
   return (
     <div className="flex w-full justify-center items-start  outline-none min-h-screen">
@@ -40,7 +38,7 @@ export default function Profile() {
           <div className="p-5 w-full flex flex-col justify-center items-center blue-glassmorphism">
             <div className="my-2 w-full rounded-sm p-2 outline-none bg-transparent text-white border-none text-sm">
               <div className="flex flex-col items-center">
-                {profile?.avatar && profile.avatar.length > 0 ? (
+                {profile?.avatar?.length ? (
                   <img
                     alt="Avatar"
                     src={profile.avatar}
@@ -138,7 +136,6 @@ export default function Profile() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }
