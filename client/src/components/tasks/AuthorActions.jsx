@@ -1,20 +1,35 @@
 import { useContext, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { ImWarning } from "react-icons/im";
+import { useDispatch, useSelector } from "react-redux";
 // import { TaskContext } from "../../context/TaskContext";
 import { PlatformContext } from "../../context/PlatformContext";
 import { TaskStatuses } from "../../utils/constants";
 import { shortenAddress } from "../../utils/shortenAddress";
 import { assignTask, unassignTask, completeTask, requestChange, openDispute, deleteTask } from "../../services/TaskService";
+import { createReview } from "../../redux/features/review/reviewSlice";
+
 
 const AuthorActions = (params) => {
   const { task } = params;
   const { setIsLoading, arbiterReward } = useContext(PlatformContext);
   const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const [hover, setHover] = useState(0);
   const defaultSelectValue = "Select a candidate to assign";
   const [selected, setSelected] = useState(defaultSelectValue);
   const [message, setMessage] = useState("");
+  const dispatch = useDispatch()
+  const handleCreateReview = () => {
+    try {
+      const userId = task.assignee;
+      dispatch(createReview({ userId, rating, comment }));
+      setComment("");
+      setRating(0);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleAssign = (e) => {
     if (selected === "Select a candidate to assign") return;
@@ -166,6 +181,13 @@ const AuthorActions = (params) => {
             );
           })}
         </div>
+        <input
+          type="text"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="Please describe your experience working with tthe executor..."
+          className=""
+        />
         <button
           type="button"
           className="flex flex-row justify-center items-center my-5 bg-[#134e4a] p-2 w-1/6 text-white rounded-2xl cursor-pointer hover:bg-[#2546bd]"

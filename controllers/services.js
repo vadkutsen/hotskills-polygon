@@ -116,6 +116,6 @@ export const updateService = async (req, res) => {
     res.json(service);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send(error.message);
+    res.status(500).send("Server Error");
   }
 };

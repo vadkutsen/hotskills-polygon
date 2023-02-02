@@ -22,6 +22,12 @@ const UserSchema = new Schema({
             ref: "Task",
         }
     ],
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Review",
+        }
+    ],
 },
 { timestamps: true },
 );
