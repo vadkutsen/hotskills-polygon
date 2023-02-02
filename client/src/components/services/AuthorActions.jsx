@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaPause, FaTrashAlt, FaPlay, FaEdit } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import { ServiceStatuses } from "../../utils/constants";
 import {
   // deleteService,
@@ -45,13 +45,12 @@ const AuthorActions = ({ service }) => {
           <FaPlay />
         </button>
       )}
-      <button
-        type="button"
+      <Link
+        to={`/services/${service._id}/edit`}
         className="flex flex-row justify-center items-center my-5 bg-[#1fe4ca52] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"
-        onClick={() => editService(service._id)}
       >
         <FaEdit />
-      </button>
+      </Link>
       <button
         type="button"
         className="flex flex-row justify-center items-center my-5 bg-[#831843] p-3 w-1/6 text-white rounded-full cursor-pointer hover:bg-[#2546bd]"

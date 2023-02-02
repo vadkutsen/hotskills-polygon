@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "../utils/axios";
 import { Loader } from "../components";
 import { Categories } from "../utils/constants";
@@ -10,7 +10,9 @@ import { onGalleryUploadHandler } from "../services/IpfsUploadHandler";
 import { OnboardingButton } from "../components/MetaMaskOnboarding";
 import { loginUser } from "../redux/features/auth/authSlice";
 import { notify } from "../services/ToastService";
-import { createService } from "../redux/features/service/serviceSlice";
+import { updateService } from "../redux/features/service/serviceSlice";
+import Gallery from "../components/services/Gallery";
+import { FaArrowLeft } from "react-icons/fa";
 
 const FormField = ({ placeholder, name, type, value, handleChange }) => {
   if (name === "category") {
@@ -62,30 +64,49 @@ const FormField = ({ placeholder, name, type, value, handleChange }) => {
   );
 };
 
-export default function NewService() {
+export default function editService() {
+  const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  // const { currentAccount } = useContext(AuthContext);
-  const [address, setAddress] = useState(null);
-  // const { selectedFiles } = useContext(ServiceContext);
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [usdPrice, setUsdPrice] = useState(0);
-  const dispatch = useDispatch();
+  const [oldImages, setOldImages] = useState([]);
   const [formData, setformData] = useState({
     category: Categories[0],
-    image: "",
     title: "",
     description: "",
     price: 0,
     deliveryTime: 0,
+    id: params.id
   });
+  const fetchService = useCallback(async () => {
+    setIsLoading(true);
+    const { data } = await axios.get(`/api/services/${params.id}`);
+    setOldImages(data.images);
+    setformData((prevState) => ({ ...prevState, category: data.category }));
+    setformData((prevState) => ({ ...prevState, title: data.title }));
+    setformData((prevState) => ({ ...prevState, description: data.description }));
+    setformData((prevState) => ({ ...prevState, price: data.price }));
+    setformData((prevState) => ({ ...prevState, deliveryTime: data.deliveryTime }));
+    setformData((prevState) => ({ ...prevState, id: params.id }));
+    setIsLoading(false);
+  }, [params.id]);
+
+  useEffect(() => {
+    fetchService();
+  }, [fetchService]);
+
+  const [address, setAddress] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const [usdPrice, setUsdPrice] = useState(0);
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const { status } = useSelector((state) => state.auth);
   useEffect(() => {
     if (status) notify(status, null, null);
     try {
-      dispatch(loginUser({ address }));
-      notify("Logged in", null, "success");
+      // dispatch(loginUser({ address }));
+      // notify("Logged in", null, "success");
     } catch (error) {
       console.log(error.message);
       notify(error.message, null, "error");
@@ -108,8 +129,15 @@ export default function NewService() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const { category, title, description, price, deliveryTime } = formData;
-    const images = await onGalleryUploadHandler(selectedFiles);
+    dispatch(loginUser({ address }));
+    notify("Logged in", null, "success");
+    const { category, title, description, price, deliveryTime, id } = formData;
+    let images;
+    if (selectedFiles.length > 0) {
+      images = await onGalleryUploadHandler(selectedFiles);
+    } else {
+      images = oldImages;
+    }
     if (!title || !description || !price || !address) return;
     try {
       const serviceData = {
@@ -119,11 +147,12 @@ export default function NewService() {
         description,
         authorAddress: address,
         price,
-        deliveryTime
+        deliveryTime,
+        id
       };
       console.log(serviceData);
-      dispatch(createService(serviceData));
-      notify("Service added successfully.", null, "success");
+      dispatch(updateService(serviceData));
+      notify("Service updated successfully.", null, "success");
       navigate("/services");
     } catch (error) {
       console.log(error.message);
@@ -172,6 +201,7 @@ export default function NewService() {
                 <FormField
                   name="category"
                   type="select"
+                  value={formData.category}
                   handleChange={handleChange}
                 />
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -190,6 +220,7 @@ export default function NewService() {
               >
                 Gallery
               </span>
+              <Gallery images={oldImages} />
               <div className="relative">
                 <IpfsForm selectedFiles={selectedFiles} setSelectedFiles={setSelectedFiles} />
                 {/* {selectedFiles?.length > 0 && <img src={URL.createObjectURL(selectedFiles[0])} />} */}
@@ -206,6 +237,7 @@ export default function NewService() {
                 placeholder="title..."
                 name="title"
                 type="text"
+                value={formData.title}
                 handleChange={handleChange}
               />
             </div>
@@ -220,6 +252,7 @@ export default function NewService() {
                 placeholder="Describe your services (e.g. I will...)"
                 name="description"
                 type="text"
+                value={formData.description}
                 handleChange={handleChange}
               />
             </div>
@@ -240,6 +273,7 @@ export default function NewService() {
                   name="price"
                   min="0"
                   type="number"
+                  value={formData.price}
                   handleChange={handleChange}
                 />
                 <span className="text-white self-center">
@@ -277,6 +311,7 @@ export default function NewService() {
                   min="0"
                   name="deliveryTime"
                   type="number"
+                  value={formData.deliveryTime}
                   handleChange={handleChange}
                 />
                 <span className="text-white self-center">days</span>
@@ -291,9 +326,17 @@ export default function NewService() {
                 onClick={handleSubmit}
                 className="text-white w-full mt-2 border-[1px] p-2 border-[#3d4f7c] hover:bg-[#3d4f7c] rounded-2xl cursor-pointer"
               >
-                Add Service
+                Update Service
               </button>
             )}
+            <div className="flex justify-items-start w-full">
+              <Link to={`/services/${params.id}`}>
+                <div className="flex gap-2 justify-center items-center text-white pt-2">
+                  <FaArrowLeft />
+                  <span>Back</span>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

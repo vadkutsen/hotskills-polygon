@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "../../../utils/axios";
 
@@ -32,6 +34,18 @@ export const deleteService = createAsyncThunk(
   async (id) => {
     try {
       const { data } = await axios.delete(`/api/services/${id}`, id);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const updateService = createAsyncThunk(
+  "service/updateService",
+  async (updatedService) => {
+    try {
+      const { data } = await axios.put(`/api/services/${updatedService.id}`, updatedService);
       return data;
     } catch (error) {
       console.log(error);
@@ -75,6 +89,18 @@ export const serviceSlice = createSlice({
       state.services = state.services.filter((service) => service._id !== action.payload._id);
     },
     [deleteService.rejected]: (state) => {
+      state.loading = false;
+    },
+    // update service
+    [updateService.pending]: (state) => {
+      state.loading = true;
+    },
+    [updateService.fulfilled]: (state, action) => {
+      state.loading = false;
+      const index = state.services.findIndex((service) => service._id === action.payload._id);
+      state.services[index] = action.payload;
+    },
+    [updateService.rejected]: (state) => {
       state.loading = false;
     },
   },

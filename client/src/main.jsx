@@ -21,48 +21,40 @@ import Tasks from "./routes/tasks";
 import Home from "./routes/home";
 import Profile from "./routes/profile";
 import EditProfile from "./routes/editProfile";
+import EditService from "./routes/editService";
 import { store } from "./redux/store";
 import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  // <AuthProvider>
-    // <PlatformProvider>
-      // {/* <TaskProvider> */}
-      // <ServiceProvider>
-        // <ProfileProvider>
-          <Router>
-            <Provider store={store}>
-              <Routes>
-                <Route path="/" element={<App />}>
-                  <Route index element={<Home />} />
-                  <Route exact path="services" element={<Services />} />
-                  <Route exact path="services/new" element={<NewService />} />
-                  <Route exact path="services/:id" element={<Service />} />
-                  <Route exact path="tasks" element={<Tasks />} />
-                  <Route exact path="tasks/new" element={<NewTask />} />
-                  <Route exact path="tasks/:id" element={<Task />} />
-                  <Route exact path="mytasks" element={<MyTasks />} />
-                  <Route exact path="myservices" element={<MyServices />} />
-                  <Route exact path="profile" element={<Profile />} />
-                  {/* <Route path="profile/new" element={<NewProfile />} /> */}
-                  <Route exact path="profile/edit" element={<EditProfile />} />
-                  <Route
-                    path="*"
-                    element={(
-                      <main className="text-white p-1 min-h-screen">
-                        <h1 className="text-center">There is nothing here!</h1>
-                      </main>
-                    )}
-                  />
-                </Route>
-              </Routes>
-              <ToastContainer />
-            </Provider>
-          </Router>,
-        // </ProfileProvider>
-      // </ServiceProvider>
-      // {/* </TaskProvider> */}
-    // </PlatformProvider>
-  // </AuthProvider>,
+  <Router>
+    <Provider store={store}>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
+          <Route exact path="services" element={<Services />} />
+          <Route exact path="services/new" element={<NewService />} />
+          <Route exact path="services/:id" element={<Service />} />
+          <Route exact path="services/:id/edit" element={<EditService />} />
+          <Route exact path="tasks" element={<Tasks />} />
+          <Route exact path="tasks/new" element={<NewTask />} />
+          <Route exact path="tasks/:id" element={<Task />} />
+          <Route exact path="mytasks" element={<MyTasks />} />
+          <Route exact path="myservices" element={<MyServices />} />
+          <Route exact path="profile" element={<Profile />} />
+          {/* <Route path="profile/new" element={<NewProfile />} /> */}
+          <Route exact path="profile/edit" element={<EditProfile />} />
+          <Route
+            path="*"
+            element={(
+              <main className="text-white p-1 min-h-screen">
+                <h1 className="text-center">There is nothing here!</h1>
+              </main>
+            )}
+          />
+        </Route>
+      </Routes>
+      <ToastContainer />
+    </Provider>
+  </Router>
 );

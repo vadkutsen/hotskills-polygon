@@ -12,7 +12,8 @@ import {
     getServices,
     getService,
     getMyServices,
-    deleteService
+    deleteService,
+    updateService
 } from "../../controllers/services.js";
 
 // @route   GET api/services
@@ -55,5 +56,17 @@ router.get("/user/me", checkAuth, getMyServices);
 // @desc    get service by id
 // @access  public
 router.delete("/:id", checkAuth, deleteService);
+
+// @route   PUT api/services/:id
+// @desc    create new service
+// @access  authenticated
+router.put(
+    "/:id",
+    checkAuth,
+    serviceValidationRules(),
+    validate,
+    updateService
+);
+
 
 export default router;

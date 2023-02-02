@@ -93,3 +93,29 @@ export const deleteService = async (req, res) => {
     res.status(500).send("Server Error");
   }
 };
+
+export const updateService = async (req, res) => {
+  try {
+    const {
+      id,
+      category,
+      images,
+      title,
+      price,
+      description,
+      deliveryTime,
+    } = req.body;
+    const service = await Service.findById(id);
+    service.category = category;
+    service.images = images;
+    service.title = title;
+    service.price = price;
+    service.description = description;
+    service.deliveryTime = deliveryTime;
+    await service.save();
+    res.json(service);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error.message);
+  }
+};
