@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 const ReviewSchema = new Schema({
     rating: {
-        type: number,
+        type: Number,
         required: true,
     },
     comment: {

@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-// import axios from "axios";
+import { useEffect } from "react";
 import { HiSearch } from "react-icons/hi";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,36 +7,14 @@ import { Categories } from "../utils/constants";
 import { getServices } from "../redux/features/service/serviceSlice";
 
 const Services = () => {
-  // const [services, setServices] = useState([]);
-  const [isLoading, setIsloading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-
   const dispatch = useDispatch();
-  const { services } = useSelector((state) => state.service);
+  const { services, loading } = useSelector((state) => state.service);
 
   useEffect(() => {
-    setIsloading(true);
     dispatch(getServices());
-    setIsloading(false);
   }, [dispatch]);
 
-  // const fetchServices = async () => {
-  //   setIsloading(true);
-  //   const res = await axios.get("/api/services");
-  //   setIsloading(false);
-  //   return res.data;
-  // };
-
-  // useEffect(() => {
-  //   fetchServices().then((s) => {
-  //     setServices(s);
-  //   });
-  //   return () => {
-  //     // this now gets called when the component unmounts
-  //     setServices([]);
-  //   };
-  // }, []);
-  console.log(services);
   const filterByCategory = (filter) => {
     if (filter) {
       setSearchParams({ filter });
@@ -45,14 +22,6 @@ const Services = () => {
       setSearchParams({});
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex flex-col w-full justify-start items-center min-h-screen">
-        <Loader />
-      </div>
-    );
-  }
 
   return (
     <div className="flex flex-col w-full justify-start items-center min-h-screen">
@@ -95,6 +64,11 @@ const Services = () => {
         </div>
       </div>
       <div className="flex flex-wrap justify-center items-center mt-10 w-9/12">
+        {loading && (
+          <div className="flex flex-col w-full justify-start items-center min-h-screen">
+            <Loader />
+          </div>
+        )}
         {!services?.length ? (
           <p className="text-xl text-white">No services yet</p>
         ) : (

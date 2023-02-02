@@ -4,7 +4,10 @@ import { checkAuth } from '../../utils/checkAuth.js';
 import {
     reviewValidationRules,
     validate
-} from "../../validators/serviceValidator.js";
+} from "../../validators/reviewValidator.js";
+import {
+    createReview,
+} from "../../controllers/reviews.js";
 
 // @route   POST api/reviews/:id
 // @desc    create new review
@@ -16,3 +19,5 @@ router.post(
     validate,
     createReview
 );
+
+export default router;

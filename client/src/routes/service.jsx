@@ -11,13 +11,9 @@ import Gallery from "../components/services/Gallery";
 import noImage from "../../images/no-image.png";
 import { ServiceStatuses } from "../utils/constants";
 
-const { ethereum } = window;
-
 export default function Service() {
   const params = useParams();
   const [isLoading, setIsLoading] = useState(false);
-  // const { formatService, contract } = useContext(ServiceContext);
-  // const { isLoading, setIsLoading, getRating } = useContext(PlatformContext);
   const serviceId = params.id;
   const [service, setService] = useState([]);
   const [rating, setRating] = useState(0);
@@ -63,37 +59,11 @@ export default function Service() {
     setIsLoading(false);
   }, [params.id]);
 
-  // const getService = async (id) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const res = await axios.get(`/api/services/${id}`);
-  //     setService(res.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //     // alert(error.message);
-  //   }
-  //   setIsLoading(false);
-  // };
-
   useEffect(() => {
     fetchService();
     // getRating(s.author).then((r) => setRating(r));
     // getProfile(s.author);
   }, [fetchService]);
-
-  // useEffect(() => {
-  //   const onServiceUpdated = (s) => {
-  //     setService(formatService(s));
-  //   };
-  //   if (ethereum) {
-  //     contract.on("ServiceUpdated", onServiceUpdated);
-  //   }
-  //   return () => {
-  //     if (contract) {
-  //       contract.off("ServiceUpdated", onServiceUpdated);
-  //     }
-  //   };
-  // }, []);
 
   if (service) {
     return (
