@@ -20,7 +20,7 @@ export const createService = createAsyncThunk(
   }
 );
 
-export const getServices = createAsyncThunk("service/getService", async () => {
+export const getServices = createAsyncThunk("service/getServices", async () => {
   try {
     const { data } = await axios.get("/api/services");
     return data;

@@ -5,7 +5,7 @@ import { AiOutlineClose } from "react-icons/ai";
 // import { AuthContext } from "../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import logo1 from "../../images/logo-white.svg";
-import logo2 from "../../images/polygonlogo.png";
+// import logo2 from "../../images/polygonlogo.png";
 import Wallet from "./Wallet";
 // import ConnectWalletButton from "./ConnectWalletButton";
 import Notifications from "./Notifications";
@@ -26,19 +26,19 @@ const Navbar = () => {
   const [address, setAddress] = useState(null);
   const dispatch = useDispatch();
 
-  const logoutHandler = () => {
-    dispatch(logout());
-    window.localStorage.removeItem("token");
-    notify("Logged out", null, "success");
-  };
+  // const logoutHandler = () => {
+  //   dispatch(logout());
+  //   window.localStorage.removeItem("token");
+  //   notify("Logged out", null, "success");
+  // };
 
-  useEffect(() => {
-    if (isAuth) {
-      notify("Logged In");
-    } else {
-      logoutHandler();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (isAuth) {
+  //     notify("Logged In");
+  //   } else {
+  //     logoutHandler();
+  //   }
+  // }, []);
 
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
@@ -47,7 +47,7 @@ const Navbar = () => {
           <div className="flex gap-2 text-white text-sm items-center cursor-pointer font-bold">
             <img alt="Brand logo" className="h-8 self-center" src={logo1} />
             <b>HOTSKILLS</b>
-            <img alt="Network logo" className="h-5 self-center" src={logo2} />
+            {/* <img alt="Network logo" className="h-5 self-center" src={logo2} /> */}
           </div>
         </Link>
       </div>

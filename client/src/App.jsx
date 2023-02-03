@@ -11,6 +11,7 @@ const App = () => {
   useEffect(() => {
     dispatch(getMe());
   }, [dispatch]);
+
   return (
     <div className="min-h-screen">
       <div className="gradient-bg-welcome">

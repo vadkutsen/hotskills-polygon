@@ -30,11 +30,11 @@ const Services = () => {
           Services ({services?.length})
         </p>
         <div className="flex flex-col justify-center items-center">
-          <div className="flex flex-row gap-2 justify-center items-center">
+          <div className="flex flex-wrap gap-2 justify-center items-center">
             {Categories.map((c, i) => (
               <button
                 type="button"
-                className="p-2 text-center text-white white-glassmorphism"
+                className="px-2 py-1 text-center text-white white-glassmorphism"
                 key={i}
                 onClick={() => filterByCategory(c)}
               >

@@ -1,10 +1,10 @@
 import { toast } from "react-toastify";
-import { networks } from "../utils/networks";
+// import { networks } from "../utils/networks";
 
-const MessageDisplay = ({ message, hash }) => (
+const MessageDisplay = ({ message }) => (
   <div className="w-full">
     <p>{message}</p>
-    {hash && (
+    {/* {hash && (
       <a
         className="text-[#6366f1]"
         href={`${networks.testnet.blockExplorerUrls[0]}/tx/${hash}`}
@@ -13,14 +13,14 @@ const MessageDisplay = ({ message, hash }) => (
       >
         Check in etherscan
       </a>
-    )}
+    )} */}
   </div>
 );
 
-export const notify = (message, hash, type) => {
+export const notify = (message, type) => {
   if (type === "success") {
     console.log("notify called");
-    toast.success(<MessageDisplay message={message} hash={hash} />, {
+    toast.success(<MessageDisplay message={message} />, {
       position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -31,7 +31,7 @@ export const notify = (message, hash, type) => {
       theme: "dark",
     });
   } else if (type === "error") {
-    toast.error(<MessageDisplay message={message} hash={hash} />, {
+    toast.error(<MessageDisplay message={message} />, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
@@ -42,7 +42,7 @@ export const notify = (message, hash, type) => {
       theme: "dark",
     });
   } else {
-    toast(<MessageDisplay message={message} hash={hash} />, {
+    toast(<MessageDisplay message={message} />, {
       position: "top-right",
       autoClose: 5000,
       hideProgressBar: false,
