@@ -10,7 +10,7 @@ import Task from "../../models/Task.js";
 // @access  public
 router.get("/", async (req, res) => {
     try {
-        const tasks = await find().select("-about");
+        const tasks = await Task.find().select("-about");
         res.json(tasks);
     } catch (error) {
         console.log(error.message);
@@ -32,7 +32,7 @@ router.post(
 
         try {
             const ids = req.body.ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
-            const tasks = await find()
+            const tasks = await Task.find()
                 .select("-about")
                 .where("_id")
                 .in(ids)
@@ -50,7 +50,7 @@ router.post(
 // @access  public
 router.get("/:id", async (req, res) => {
     try {
-        const task = await findById(req.params.id);
+        const task = await Task.findById(req.params.id);
 
         if (!task) {
             return res.status(404).json({ msg: "Task not found" });
